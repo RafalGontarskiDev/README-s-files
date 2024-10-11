@@ -42,10 +42,10 @@ To configure this plugin, you need to provide the following:
   
   To generate a token:
   
-  1. Log in to your Bitbucket account.
-  2. Go to **Personal Settings** > **App passwords**.
-  3. Generate a new token with the required scopes.
-  4. Store the token securely and provide it in the plugin configuration.
+  - Log in to your Bitbucket account.
+  - Go to **Personal Settings** > **App passwords**.
+  - Generate a new token with the required scopes.
+  - Store the token securely and provide it in the plugin configuration.
 
 - **Data Format**: The API credentials and other configurations should be provided in JSON format. Here's an example:
 
