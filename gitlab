@@ -12,47 +12,22 @@ Additionally, the plugin has been integrated with **Pinecone**, allowing seamles
    - **What it does**: Fetches information about the currently authenticated user in GitLab.
    - **Configuration**: 
      - Requires authentication via a GitLab API token with appropriate scopes (`read_user`).
-   - **Example Request**:
-     ```json
-     {
-       "token": "your_gitlab_token"
-     }
-     ```
 
 ### 2. **Get Users List**
    - **What it does**: Retrieves a list of users in the GitLab instance.
    - **Configuration**: 
      - Requires authentication via a GitLab API token.
-   - **Example Request**:
-     ```json
-     {
-       "token": "your_gitlab_token"
-     }
-     ```
 
 ### 3. **Get Project's List**
    - **What it does**: Fetches a list of projects associated with the authenticated user or within a group.
    - **Configuration**: 
      - Requires authentication via a GitLab API token with `read_api` or `read_repository` permissions.
-   - **Example Request**:
-     ```json
-     {
-       "token": "your_gitlab_token"
-     }
-     ```
 
 ### 4. **Get Issues List**
    - **What it does**: Retrieves a list of issues from a specific project.
    - **Configuration**: 
      - Requires authentication via a GitLab API token and the project ID from which to fetch the issues.
      - Requires `read_api` permissions.
-   - **Example Request**:
-     ```json
-     {
-       "token": "your_gitlab_token",
-       "project_id": "123456"
-     }
-     ```
 
 ## 3. Configuration
 
@@ -71,7 +46,7 @@ To configure this plugin, you need to provide the following:
 
   ```json
   {
-    "Personal_access_token": "your_gitlab_token"
+    "Personal_access_token": "your_gitlab_personal_access_token"
   }
   ```
 
