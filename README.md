@@ -17,7 +17,9 @@ This plugin provides integration with the GitHub API, allowing you to interact w
      {
        "name": "my-new-repo",
        "description": "This is my new repository",
-       "private": true
+       "homepage" : "https://github.com",
+       "private": true,
+       "is_template": true
      }
      ```
 
@@ -25,12 +27,6 @@ This plugin provides integration with the GitHub API, allowing you to interact w
    - **What it does**: Fetches information about the authenticated user or any specified user on GitHub.
    - **Configuration**: 
      - No special configuration needed beyond GitHub API authentication.
-   - **Example Request**:
-     ```json
-     {
-       "username": "octocat"
-     }
-     ```
 
 ### 3. **Get User by ID**
    - **What it does**: Fetches detailed information about a user based on their unique GitHub user ID.
@@ -89,7 +85,7 @@ To configure this plugin, you need to provide the following:
 
   ```json
   {
-    "api_token": "your_github_token"
+    "Personal_access_token": "your_personal_access_token"
   }
   ```
 
