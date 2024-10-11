@@ -48,8 +48,8 @@ This plugin provides integration with the GitHub API, allowing you to interact w
    - **Example Request**:
      ```json
      {
-       "owner": "octocat",
-       "repo": "hello-world",
+       "owner": "owner_name",
+       "repo": "repo_name",
        "path": "README.md"
      }
      ```
@@ -62,8 +62,8 @@ This plugin provides integration with the GitHub API, allowing you to interact w
    - **Example Request**:
      ```json
      {
-       "owner": "octocat",
-       "repo": "hello-world",
+       "owner": "owner_name",
+       "repo": "repo_name",
        "path": ""
      }
      ```
