@@ -3,6 +3,8 @@
 ## 1. Overview
 This plugin provides integration with the GitHub API, allowing you to interact with GitHub repositories and users. It offers several methods for repository creation, fetching user information, and retrieving repository content.
 
+Additionally, the plugin has been integrated with Pinecone, allowing seamless interaction between GitHub data and Pinecone's vector database for advanced data management and processing.
+
 ## 2. Available Methods
 
 ### 1. **Create Repository**
