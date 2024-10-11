@@ -1,1 +1,1 @@
-# README-s-files
+# README-s-files for plugins in NoCode-x
