@@ -75,6 +75,7 @@ To configure this plugin, you need to provide the following:
 - **GitHub API Token**: This plugin requires a personal access token from GitHub with appropriate permissions (`repo` scope) for the necessary methods.
   
   To generate a token:
+  
   1. Log in to your GitHub account.
   2. Go to **Settings** > **Developer settings** > **Personal access tokens**.
   3. Generate a new token with the required scopes.
