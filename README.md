@@ -15,13 +15,6 @@ Additionally, the plugin is integrated with Pinecone, enabling seamless interact
    - **Configuration**:
      - Requires authentication via Google API OAuth 2.0.
      - You need to provide a title for the document.
-   - **Example Request**:
-   ```json
-   {
-     "title": "Document Title",
-     "content": "Initial content for the document"
-   }
-   ```
 
 2. **Batch Update a Document**
    - **What it does**: Allows batch updates to be applied to a document, such as adding text, formatting, or replacing content.
