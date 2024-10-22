@@ -92,6 +92,6 @@ To configure this plugin, you need to provide the following:
 
 ## 4. Links to Documentation
 
-- [Bitbucket REST API Documentation](https://developer.atlassian.com/bitbucket/api/2/reference/)
+- [Bitbucket REST API Documentation](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#authentication)
 - [Creating a Repository Access Token in Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/)
 - [Pinecone Documentation](https://docs.pinecone.io)
