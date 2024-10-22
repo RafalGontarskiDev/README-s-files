@@ -1,87 +1,97 @@
 # README-s-files for plugins in NoCode-x
 
 
-### Google Docs Plugin Documentation
+# Bitbucket Pinecone Assistant Plugin Documentation
 
-#### 1. Overview
-This plugin provides integration with the Google Docs API, allowing you to interact with Google documents. It offers several methods for creating new documents, batch updating document content, and fetching documents by their ID.
+## 1. Overview
 
-Additionally, the plugin is integrated with Pinecone, enabling seamless interaction between Google Docs content and Pinecone's vector database for advanced data management, search, and processing.
+This plugin provides integration with the Bitbucket API, allowing you to interact with repositories, files, and workspaces. It offers several methods for committing files, fetching file contents, and listing user workspaces.
 
-#### 2. Available Methods
+Additionally, the plugin has been integrated with **Pinecone**, allowing seamless interaction between Bitbucket data and Pinecone's vector database for advanced data management and processing.
 
-1. **Create a Document**
-   - **What it does**: Creates a new document in Google Docs.
-   - **Configuration**:
-     - Requires authentication via Google API OAuth 2.0.
-     - You need to provide a title for the document.
+## 2. Available Methods
 
-2. **Batch Update a Document**
-   - **What it does**: Allows batch updates to be applied to a document, such as adding text, formatting, or replacing content.
-   - **Configuration**:
-     - Requires authentication via Google API OAuth 2.0.
-     - You need to provide the document ID and a list of update requests.
+### 1. **Get File or Directory Contents**
+   - **What it does**: Retrieves the content of a specific file or the listing of a directory from a Bitbucket repository.
+   - **Configuration**: 
+     - Requires authentication via a Bitbucket API token with `repository:read` permissions.
+     - You need to provide the repository, branch, and the file or directory path.
    - **Example Request**:
-   ```json
-   {
-     "documentId": "your_doc_id",
-     "requests": [
-       {
-         "insertText": {
-           "location": {
-             "index": 1
-           },
-           "text": "New text to insert"
-         }
+     ```plaintext
+     GET https://api.bitbucket.org/2.0/repositories/{{workspaceSlug}}/{{repoSlug}}/src/{{commit}}/{{path}}?max_depth=3&pagelen=100
+     ```
+
+   - **What it returns**: List of files in the repository starting from the specified path (e.g., `/` for the root directory). It supports recursive file fetching through `max_depth`.
+
+### 2. **Fetch File by Path**
+   - **What it does**: Fetches a specific file from a Bitbucket repository using its exact path.
+   - **Configuration**:
+     - Requires authentication via a Bitbucket API token with `repository:read` permissions.
+     - You need to provide the repository, branch, and the file path.
+   - **Example Request**:
+     ```plaintext
+     GET https://api.bitbucket.org/2.0/repositories/{{workspaceSlug}}/{{repoSlug}}/src/{{commit}}/{{path}}
+     ```
+
+   - **What it returns**: The content of the specified file.
+
+### 3. **Feed Assistant (Upload Files to Pinecone Assistant)**
+   - **What it does**: Uploads files fetched from Bitbucket to a Pinecone Assistant for further processing or data vectorization.
+   - **How it works**:
+     - This method fetches files using the Bitbucket `Get File or Directory Contents` or `Fetch File by Path` methods and uploads them directly to a Pinecone Assistant.
+     - Requires authentication with both Bitbucket and Pinecone API tokens.
+     - The file path in Bitbucket and the Pinecone Assistant name need to be provided.
+   - **Example Request** (Upload file to Pinecone Assistant):
+     ```plaintext
+     POST https://prod-1-data.ke.pinecone.io/assistant/files/{{ASSISTANT_NAME}}
+     ```
+
+     ```json
+     {
+       "file": "file_contents",
+       "metadata": {
+         "filename": "example.txt",
+         "source": "Bitbucket"
        }
-     ]
-   }
-   ```
+     }
+     ```
 
-3. **Get Document by ID**
-   - **What it does**: Fetches the content of a Google Docs document by its ID.
-   - **Configuration**:
-     - Requires authentication via Google API OAuth 2.0.
-     - You need to provide the document ID.
-   - **Example Request**:
-   ```json
-   {
-     "documentId": "your_doc_id"
-   }
-   ```
+   - **What it returns**: Confirmation of the file upload to Pinecone Assistant.
 
-### 3. Configuration
+## 3. Configuration
 
 To configure this plugin, you need to provide the following:
 
-- **Google Docs API Access**: The plugin uses the user's delegated credentials and requires an access token (ACCESS_TOKEN) with the appropriate scopes to interact with Google Docs (e.g., `https://www.googleapis.com/auth/documents.readonly`, `https://www.googleapis.com/auth/documents`). The access can be granted either through user delegation or directly via a standard user account.
-
-  - **How to generate an access token**:
-    - Log in to your Google Cloud account.
-    - Enable the Google Docs API for your project.
-    - Create OAuth 2.0 credentials in the Google Cloud Console (either for user delegation or directly for the user).
-    - Obtain the access token using the credentials.
+- **Bitbucket API Token**: This plugin requires a personal access token from Bitbucket with appropriate permissions (`repository:read`, `repository:write`, `account:read`) for the necessary methods.
   
-  - The plugin will automatically handle and apply the user's delegated credentials through the `ACCESS_TOKEN` variable, allowing seamless access to Google Docs. Ensure that the token is refreshed appropriately.
+  To generate a token:
+  
+  - Log in to your Bitbucket account.
+  - Go to **Personal Settings** > **App passwords**.
+  - Generate a new token with the required scopes.
+  - Store the token securely and provide it in the plugin configuration.
+
+- **Pinecone API Token**: The plugin requires a valid Pinecone API token for integration with Pinecone Assistant. You must generate this token from the Pinecone dashboard and include it in the plugin configuration.
+  
+  To generate a token:
+  
+  - Log in to your Pinecone account.
+  - Go to **API Keys** and create a new key with the required permissions.
+  - Store the token securely and provide it in the plugin configuration.
 
 - **Data Format**: The API credentials and other configurations should be provided in JSON format. Here's an example:
 
-```json
-{
-  "ACCESS_TOKEN": "your_access_token"
-}
-```
+  ```json
+  {
+    "Repository_Access_Token": "your_repository_access_token",
+    "Pinecone_Access_Token": "your_pinecone_access_token"
+  }
+  ```
 
-This approach allows flexibility in using either delegated credentials or a direct user access token for the plugin configuration.
+- **Pinecone Integration**: The plugin can seamlessly interact with Pinecone by passing Bitbucket repository or workspace data directly into Pinecone's vector database for further processing. Ensure that both Bitbucket and Pinecone API credentials are provided for smooth integration.
 
-#### 4. Pinecone Integration
+## 4. Links to Documentation
 
-The plugin is integrated with Pinecone to enable efficient vector-based search and data processing on Google Docs content. Once documents are fetched from Google Docs, their text can be indexed in Pinecone's vector database for further querying and analysis.
-
-Ensure that both Google Docs and Pinecone API credentials are provided for smooth integration.
-
-#### 5. Links to Documentation
-
-- [Google Docs API Documentation](https://developers.google.com/docs/api)
-- [Creating OAuth Credentials in Google Cloud](https://cloud.google.com/docs/authentication)
+- [Bitbucket REST API Documentation](https://developer.atlassian.com/bitbucket/api/2/reference/)
+- [Creating a Repository Access Token in Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/)
 - [Pinecone Documentation](https://docs.pinecone.io)
