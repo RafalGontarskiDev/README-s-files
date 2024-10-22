@@ -1,27 +1,24 @@
 # README-s-files for plugins in NoCode-x
 
 
-# Bitbucket Pinecone Assistant Plugin Documentation
+# Bitbucket API Plugin Documentation
 
 ## 1. Overview
 
-This plugin provides integration with the Bitbucket API, allowing you to interact with repositories, files, and workspaces. It offers several methods for committing files, fetching file contents, and listing user workspaces.
-
-Additionally, the plugin has been integrated with **Pinecone**, allowing seamless interaction between Bitbucket data and Pinecone's vector database for advanced data management and processing.
+This plugin integrates with the **Bitbucket API**, providing a range of methods for interacting with repositories, files, and workspaces. The plugin allows users to list repositories, retrieve file contents, and create commits by uploading files directly to a Bitbucket repository.
 
 ## 2. Available Methods
 
 ### 1. **Get File or Directory Contents**
-   - **What it does**: Retrieves the content of a specific file or the listing of a directory from a Bitbucket repository.
-   - **Configuration**: 
+   - **What it does**: Retrieves the contents of a specific file or the listing of a directory from a Bitbucket repository.
+   - **Configuration**:
      - Requires authentication via a Bitbucket API token with `repository:read` permissions.
      - You need to provide the repository, branch, and the file or directory path.
    - **Example Request**:
      ```plaintext
      GET https://api.bitbucket.org/2.0/repositories/{{workspaceSlug}}/{{repoSlug}}/src/{{commit}}/{{path}}?max_depth=3&pagelen=100
      ```
-
-   - **What it returns**: List of files in the repository starting from the specified path (e.g., `/` for the root directory). It supports recursive file fetching through `max_depth`.
+   - **What it returns**: Lists files or the content of a specific file in the repository, starting from the provided path.
 
 ### 2. **Fetch File by Path**
    - **What it does**: Fetches a specific file from a Bitbucket repository using its exact path.
@@ -32,66 +29,70 @@ Additionally, the plugin has been integrated with **Pinecone**, allowing seamles
      ```plaintext
      GET https://api.bitbucket.org/2.0/repositories/{{workspaceSlug}}/{{repoSlug}}/src/{{commit}}/{{path}}
      ```
-
    - **What it returns**: The content of the specified file.
 
-### 3. **Feed Assistant (Upload Files to Pinecone Assistant)**
-   - **What it does**: Uploads files fetched from Bitbucket to a Pinecone Assistant for further processing or data vectorization.
-   - **How it works**:
-     - This method fetches files using the Bitbucket `Get File or Directory Contents` or `Fetch File by Path` methods and uploads them directly to a Pinecone Assistant.
-     - Requires authentication with both Bitbucket and Pinecone API tokens.
-     - The file path in Bitbucket and the Pinecone Assistant name need to be provided.
-   - **Example Request** (Upload file to Pinecone Assistant):
+### 3. **List Repositories in a Workspace**
+   - **What it does**: Lists all repositories within a specific workspace.
+   - **Configuration**:
+     - Requires authentication via a Bitbucket API token with `repository:read` or `account:read` permissions.
+     - You need to provide the workspace slug.
+   - **Example Request**:
      ```plaintext
-     POST https://prod-1-data.ke.pinecone.io/assistant/files/{{ASSISTANT_NAME}}
+     GET https://api.bitbucket.org/2.0/repositories/{{workspaceSlug}}
      ```
+   - **What it returns**: A list of repositories within the specified workspace.
 
+### 4. **List Workspaces for User**
+   - **What it does**: Fetches a list of workspaces associated with the authenticated user in Bitbucket.
+   - **Configuration**:
+     - Requires authentication via a Bitbucket API token with `account:read` permissions.
+   - **Example Request**:
+     ```plaintext
+     GET https://api.bitbucket.org/2.0/workspaces
+     ```
+   - **What it returns**: A list of workspaces associated with the authenticated user.
+
+### 5. **Create a Commit by Uploading a File**
+   - **What it does**: Creates a new commit in a Bitbucket repository by uploading a file.
+   - **Configuration**:
+     - Requires authentication via a Bitbucket API token with `repository:write` permissions.
+     - You need to provide the repository, branch, file path, commit message, and author information.
+   - **Example Request**:
      ```json
      {
-       "file": "file_contents",
-       "metadata": {
-         "filename": "example.txt",
-         "source": "Bitbucket"
-       }
+       "files": "file_path",
+       "branch": "main",
+       "message": "Commit message",
+       "author": "Author Name <email@example.com>"
      }
      ```
-
-   - **What it returns**: Confirmation of the file upload to Pinecone Assistant.
+   - **What it returns**: A response confirming the successful creation of the commit in the repository.
 
 ## 3. Configuration
 
-To configure this plugin, you need to provide the following:
+To use this plugin, you need to authenticate with Bitbucket using an API token (app password). Here's how to set it up:
 
-- **Bitbucket API Token**: This plugin requires a personal access token from Bitbucket with appropriate permissions (`repository:read`, `repository:write`, `account:read`) for the necessary methods.
-  
-  To generate a token:
-  
-  - Log in to your Bitbucket account.
-  - Go to **Personal Settings** > **App passwords**.
-  - Generate a new token with the required scopes.
-  - Store the token securely and provide it in the plugin configuration.
+### **Bitbucket API Token (App Password)**
 
-- **Pinecone API Token**: The plugin requires a valid Pinecone API token for integration with Pinecone Assistant. You must generate this token from the Pinecone dashboard and include it in the plugin configuration.
-  
-  To generate a token:
-  
-  - Log in to your Pinecone account.
-  - Go to **API Keys** and create a new key with the required permissions.
-  - Store the token securely and provide it in the plugin configuration.
+To generate a personal access token (app password) in Bitbucket:
 
-- **Data Format**: The API credentials and other configurations should be provided in JSON format. Here's an example:
+1. **Log in** to your Bitbucket account.
+2. Navigate to **Personal Settings** > **App passwords**.
+3. Click **Create app password** and assign the necessary permissions for the methods you want to use:
+   - **repository:read** for fetching files or listing repositories.
+   - **repository:write** for creating commits.
+   - **account:read** for listing workspaces.
+4. Generate the token and store it securely, as you won't be able to view it again after creation.
 
-  ```json
-  {
-    "Repository_Access_Token": "your_repository_access_token",
-    "Pinecone_Access_Token": "your_pinecone_access_token"
-  }
-  ```
+### Example JSON Configuration:
 
-- **Pinecone Integration**: The plugin can seamlessly interact with Pinecone by passing Bitbucket repository or workspace data directly into Pinecone's vector database for further processing. Ensure that both Bitbucket and Pinecone API credentials are provided for smooth integration.
+```json
+{
+  "Repository_Access_Token": "your_bitbucket_access_token"
+}
+```
 
 ## 4. Links to Documentation
 
 - [Bitbucket REST API Documentation](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#authentication)
 - [Creating a Repository Access Token in Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/)
-- [Pinecone Documentation](https://docs.pinecone.io)
