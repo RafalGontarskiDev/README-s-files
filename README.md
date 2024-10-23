@@ -1,139 +1,140 @@
-# Airtable API Plugin Documentation
+# Notion API Plugin Documentation
 
 ## 1. Overview
 
-The **Airtable API Plugin** allows integration with Airtable, enabling users to manage databases, tables, and records. This plugin provides methods to list records, create and update bases and tables, retrieve and delete specific records, and more. Authentication is handled through Bearer Token using a **USER TOKEN**, ensuring secure access to Airtable's resources.
+The **Notion API Plugin** enables interaction with Notion databases, pages, blocks, and users. This plugin provides methods to list and retrieve users, create databases and pages, search for content, and manage blocks within a Notion workspace. Authentication is managed through Bearer Token using a **Secret_internal** key, ensuring secure access to Notion resources.
 
 ## 2. Available Methods
 
-### 1. **List Records**
-   - **Endpoint**: `GET https://api.airtable.com/v0/{{baseId}}/{{tableName}}`
-   - **What it does**: Retrieves a list of records from a specified table in Airtable.
+### 1. **List All Users**
+   - **Endpoint**: `GET https://api.notion.com/v1/users`
+   - **What it does**: Retrieves a list of all users within a Notion workspace.
    - **Configuration**:
-     - Requires `baseId`, the ID of the Airtable base.
-     - Requires `tableName`, the name of the table.
-     - Requires Bearer Token authentication with the `USER_TOKEN`.
-   - **Use case**: Use this method to fetch and display records from a particular table in Airtable.
+     - Requires Bearer Token authentication using `Secret_internal`.
+   - **Use case**: Use this method to fetch and display all users in a Notion workspace, such as for team management or user identification.
 
-### 2. **Get Record**
-   - **Endpoint**: `GET https://api.airtable.com/v0/{{baseId}}/{{tableIdOrName}}/{{recordId}}`
-   - **What it does**: Retrieves a specific record by its unique `recordId`.
+### 2. **Retrieve a User**
+   - **Endpoint**: `GET https://api.notion.com/v1/users/{{user_id}}`
+   - **What it does**: Retrieves information about a specific user by their `user_id`.
    - **Configuration**:
-     - Requires `baseId` and `tableIdOrName`, the name or ID of the table.
-     - Requires `recordId`, the unique identifier of the record.
-     - Requires Bearer Token authentication with the `USER_TOKEN`.
-   - **Use case**: Use this method to retrieve detailed information about a specific record in a table.
+     - Requires `user_id`, the unique identifier of the user.
+     - Requires Bearer Token authentication using `Secret_internal`.
+   - **Use case**: Fetch detailed information about a specific user, such as when managing user data or collaborating with individual users.
 
-### 3. **Create Base**
-   - **Endpoint**: `POST https://api.airtable.com/v0/meta/bases`
-   - **What it does**: Creates a new base in Airtable.
+### 3. **Retrieve a Page**
+   - **Endpoint**: `GET https://api.notion.com/v1/pages/{{pageId}}`
+   - **What it does**: Retrieves the content and properties of a specific page by its `pageId`.
    - **Configuration**:
-     - Requires a Bearer Token with the necessary permissions (`USER_TOKEN`).
-     - The request body must include details such as the base name and configurations.
-   - **Use case**: Use this method to programmatically create a new Airtable base for organizing data.
+     - Requires `pageId`, the unique identifier of the page.
+     - Requires Bearer Token authentication using `Secret_internal`.
+   - **Use case**: Use this method to access and display a Notion page’s content, such as for reading or analyzing the information stored on that page.
+
+### 4. **Retrieve a Block**
+   - **Endpoint**: `GET https://api.notion.com/v1/blocks/{{blockId}}`
+   - **What it does**: Retrieves a specific block from a page by its `blockId`.
+   - **Configuration**:
+     - Requires `blockId`, the unique identifier of the block.
+     - Requires Bearer Token authentication using `Secret_internal`.
+   - **Use case**: Access individual content blocks (e.g., text, images, media) from a Notion page, enabling detailed content manipulation or retrieval.
+
+### 5. **Create Database**
+   - **Endpoint**: `POST https://api.notion.com/v1/databases`
+   - **What it does**: Creates a new database in Notion.
+   - **Configuration**:
+     - Requires Bearer Token authentication using `Secret_internal`.
+     - The request body must include database details such as the title and properties.
+   - **Use case**: Use this method to programmatically create a new Notion database to store and organize data.
 
 #### Example Request Body:
 ```json
 {
-  "name": "New Base"
-}
-```
-
-### 4. **Create Table**
-   - **Endpoint**: `POST https://api.airtable.com/v0/meta/bases/{{baseId}}/tables`
-   - **What it does**: Creates a new table within an existing base.
-   - **Configuration**:
-     - Requires `baseId`, the ID of the base.
-     - Requires a Bearer Token for authentication (`USER_TOKEN`).
-     - The request body should contain table details like the table name and field configurations.
-   - **Use case**: Use this method to add a new table to an existing base for managing records.
-
-#### Example Request Body:
-```json
-{
-  "name": "New Table",
-  "fields": [
+  "parent": {
+    "type": "page_id",
+    "page_id": "parent_page_id"
+  },
+  "title": [
     {
-      "name": "Field 1",
-      "type": "singleLineText"
-    },
-    {
-      "name": "Field 2",
-      "type": "number"
+      "type": "text",
+      "text": {
+        "content": "New Database"
+      }
     }
-  ]
-}
-```
-
-### 5. **Create Record**
-   - **Endpoint**: `POST https://api.airtable.com/v0/{{baseId}}/{{tableName}}`
-   - **What it does**: Adds a new record to a specified table in Airtable.
-   - **Configuration**:
-     - Requires `baseId`, the ID of the base.
-     - Requires `tableName`, the name of the table.
-     - Requires a Bearer Token for authentication (`USER_TOKEN`).
-     - The request body should contain the fields and data for the new record.
-   - **Use case**: Use this method to insert new data into an existing table.
-
-#### Example Request Body:
-```json
-{
-  "fields": {
-    "Name": "John Doe",
-    "Age": 30
+  ],
+  "properties": {
+    "Name": {
+      "title": {}
+    },
+    "Description": {
+      "rich_text": {}
+    }
   }
 }
 ```
 
-### 6. **Update Table**
-   - **Endpoint**: `PATCH https://api.airtable.com/v0/meta/bases/{{baseId}}/tables/{{tableName}}`
-   - **What it does**: Updates the structure of a table, such as adding, renaming, or deleting fields.
+### 6. **Create Page**
+   - **Endpoint**: `POST https://api.notion.com/v1/pages`
+   - **What it does**: Creates a new page in Notion.
    - **Configuration**:
-     - Requires `baseId` and `tableName`.
-     - Requires Bearer Token authentication with the `USER_TOKEN`.
-     - The request body should include details of the changes.
-   - **Use case**: Use this method to update a table's configuration, like changing field names or types.
+     - Requires Bearer Token authentication using `Secret_internal`.
+     - The request body must contain the parent database or page, title, and content.
+   - **Use case**: Use this method to create new content pages in Notion for documentation, note-taking, or task management.
 
 #### Example Request Body:
 ```json
 {
-  "fields": [
-    {
-      "name": "New Field Name",
-      "type": "singleLineText"
+  "parent": {
+    "database_id": "database_id"
+  },
+  "properties": {
+    "Title": {
+      "title": [
+        {
+          "text": {
+            "content": "New Page"
+          }
+        }
+      ]
     }
-  ]
+  }
 }
 ```
 
-### 7. **Delete Record**
-   - **Endpoint**: `DELETE https://api.airtable.com/v0/{{baseId}}/{{tableIdOrName}}/{{recordId}}`
-   - **What it does**: Deletes a specific record from a table.
+### 7. **Search by Title**
+   - **Endpoint**: `POST https://api.notion.com/v1/search`
+   - **What it does**: Searches through all Notion pages and databases by title.
    - **Configuration**:
-     - Requires `baseId`, `tableIdOrName`, and `recordId`.
-     - Requires Bearer Token authentication with the `USER_TOKEN`.
-   - **Use case**: Use this method to delete specific records when they are no longer needed.
+     - Requires Bearer Token authentication using `Secret_internal`.
+     - The request body must contain the search query.
+   - **Use case**: Use this method to search for specific pages or databases by title, allowing quick navigation or access to information.
+
+#### Example Request Body:
+```json
+{
+  "query": "Your Page Title"
+}
+```
 
 ## 3. Configuration
 
-To use this plugin, you will need to authenticate using a **Bearer Token**. This token must have the necessary permissions to interact with the Airtable API based on the actions you intend to perform.
+To use this plugin, you will need to authenticate using a **Bearer Token**. This token (referred to as `Secret_internal`) must have the necessary permissions to interact with Notion’s API based on the actions you intend to perform.
 
 ### 1. **Bearer Token Setup**
-   - In Airtable, you can generate a personal API key (Bearer Token) from your account settings.
-   - This token should be passed as a Bearer token in the headers of all API requests.
+   - You can generate a Notion integration token from your Notion account.
+   - The Bearer token should be passed as a Bearer token in the headers of all API requests.
 
 ### 2. **JSON Configuration Example**
 
 ```json
 {
-  "USER_TOKEN": "your_airtable_bearer_token"
+  "Secret_internal": "your_notion_integration_token"
 }
 ```
 
-This configuration allows the plugin to authenticate with Airtable and perform the various actions described above.
+This configuration allows the plugin to authenticate with Notion and use the various methods to manage databases, pages, blocks, and users.
 
 ## 4. Links to Documentation
 
-- [Airtable API Documentation](https://airtable.com/api)
+- [Notion API Documentation](https://developers.notion.com/reference/intro)
+- [Notion API Access Setup](https://developers.notion.com/docs/getting-started)
 
-This documentation provides a clear guide to interacting with Airtable’s API, enabling seamless management of bases, tables, and records with secure Bearer Token authentication.
+This documentation provides all the necessary details to integrate with Notion's API, enabling seamless interaction with Notion workspaces, databases, pages, and users.
