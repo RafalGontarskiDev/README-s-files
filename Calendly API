@@ -1,0 +1,94 @@
+# Calendly API Plugin Documentation
+
+## 1. Overview
+
+The **Calendly API Plugin** allows integration with Calendly's scheduling platform, enabling users to create single-use scheduling links, retrieve user data, and create one-off event types. Authentication is managed through a **Bearer Access Token** using `personal_access_token`, ensuring secure access to Calendly resources via the API.
+
+## 2. Available Methods
+
+### 1. **Create Single-Use Scheduling Link**
+   - **Endpoint**: `POST https://api.calendly.com/scheduling_links`
+   - **What it does**: Creates a single-use scheduling link that can be shared with invitees for booking a specific time.
+   - **Configuration**:
+     - Requires **Bearer Token** authentication using `personal_access_token`.
+     - The request body must include the event details, such as the event type and expiration time.
+   - **Use case**: Use this method to generate a unique link for a specific invitee to schedule a meeting with you.
+
+#### Example Request Body:
+```json
+{
+  "max_event_count": 1,
+  "owner": "https://api.calendly.com/event_types/12345",
+  "expiration_time": "2024-11-01T10:00:00.000Z"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.calendly.com/scheduling_links
+Authorization: Bearer {{personal_access_token}}
+Content-Type: application/json
+```
+
+### 2. **Get My Data**
+   - **Endpoint**: `GET https://api.calendly.com/users/me`
+   - **What it does**: Retrieves information about the authenticated user, including name, email, and other profile details.
+   - **Configuration**:
+     - Requires **Bearer Token** authentication using `personal_access_token`.
+   - **Use case**: Use this method to get your profile details and settings from Calendly.
+
+#### Example Request:
+```http
+GET https://api.calendly.com/users/me
+Authorization: Bearer {{personal_access_token}}
+```
+
+### 3. **Create One-Off Event Type**
+   - **Endpoint**: `POST https://api.calendly.com/one_off_event_types`
+   - **What it does**: Creates a one-off event type that is not tied to a recurring schedule.
+   - **Configuration**:
+     - Requires **Bearer Token** authentication using `personal_access_token`.
+     - The request body must include event details such as the event name, duration, and owner.
+   - **Use case**: Use this method to create a special event type for a single-use or one-time occasion.
+
+#### Example Request Body:
+```json
+{
+  "name": "One-Time Consultation",
+  "description": "A 30-minute consultation.",
+  "duration": 30,
+  "owner": "https://api.calendly.com/users/me"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.calendly.com/one_off_event_types
+Authorization: Bearer {{personal_access_token}}
+Content-Type: application/json
+```
+
+## 3. Configuration
+
+To use the Calendly API, you must authenticate using an **OAuth2 Bearer Token**. This token provides access to your Calendly account for creating scheduling links, events, and retrieving user information.
+
+### 1. **Bearer Token Setup**
+   - Obtain a **Personal Access Token** from the Calendly Developer Portal.
+   - The token must be included in the Authorization header as a **Bearer Token** for all API requests.
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "personal_access_token": "your_calendly_personal_access_token"
+}
+```
+
+This configuration allows secure access to Calendly for managing scheduling links, events, and user data.
+
+## 4. Links to Documentation
+
+- [Calendly API Documentation](https://developer.calendly.com/api-docs/4b402d5ab3edd-calendly-developer)
+- [Calendly API Access Setup](https://developer.calendly.com/api-docs/3cefb59b832eb-calendly-o-auth-2-0)
+
+This documentation provides a guide to interacting with the Calendly API, enabling secure access to scheduling, event management, and user data with OAuth2 Bearer Token authentication.
