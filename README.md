@@ -1,88 +1,112 @@
-# Microsoft Files API Plugin Documentation
+# Pipedrive API Plugin Documentation
 
 ## 1. Overview
 
-The **Microsoft Files API Plugin** provides access to file storage and container management within the Microsoft Graph API. It allows users to list, create, and retrieve file storage containers. Authentication is managed through a **Bearer Access Token** using `microsoft_access_token`, ensuring secure access to file storage resources.
+The **Pipedrive API Plugin** provides integration with the Pipedrive CRM platform, allowing users to manage activities such as getting details, adding, updating, and retrieving activities assigned to specific users. Authentication is managed through a **Bearer Access Token** using `personal_API_token`, ensuring secure access to Pipedrive resources.
 
 ## 2. Available Methods
 
-### 1. **List Containers**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/storage/fileStorage/containers?$filter=containerTypeId eq {{containerTypeId}}`
-   - **What it does**: Retrieves a list of file storage containers filtered by their `containerTypeId`.
+### 1. **Get Details of an Activity**
+   - **Endpoint**: `GET https://api.pipedrive.com/v1/activities/{{activityId}}`
+   - **What it does**: Retrieves detailed information about a specific activity by its `activityId`.
    - **Configuration**:
-     - Requires `containerTypeId`, the unique identifier of the container type.
-     - Requires **Bearer Token** authentication using `microsoft_access_token`.
-   - **Use case**: Use this method to list containers of a specific type in the user's file storage.
+     - Requires `activityId`, the unique identifier of the activity.
+     - Requires **Bearer Token** authentication using `personal_API_token`.
+   - **Use case**: Use this method to retrieve specific details of an activity, such as its subject, type, due date, and associated users.
 
 #### Example Request:
 ```http
-GET https://graph.microsoft.com/v1.0/storage/fileStorage/containers?$filter=containerTypeId eq {{containerTypeId}}
-Authorization: Bearer {{microsoft_access_token}}
+GET https://api.pipedrive.com/v1/activities/{{activityId}}
+Authorization: Bearer {{personal_API_token}}
 ```
 
-### 2. **Create File Storage Container**
-   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/storage/fileStorage/containers`
-   - **What it does**: Creates a new file storage container for managing files and folders.
+### 2. **Get All Activities Assigned to a Particular User**
+   - **Endpoint**: `GET https://api.pipedrive.com/v1/activities`
+   - **What it does**: Retrieves a list of all activities assigned to the authenticated user or a particular user based on query parameters.
    - **Configuration**:
-     - Requires **Bearer Token** authentication using `microsoft_access_token`.
-     - The request body must contain the name and type of the container being created.
-   - **Use case**: Use this method to create new containers in Microsoft file storage for organizing files and other resources.
+     - Requires **Bearer Token** authentication using `personal_API_token`.
+     - Optional query parameters can be used to filter activities, such as by user ID or activity type.
+   - **Use case**: Use this method to list all activities assigned to the authenticated user or another specific user in Pipedrive.
+
+#### Example Request:
+```http
+GET https://api.pipedrive.com/v1/activities
+Authorization: Bearer {{personal_API_token}}
+```
+
+### 3. **Add an Activity**
+   - **Endpoint**: `POST https://api.pipedrive.com/v1/activities`
+   - **What it does**: Creates a new activity and assigns it to a user or team.
+   - **Configuration**:
+     - Requires **Bearer Token** authentication using `personal_API_token`.
+     - The request body must contain details of the activity, such as subject, type, due date, and assigned user.
+   - **Use case**: Use this method to add new activities to Pipedrive for tracking tasks, meetings, calls, or other engagements.
 
 #### Example Request Body:
 ```json
 {
-  "name": "NewContainer",
-  "containerTypeId": "custom-container-type"
+  "subject": "Follow-up Meeting",
+  "type": "meeting",
+  "due_date": "2024-10-25",
+  "assigned_to_user_id": "123456"
 }
 ```
 
 #### Example Request:
 ```http
-POST https://graph.microsoft.com/v1.0/storage/fileStorage/containers
-Authorization: Bearer {{microsoft_access_token}}
+POST https://api.pipedrive.com/v1/activities
+Authorization: Bearer {{personal_API_token}}
 Content-Type: application/json
 ```
 
-### 3. **Get File Storage Container**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/storage/fileStorage/containers/{{containerId}}`
-   - **What it does**: Retrieves details of a specific file storage container by its `containerId`.
+### 4. **Update an Activity**
+   - **Endpoint**: `PUT https://api.pipedrive.com/v1/activities/{{activityId}}`
+   - **What it does**: Updates the details of an existing activity by its `activityId`.
    - **Configuration**:
-     - Requires `containerId`, the unique identifier of the container.
-     - Requires **Bearer Token** authentication using `microsoft_access_token`.
-   - **Use case**: Use this method to retrieve information about a specific file storage container, such as its name, size, and contents.
+     - Requires `activityId`, the unique identifier of the activity.
+     - Requires **Bearer Token** authentication using `personal_API_token`.
+     - The request body must include the updated details, such as subject, due date, or status.
+   - **Use case**: Use this method to modify details of an existing activity, such as rescheduling a meeting or updating the assigned user.
+
+#### Example Request Body:
+```json
+{
+  "subject": "Rescheduled Meeting",
+  "due_date": "2024-10-26"
+}
+```
 
 #### Example Request:
 ```http
-GET https://graph.microsoft.com/v1.0/storage/fileStorage/containers/{{containerId}}
-Authorization: Bearer {{microsoft_access_token}}
+PUT https://api.pipedrive.com/v1/activities/{{activityId}}
+Authorization: Bearer {{personal_API_token}}
+Content-Type: application/json
 ```
 
 ## 3. Configuration
 
-To use the Microsoft Files API, you must authenticate using an **OAuth2 Bearer Token**. This token provides access to file storage containers for managing files and folders programmatically.
+To use the Pipedrive API, you must authenticate using a **Bearer Personal Access Token**. This token provides access to the user's activities for managing tasks, events, and engagements.
 
 ### 1. **Bearer Token Setup**
-   - The Microsoft Graph API requires OAuth2 authentication to generate an access token.
-   - Obtain an access token by following the OAuth2 flow for Microsoft services, using the **Microsoft Identity platform**.
-   - The access token must be included in the Authorization header for each API request.
+   - Pipedrive requires an API token, which can be found in the user settings under **Personal Preferences**.
+   - The token must be included in the Authorization header for each API request.
 
 ### 2. **Required Scopes**
-   The following OAuth2 scopes are typically required:
-   - `Files.ReadWrite.All`: Allows reading and writing to all file storage containers.
+   The API token should have the necessary scopes or permissions to access and manage activities in Pipedrive.
 
 ### 3. **JSON Configuration Example**
 
 ```json
 {
-  "microsoft_access_token": "your_microsoft_oauth2_access_token"
+  "personal_API_token": "your_pipedrive_api_token"
 }
 ```
 
-This configuration allows secure access to Microsoft Files for managing file storage containers.
+This configuration allows secure access to Pipedrive activities for retrieving, creating, and updating user activities.
 
 ## 4. Links to Documentation
 
-- [Microsoft Files API Documentation](https://learn.microsoft.com/en-us/graph/api/resources/drive?view=graph-rest-1.0)
-- [Microsoft Graph API Access Setup](https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+- [Pipedrive API Documentation](https://pipedrive.readme.io/docs/activities)
+- [Pipedrive API Access Setup](https://pipedrive.readme.io/docs/how-to-find-the-api-token)
 
-This documentation provides a guide to interacting with the Microsoft Files API, enabling secure access to file storage containers and resources using OAuth2 Bearer Token authentication.
+This documentation provides a guide to interacting with the Pipedrive API, allowing secure access to manage activities using Bearer Personal Access Token authentication.
