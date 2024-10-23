@@ -1,96 +1,65 @@
-# Microsoft Bookings API Plugin Documentation
+# Microsoft Files API Plugin Documentation
 
 ## 1. Overview
 
-The **Microsoft Bookings API Plugin** allows integration with Microsoft Bookings, enabling users to manage booking businesses and customers. With this API, you can list, retrieve, and create booking businesses and customers. Authentication is managed through a **Bearer Access Token** using `microsoft_access_token`, providing secure access via the Microsoft Graph API.
+The **Microsoft Files API Plugin** provides access to file storage and container management within the Microsoft Graph API. It allows users to list, create, and retrieve file storage containers. Authentication is managed through a **Bearer Access Token** using `microsoft_access_token`, ensuring secure access to file storage resources.
 
 ## 2. Available Methods
 
-### 1. **List Booking Businesses**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/solutions/bookingBusinesses`
-   - **What it does**: Retrieves a list of all booking businesses associated with the authenticated user.
+### 1. **List Containers**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/storage/fileStorage/containers?$filter=containerTypeId eq {{containerTypeId}}`
+   - **What it does**: Retrieves a list of file storage containers filtered by their `containerTypeId`.
    - **Configuration**:
+     - Requires `containerTypeId`, the unique identifier of the container type.
      - Requires **Bearer Token** authentication using `microsoft_access_token`.
-   - **Use case**: Use this method to retrieve all booking businesses under the authenticated account for management or display.
+   - **Use case**: Use this method to list containers of a specific type in the user's file storage.
 
 #### Example Request:
 ```http
-GET https://graph.microsoft.com/v1.0/solutions/bookingBusinesses
+GET https://graph.microsoft.com/v1.0/storage/fileStorage/containers?$filter=containerTypeId eq {{containerTypeId}}
 Authorization: Bearer {{microsoft_access_token}}
 ```
 
-### 2. **Get Booking Business**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/solutions/bookingBusinesses/{{bookingBusinessId}}`
-   - **What it does**: Retrieves details of a specific booking business by its `bookingBusinessId`.
-   - **Configuration**:
-     - Requires `bookingBusinessId`, the unique identifier of the booking business.
-     - Requires **Bearer Token** authentication using `microsoft_access_token`.
-   - **Use case**: Use this method to get detailed information about a specific booking business, including its name, services, and settings.
-
-#### Example Request:
-```http
-GET https://graph.microsoft.com/v1.0/solutions/bookingBusinesses/{{bookingBusinessId}}
-Authorization: Bearer {{microsoft_access_token}}
-```
-
-### 3. **Create Booking Business**
-   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/solutions/bookingBusinesses`
-   - **What it does**: Creates a new booking business for managing appointments and services.
+### 2. **Create File Storage Container**
+   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/storage/fileStorage/containers`
+   - **What it does**: Creates a new file storage container for managing files and folders.
    - **Configuration**:
      - Requires **Bearer Token** authentication using `microsoft_access_token`.
-     - The request body must contain the details of the booking business such as the business name, address, and other relevant information.
-   - **Use case**: Use this method to programmatically create new booking businesses for managing appointments and schedules.
+     - The request body must contain the name and type of the container being created.
+   - **Use case**: Use this method to create new containers in Microsoft file storage for organizing files and other resources.
 
 #### Example Request Body:
 ```json
 {
-  "displayName": "New Booking Business",
-  "address": {
-    "street": "123 Main St",
-    "city": "City",
-    "state": "State",
-    "postalCode": "12345",
-    "countryOrRegion": "USA"
-  },
-  "businessType": "Consulting"
+  "name": "NewContainer",
+  "containerTypeId": "custom-container-type"
 }
 ```
 
 #### Example Request:
 ```http
-POST https://graph.microsoft.com/v1.0/solutions/bookingBusinesses
+POST https://graph.microsoft.com/v1.0/storage/fileStorage/containers
 Authorization: Bearer {{microsoft_access_token}}
 Content-Type: application/json
 ```
 
-### 4. **Create Booking Customer**
-   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/solutions/bookingBusinesses/{{bookingBusinessId}}/customers`
-   - **What it does**: Creates a new customer for a specific booking business.
+### 3. **Get File Storage Container**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/storage/fileStorage/containers/{{containerId}}`
+   - **What it does**: Retrieves details of a specific file storage container by its `containerId`.
    - **Configuration**:
-     - Requires `bookingBusinessId`, the unique identifier of the booking business.
+     - Requires `containerId`, the unique identifier of the container.
      - Requires **Bearer Token** authentication using `microsoft_access_token`.
-     - The request body must include the customer's details such as their name, email, and phone number.
-   - **Use case**: Use this method to add a new customer to a booking business for appointment scheduling.
-
-#### Example Request Body:
-```json
-{
-  "displayName": "John Doe",
-  "emailAddress": "johndoe@example.com",
-  "phone": "+1 555 555 5555"
-}
-```
+   - **Use case**: Use this method to retrieve information about a specific file storage container, such as its name, size, and contents.
 
 #### Example Request:
 ```http
-POST https://graph.microsoft.com/v1.0/solutions/bookingBusinesses/{{bookingBusinessId}}/customers
+GET https://graph.microsoft.com/v1.0/storage/fileStorage/containers/{{containerId}}
 Authorization: Bearer {{microsoft_access_token}}
-Content-Type: application/json
 ```
 
 ## 3. Configuration
 
-To use the Microsoft Bookings API, you must authenticate using an **OAuth2 Bearer Token**. This token provides access to booking businesses and customers for managing appointments and related services.
+To use the Microsoft Files API, you must authenticate using an **OAuth2 Bearer Token**. This token provides access to file storage containers for managing files and folders programmatically.
 
 ### 1. **Bearer Token Setup**
    - The Microsoft Graph API requires OAuth2 authentication to generate an access token.
@@ -99,7 +68,7 @@ To use the Microsoft Bookings API, you must authenticate using an **OAuth2 Beare
 
 ### 2. **Required Scopes**
    The following OAuth2 scopes are typically required:
-   - `Bookings.ReadWrite.All`: Allows reading and writing to Microsoft Bookings businesses and customers.
+   - `Files.ReadWrite.All`: Allows reading and writing to all file storage containers.
 
 ### 3. **JSON Configuration Example**
 
@@ -109,11 +78,11 @@ To use the Microsoft Bookings API, you must authenticate using an **OAuth2 Beare
 }
 ```
 
-This configuration allows secure access to Microsoft Bookings for managing booking businesses, customers, and related services.
+This configuration allows secure access to Microsoft Files for managing file storage containers.
 
 ## 4. Links to Documentation
 
-- [Microsoft Bookings API Documentation](https://learn.microsoft.com/en-us/graph/api/resources/booking-api-overview?view=graph-rest-1.0)
+- [Microsoft Files API Documentation](https://learn.microsoft.com/en-us/graph/api/resources/drive?view=graph-rest-1.0)
 - [Microsoft Graph API Access Setup](https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)
 
-This documentation provides a guide to interacting with the Microsoft Bookings API, enabling secure access to booking businesses and customers with OAuth2 Bearer Token authentication.
+This documentation provides a guide to interacting with the Microsoft Files API, enabling secure access to file storage containers and resources using OAuth2 Bearer Token authentication.
