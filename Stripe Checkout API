@@ -1,0 +1,116 @@
+# Stripe Checkout API Plugin Documentation
+
+## 1. Overview
+
+The **Stripe Checkout API Plugin** allows integration with Stripe’s Checkout service, enabling users to create and manage Checkout sessions. It also provides methods to list sessions, retrieve session details and line items, and expire sessions. Authentication is managed through **Basic Authentication** using `api_key`, ensuring secure access to Stripe resources.
+
+## 2. Available Methods
+
+### 1. **List All Checkout Sessions**
+   - **Endpoint**: `GET https://api.stripe.com/v1/checkout/sessions`
+   - **What it does**: Retrieves a list of all Stripe Checkout sessions. You can filter sessions by date, status, or other parameters.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `api_key`.
+   - **Use case**: Use this method to view all Checkout sessions created for your account, useful for reporting and monitoring purposes.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/checkout/sessions
+Authorization: Basic {{base64_encoded(api_key:)}}
+```
+
+### 2. **Create a Session**
+   - **Endpoint**: `POST https://api.stripe.com/v1/checkout/sessions`
+   - **What it does**: Creates a new Checkout session, allowing customers to complete purchases for products or services. The session can be configured for one-time payments or subscriptions.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `api_key`.
+     - The request body must include details such as `line_items`, `success_url`, `cancel_url`, and payment method preferences.
+   - **Use case**: Use this method to create a session for handling payments through Stripe’s hosted Checkout page.
+
+#### Example Request Body:
+```json
+{
+  "payment_method_types[]": "card",
+  "line_items[0][price]": "price_12345",
+  "line_items[0][quantity]": 1,
+  "mode": "payment",
+  "success_url": "https://your-success-url.com",
+  "cancel_url": "https://your-cancel-url.com"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.stripe.com/v1/checkout/sessions
+Authorization: Basic {{base64_encoded(api_key:)}}
+Content-Type: application/x-www-form-urlencoded
+```
+
+### 3. **Retrieve a Checkout Session's Line Items**
+   - **Endpoint**: `GET https://api.stripe.com/v1/checkout/sessions/{{sessionId}}/line_items`
+   - **What it does**: Retrieves the line items associated with a specific Checkout session.
+   - **Configuration**:
+     - Requires `sessionId`, the unique identifier of the Checkout session.
+     - Requires **Basic Authentication** using `api_key`.
+   - **Use case**: Use this method to view the details of the products or services purchased in a specific Checkout session.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/checkout/sessions/{{sessionId}}/line_items
+Authorization: Basic {{base64_encoded(api_key:)}}
+```
+
+### 4. **Retrieve a Session**
+   - **Endpoint**: `GET https://api.stripe.com/v1/checkout/sessions/{{sessionId}}`
+   - **What it does**: Retrieves details about a specific Checkout session, including the customer information, payment status, and session mode (payment or subscription).
+   - **Configuration**:
+     - Requires `sessionId`, the unique identifier of the Checkout session.
+     - Requires **Basic Authentication** using `api_key`.
+   - **Use case**: Use this method to get the full details of a Checkout session, including payment status and customer data.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/checkout/sessions/{{sessionId}}
+Authorization: Basic {{base64_encoded(api_key:)}}
+```
+
+### 5. **Expire a Session**
+   - **Endpoint**: `POST https://api.stripe.com/v1/checkout/sessions/{{sessionId}}/expire`
+   - **What it does**: Expires an active Checkout session, preventing it from being used to complete a purchase.
+   - **Configuration**:
+     - Requires `sessionId`, the unique identifier of the Checkout session.
+     - Requires **Basic Authentication** using `api_key`.
+   - **Use case**: Use this method to manually expire a session if the Checkout process should be canceled, preventing further use of the session.
+
+#### Example Request:
+```http
+POST https://api.stripe.com/v1/checkout/sessions/{{sessionId}}/expire
+Authorization: Basic {{base64_encoded(api_key:)}}
+```
+
+## 3. Configuration
+
+To use the Stripe Checkout API, you must authenticate using **Basic Authentication** with your `api_key`. The API key is passed as the username in the Basic Authentication scheme.
+
+### 1. **Basic Authentication Setup**
+   - Use your Stripe API key as the `username` for Basic Authentication.
+   - No password is required, but the `:` character is still used in the `base64` encoding.
+   - The Authorization header will look like this:
+     - `Authorization: Basic base64(api_key:)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "api_key": "your_stripe_api_key"
+}
+```
+
+This configuration allows secure access to Stripe for creating and managing Checkout sessions, retrieving session details, and expiring sessions.
+
+## 4. Links to Documentation
+
+- [Stripe Checkout API Documentation](https://stripe.com/docs/api/checkout/sessions)
+- [Stripe API Access Setup](https://stripe.com/docs/keys)
+
+This documentation provides a guide to interacting with the Stripe Checkout API, enabling secure creation and management of sessions using Basic Authentication with your Stripe API key.
