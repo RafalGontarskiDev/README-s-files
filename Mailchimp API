@@ -1,0 +1,97 @@
+# Mailchimp API (Mandrill) Plugin Documentation
+
+## 1. Overview
+
+The **Mailchimp API Plugin (Mandrill)** provides access to user and template management functions within Mailchimp's transactional email service, Mandrill. Authentication is handled through an **API key** passed in the request body for all methods. This API enables the retrieval of user information, template management, and other related functionalities.
+
+## 2. Available Methods
+
+### 1. **Get User Info**
+   - **Endpoint**: `POST https://mandrillapp.com/api/1.0/users/info`
+   - **What it does**: Retrieves information about the authenticated user, such as account details, reputation, and sending limits.
+   - **Configuration**:
+     - Requires **API key** to be included in the request body.
+   - **Use case**: Use this method to get details about the user's Mandrill account, including stats on sent emails and overall usage.
+
+#### Example Request Body:
+```json
+{
+  "key": "your_api_key"
+}
+```
+
+#### Example Request:
+```http
+POST https://mandrillapp.com/api/1.0/users/info
+Content-Type: application/json
+```
+
+### 2. **Get Template Info**
+   - **Endpoint**: `POST https://mandrillapp.com/api/1.0/templates/info`
+   - **What it does**: Retrieves detailed information about a specific template.
+   - **Configuration**:
+     - Requires **API key** and the `name` of the template to be included in the request body.
+   - **Use case**: Use this method to retrieve details about an existing template, including its code, metadata, and last update time.
+
+#### Example Request Body:
+```json
+{
+  "key": "your_api_key",
+  "name": "template_name"
+}
+```
+
+#### Example Request:
+```http
+POST https://mandrillapp.com/api/1.0/templates/info
+Content-Type: application/json
+```
+
+### 3. **Add Template**
+   - **Endpoint**: `POST https://mandrillapp.com/api/1.0/templates/add`
+   - **What it does**: Creates a new template in Mandrill for sending transactional emails.
+   - **Configuration**:
+     - Requires **API key** and template details to be included in the request body.
+     - The request body must include the `name` of the template, its `code` (HTML content), and optional metadata.
+   - **Use case**: Use this method to create new email templates that can be used in transactional email campaigns.
+
+#### Example Request Body:
+```json
+{
+  "key": "your_api_key",
+  "name": "new_template",
+  "code": "<html><body><h1>Hello World!</h1></body></html>",
+  "publish": true
+}
+```
+
+#### Example Request:
+```http
+POST https://mandrillapp.com/api/1.0/templates/add
+Content-Type: application/json
+```
+
+## 3. Configuration
+
+To use the Mailchimp API (Mandrill), you must include your **API key** in the request body for all methods. This key is used to authenticate and authorize access to Mandrill's features.
+
+### 1. **API Key Setup**
+   - The Mandrill API key can be generated from your Mailchimp account under the Mandrill settings.
+   - The key must be included in the request body under the field `key` for each API request.
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "key": "your_mandrill_api_key"
+}
+```
+
+This configuration ensures secure access to Mandrill for managing users, templates, and other transactional email features.
+
+## 4. Links to Documentation
+
+- [Mailchimp API Documentation (Mandrill)](https://mandrillapp.com/api/docs/)
+- [Mandrill API Key Setup](https://mailchimp.com/developer/transactional/guides/connect-api/)
+
+This documentation provides a guide to interacting with the Mandrill API for Mailchimp, enabling secure management of templates and user data using API key authentication.
