@@ -1,140 +1,62 @@
-# Notion API Plugin Documentation
+# Monday API Plugin Documentation
 
 ## 1. Overview
 
-The **Notion API Plugin** enables interaction with Notion databases, pages, blocks, and users. This plugin provides methods to list and retrieve users, create databases and pages, search for content, and manage blocks within a Notion workspace. Authentication is managed through Bearer Token using a **Secret_internal** key, ensuring secure access to Notion resources.
+The **Monday API Plugin** allows you to interact with Monday.com to retrieve user data and create notifications. This plugin facilitates seamless integration with Monday’s platform, enabling users to fetch information and automate notifications using a **Bearer API Token** for authentication.
 
 ## 2. Available Methods
 
-### 1. **List All Users**
-   - **Endpoint**: `GET https://api.notion.com/v1/users`
-   - **What it does**: Retrieves a list of all users within a Notion workspace.
+### 1. **Get User Data**
+   - **Endpoint**: `POST https://api.monday.com/v2`
+   - **What it does**: Retrieves user data from Monday.com.
    - **Configuration**:
-     - Requires Bearer Token authentication using `Secret_internal`.
-   - **Use case**: Use this method to fetch and display all users in a Notion workspace, such as for team management or user identification.
-
-### 2. **Retrieve a User**
-   - **Endpoint**: `GET https://api.notion.com/v1/users/{{user_id}}`
-   - **What it does**: Retrieves information about a specific user by their `user_id`.
-   - **Configuration**:
-     - Requires `user_id`, the unique identifier of the user.
-     - Requires Bearer Token authentication using `Secret_internal`.
-   - **Use case**: Fetch detailed information about a specific user, such as when managing user data or collaborating with individual users.
-
-### 3. **Retrieve a Page**
-   - **Endpoint**: `GET https://api.notion.com/v1/pages/{{pageId}}`
-   - **What it does**: Retrieves the content and properties of a specific page by its `pageId`.
-   - **Configuration**:
-     - Requires `pageId`, the unique identifier of the page.
-     - Requires Bearer Token authentication using `Secret_internal`.
-   - **Use case**: Use this method to access and display a Notion page’s content, such as for reading or analyzing the information stored on that page.
-
-### 4. **Retrieve a Block**
-   - **Endpoint**: `GET https://api.notion.com/v1/blocks/{{blockId}}`
-   - **What it does**: Retrieves a specific block from a page by its `blockId`.
-   - **Configuration**:
-     - Requires `blockId`, the unique identifier of the block.
-     - Requires Bearer Token authentication using `Secret_internal`.
-   - **Use case**: Access individual content blocks (e.g., text, images, media) from a Notion page, enabling detailed content manipulation or retrieval.
-
-### 5. **Create Database**
-   - **Endpoint**: `POST https://api.notion.com/v1/databases`
-   - **What it does**: Creates a new database in Notion.
-   - **Configuration**:
-     - Requires Bearer Token authentication using `Secret_internal`.
-     - The request body must include database details such as the title and properties.
-   - **Use case**: Use this method to programmatically create a new Notion database to store and organize data.
+     - Requires a Bearer Token (`Api_token`) for authentication.
+     - The request must contain a GraphQL query to retrieve user-specific details such as name, email, and workspace information.
+   - **Use case**: Use this method to get information about the authenticated user or other users in your Monday workspace for management or reporting purposes.
 
 #### Example Request Body:
 ```json
 {
-  "parent": {
-    "type": "page_id",
-    "page_id": "parent_page_id"
-  },
-  "title": [
-    {
-      "type": "text",
-      "text": {
-        "content": "New Database"
-      }
-    }
-  ],
-  "properties": {
-    "Name": {
-      "title": {}
-    },
-    "Description": {
-      "rich_text": {}
-    }
-  }
+  "query": "query { users { id name email } }"
 }
 ```
 
-### 6. **Create Page**
-   - **Endpoint**: `POST https://api.notion.com/v1/pages`
-   - **What it does**: Creates a new page in Notion.
+### 2. **Create a Notification**
+   - **Endpoint**: `POST https://api.monday.com/v2`
+   - **What it does**: Creates a new notification on Monday.com for a user or board.
    - **Configuration**:
-     - Requires Bearer Token authentication using `Secret_internal`.
-     - The request body must contain the parent database or page, title, and content.
-   - **Use case**: Use this method to create new content pages in Notion for documentation, note-taking, or task management.
+     - Requires a Bearer Token (`Api_token`) for authentication.
+     - The request must contain a GraphQL mutation to specify the recipient, message, and context of the notification.
+   - **Use case**: Use this method to send notifications to users about project updates, task deadlines, or important events within a Monday.com board or workspace.
 
 #### Example Request Body:
 ```json
 {
-  "parent": {
-    "database_id": "database_id"
-  },
-  "properties": {
-    "Title": {
-      "title": [
-        {
-          "text": {
-            "content": "New Page"
-          }
-        }
-      ]
-    }
-  }
-}
-```
-
-### 7. **Search by Title**
-   - **Endpoint**: `POST https://api.notion.com/v1/search`
-   - **What it does**: Searches through all Notion pages and databases by title.
-   - **Configuration**:
-     - Requires Bearer Token authentication using `Secret_internal`.
-     - The request body must contain the search query.
-   - **Use case**: Use this method to search for specific pages or databases by title, allowing quick navigation or access to information.
-
-#### Example Request Body:
-```json
-{
-  "query": "Your Page Title"
+  "query": "mutation { create_notification (user_id: 123456, text: \"Your task is due tomorrow!\", target_id: 654321, target_type: Project) { id } }"
 }
 ```
 
 ## 3. Configuration
 
-To use this plugin, you will need to authenticate using a **Bearer Token**. This token (referred to as `Secret_internal`) must have the necessary permissions to interact with Notion’s API based on the actions you intend to perform.
+To use this plugin, you will need to authenticate using a **Bearer API Token**. This token must have the appropriate permissions to interact with the Monday.com API based on the actions you intend to perform (fetching user data or creating notifications).
 
 ### 1. **Bearer Token Setup**
-   - You can generate a Notion integration token from your Notion account.
-   - The Bearer token should be passed as a Bearer token in the headers of all API requests.
+   - In Monday.com, you can generate an API token by navigating to your profile settings.
+   - This API token should be included in the headers of all requests to the Monday.com API.
 
 ### 2. **JSON Configuration Example**
 
 ```json
 {
-  "Secret_internal": "your_notion_integration_token"
+  "Api_token": "your_monday_api_token"
 }
 ```
 
-This configuration allows the plugin to authenticate with Notion and use the various methods to manage databases, pages, blocks, and users.
+This configuration ensures secure access to Monday.com’s API for retrieving user data and sending notifications.
 
 ## 4. Links to Documentation
 
-- [Notion API Documentation](https://developers.notion.com/reference/intro)
-- [Notion API Access Setup](https://developers.notion.com/docs/getting-started)
+- [Monday API Documentation](https://api.developer.monday.com/docs)
+- [Monday API Access Setup](https://support.monday.com/hc/en-us/articles/360013483119-How-to-get-started-with-our-API)
 
-This documentation provides all the necessary details to integrate with Notion's API, enabling seamless interaction with Notion workspaces, databases, pages, and users.
+This documentation provides a detailed guide to working with Monday.com's API, enabling interaction with user data and notifications using secure Bearer Token authentication.
