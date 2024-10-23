@@ -1,0 +1,74 @@
+# Stripe Webhooks API Plugin Documentation
+
+## 1. Overview
+
+The **Stripe Webhooks API Plugin** allows integration with Stripe’s Webhooks, enabling users to create and retrieve webhook endpoints. Webhooks allow Stripe to notify your application when specific events occur, such as successful payments or refunds. Authentication is managed through **Basic Authentication** using `secret_key`, ensuring secure access to Stripe resources.
+
+## 2. Available Methods
+
+### 1. **Retrieve a Webhook Endpoint**
+   - **Endpoint**: `GET https://api.stripe.com/v1/webhook_endpoints/{{endpointId}}`
+   - **What it does**: Retrieves details of a specific webhook endpoint by its `endpointId`, including its status, event subscriptions, and URL.
+   - **Configuration**:
+     - Requires `endpointId`, the unique identifier of the webhook endpoint.
+     - Requires **Basic Authentication** using `secret_key`.
+   - **Use case**: Use this method to get detailed information about a specific webhook endpoint, such as the URL and the events it listens to.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/webhook_endpoints/{{endpointId}}
+Authorization: Basic {{base64_encoded(secret_key:)}}
+```
+
+### 2. **Create a Webhook Endpoint**
+   - **Endpoint**: `POST https://api.stripe.com/v1/webhook_endpoints`
+   - **What it does**: Creates a new webhook endpoint for receiving Stripe events. You can specify the URL and the list of events the webhook should listen to.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `secret_key`.
+     - The request body must include the URL and the list of events for which the webhook will be triggered.
+   - **Use case**: Use this method to set up a new webhook endpoint that will listen for specific Stripe events and notify your application.
+
+#### Example Request Body:
+```json
+{
+  "url": "https://example.com/webhook",
+  "enabled_events": [
+    "payment_intent.succeeded",
+    "payment_intent.failed"
+  ]
+}
+```
+
+#### Example Request:
+```http
+POST https://api.stripe.com/v1/webhook_endpoints
+Authorization: Basic {{base64_encoded(secret_key:)}}
+Content-Type: application/x-www-form-urlencoded
+```
+
+## 3. Configuration
+
+To use the Stripe Webhooks API, you must authenticate using **Basic Authentication** with your `secret_key`. The API key is passed as the username in the Basic Authentication scheme.
+
+### 1. **Basic Authentication Setup**
+   - Use your Stripe secret key as the `username` for Basic Authentication.
+   - No password is required, but the `:` character is still used in the `base64` encoding.
+   - The Authorization header will look like this:
+     - `Authorization: Basic base64(secret_key:)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "secret_key": "your_stripe_secret_key"
+}
+```
+
+This configuration allows secure access to Stripe for creating and retrieving webhook endpoints.
+
+## 4. Links to Documentation
+
+- [Stripe Webhooks API Documentation](https://stripe.com/docs/api/webhook_endpoints)
+- [Stripe API Access Setup](https://stripe.com/docs/keys)
+
+This documentation provides a guide to interacting with the Stripe Webhooks API, enabling secure creation and management of webhook endpoints using Basic Authentication with your Stripe secret key.
