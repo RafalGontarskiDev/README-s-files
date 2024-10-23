@@ -1,129 +1,65 @@
-# Microsoft To-Do API Plugin Documentation
+# Microsoft Planner API Plugin Documentation
 
 ## 1. Overview
 
-The **Microsoft To-Do API Plugin** enables integration with Microsoft To-Do, allowing you to manage task lists and tasks. This API allows for the listing, retrieval, creation, and updating of tasks and task lists. Authentication is handled through **Bearer Access Token** using a `microsoft_access_token`.
+The **Microsoft Planner API Plugin** provides integration with Microsoft Planner, allowing users to retrieve, create, and manage plans and buckets. Authentication is handled through a **Bearer Access Token** using the `microsoft_access_token`. This API enables smooth task management and project organization in Microsoft Planner.
 
 ## 2. Available Methods
 
-### 1. **List Task Lists**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userIdOrName}}/todo/lists`
-   - **What it does**: Retrieves a list of all task lists associated with a user.
+### 1. **Get Planner Plan**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/planner/plans/{{planId}}`
+   - **What it does**: Retrieves the details of a specific plan by its `planId`.
    - **Configuration**:
-     - Requires `userIdOrName` (the user's ID or username).
-     - Requires **Bearer Token** authentication with `microsoft_access_token`.
-   - **Use case**: Use this method to fetch and display all task lists created by a user in Microsoft To-Do.
+     - Requires `planId`, the unique identifier of the plan.
+     - Requires **Bearer Token** authentication using `microsoft_access_token`.
+   - **Use case**: Use this method to get detailed information about a specific Microsoft Planner plan, such as the plan title, owner, and creation date.
 
 #### Example Request:
 ```http
-GET https://graph.microsoft.com/v1.0/users/{{userIdOrName}}/todo/lists
+GET https://graph.microsoft.com/v1.0/planner/plans/{{planId}}
 Authorization: Bearer {{microsoft_access_token}}
 ```
 
-### 2. **Get Task List by ID**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userIdOrName}}/todo/lists/{{todoTaskListId}}`
-   - **What it does**: Retrieves the details of a specific task list by its `todoTaskListId`.
+### 2. **List Buckets in a Plan**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/planner/plans/{{planId}}/buckets`
+   - **What it does**: Retrieves a list of all buckets within a specific plan.
    - **Configuration**:
-     - Requires `userIdOrName` and `todoTaskListId`.
-     - Requires **Bearer Token** authentication with `microsoft_access_token`.
-   - **Use case**: Use this method to retrieve detailed information about a specific task list, such as its name, creation date, and tasks.
+     - Requires `planId`, the unique identifier of the plan.
+     - Requires **Bearer Token** authentication using `microsoft_access_token`.
+   - **Use case**: Use this method to get a list of all buckets (task categories) in a specific plan for task organization.
 
 #### Example Request:
 ```http
-GET https://graph.microsoft.com/v1.0/users/{{userIdOrName}}/todo/lists/{{todoTaskListId}}
+GET https://graph.microsoft.com/v1.0/planner/plans/{{planId}}/buckets
 Authorization: Bearer {{microsoft_access_token}}
 ```
 
-### 3. **List Tasks in a Task List**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userIdOrName}}/todo/lists/{{todoTaskListId}}/tasks`
-   - **What it does**: Retrieves all tasks from a specified task list.
+### 3. **Create Planner Plan**
+   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/planner/plans`
+   - **What it does**: Creates a new plan in Microsoft Planner.
    - **Configuration**:
-     - Requires `userIdOrName` and `todoTaskListId`.
-     - Requires **Bearer Token** authentication with `microsoft_access_token`.
-   - **Use case**: Use this method to retrieve a list of tasks from a specific task list.
-
-#### Example Request:
-```http
-GET https://graph.microsoft.com/v1.0/users/{{userIdOrName}}/todo/lists/{{todoTaskListId}}/tasks
-Authorization: Bearer {{microsoft_access_token}}
-```
-
-### 4. **Create a Task List**
-   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/users/{{userIdOrName}}/todo/lists`
-   - **What it does**: Creates a new task list under the authenticated user.
-   - **Configuration**:
-     - Requires `userIdOrName`.
-     - Requires **Bearer Token** authentication with `microsoft_access_token`.
-     - The request body must contain the name of the task list.
-   - **Use case**: Use this method to create a new task list to organize tasks for a specific project or purpose.
+     - Requires **Bearer Token** authentication using `microsoft_access_token`.
+     - The request body must include details such as the title of the plan and the owner group ID.
+   - **Use case**: Use this method to programmatically create new plans for project management or task organization in Microsoft Planner.
 
 #### Example Request Body:
 ```json
 {
-  "displayName": "New Task List"
+  "title": "New Project Plan",
+  "owner": "group-id"
 }
 ```
 
 #### Example Request:
 ```http
-POST https://graph.microsoft.com/v1.0/users/{{userIdOrName}}/todo/lists
-Authorization: Bearer {{microsoft_access_token}}
-Content-Type: application/json
-```
-
-### 5. **Create a Task in a Task List**
-   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/users/{{userIdOrName}}/todo/lists/{{todoTaskListId}}/tasks`
-   - **What it does**: Creates a new task within a specified task list.
-   - **Configuration**:
-     - Requires `userIdOrName` and `todoTaskListId`.
-     - Requires **Bearer Token** authentication with `microsoft_access_token`.
-     - The request body must include task details, such as title, due date, and status.
-   - **Use case**: Use this method to create a new task within an existing task list, for example, to track action items for a project.
-
-#### Example Request Body:
-```json
-{
-  "title": "New Task",
-  "dueDateTime": {
-    "dateTime": "2024-10-30T17:00:00",
-    "timeZone": "UTC"
-  }
-}
-```
-
-#### Example Request:
-```http
-POST https://graph.microsoft.com/v1.0/users/{{userIdOrName}}/todo/lists/{{todoTaskListId}}/tasks
-Authorization: Bearer {{microsoft_access_token}}
-Content-Type: application/json
-```
-
-### 6. **Update a Task List**
-   - **Endpoint**: `PATCH https://graph.microsoft.com/v1.0/users/{{userIdOrName}}/todo/lists/{{todoTaskListId}}`
-   - **What it does**: Updates details of a specified task list.
-   - **Configuration**:
-     - Requires `userIdOrName` and `todoTaskListId`.
-     - Requires **Bearer Token** authentication with `microsoft_access_token`.
-     - The request body should include the fields to be updated (e.g., `displayName`).
-   - **Use case**: Use this method to update the name or other properties of an existing task list.
-
-#### Example Request Body:
-```json
-{
-  "displayName": "Updated Task List Name"
-}
-```
-
-#### Example Request:
-```http
-PATCH https://graph.microsoft.com/v1.0/users/{{userIdOrName}}/todo/lists/{{todoTaskListId}}
+POST https://graph.microsoft.com/v1.0/planner/plans
 Authorization: Bearer {{microsoft_access_token}}
 Content-Type: application/json
 ```
 
 ## 3. Configuration
 
-To use the Microsoft To-Do API, you need to authenticate using an **OAuth2 Bearer Token**. This token provides access to the user's task lists and tasks.
+To use the Microsoft Planner API, you need to authenticate using an **OAuth2 Bearer Token**. This token provides access to Planner resources like plans and buckets for the authenticated user.
 
 ### 1. **Bearer Token Setup**
    - The Microsoft Graph API requires OAuth2 authentication to generate an access token.
@@ -132,8 +68,8 @@ To use the Microsoft To-Do API, you need to authenticate using an **OAuth2 Beare
 
 ### 2. **Required Scopes**
    The following OAuth2 scopes are typically required:
-   - `Tasks.Read`: Allows reading tasks and task lists.
-   - `Tasks.ReadWrite`: Allows reading and writing tasks and task lists.
+   - `Tasks.Read`: Allows reading Microsoft Planner tasks and plans.
+   - `Tasks.ReadWrite`: Allows reading and writing Microsoft Planner tasks and plans.
 
 ### 3. **JSON Configuration Example**
 
@@ -143,11 +79,11 @@ To use the Microsoft To-Do API, you need to authenticate using an **OAuth2 Beare
 }
 ```
 
-This configuration allows secure access to Microsoft To-Do tasks and lists for managing tasks programmatically.
+This configuration allows secure access to Microsoft Planner for retrieving and managing plans and buckets.
 
 ## 4. Links to Documentation
 
-- [Microsoft To-Do API Documentation](https://learn.microsoft.com/en-us/graph/api/resources/todo-overview?view=graph-rest-1.0)
+- [Microsoft Planner API Documentation](https://learn.microsoft.com/en-us/graph/api/resources/planner-overview?view=graph-rest-1.0)
 - [Microsoft Graph API Access Setup](https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)
 
-This documentation provides a clear guide to interacting with the Microsoft To-Do API, allowing for secure management of tasks and task lists using OAuth2 Bearer Token authentication.
+This documentation provides an easy guide to integrating with Microsoft Planner through the Graph API, allowing for secure and efficient management of plans and buckets using OAuth2 Bearer Token authentication.
