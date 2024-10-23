@@ -1,98 +1,68 @@
 # README-s-files for plugins in NoCode-x
 
 
-# Bitbucket API Plugin Documentation
+# GitLab Pinecone Assistant Documentation
 
 ## 1. Overview
 
-This plugin integrates with the **Bitbucket API**, providing a range of methods for interacting with repositories, files, and workspaces. The plugin allows users to list repositories, retrieve file contents, and create commits by uploading files directly to a Bitbucket repository.
+The GitLab Pinecone Assistant plugin allows integration between GitLab and Pinecone. It enables users to access and manage GitLab repositories, fetch files, and seamlessly upload files to Pinecone for further data processing or analysis. This plugin combines the functionality of GitLab's project and file management with Pinecone's vector database for optimized data interaction.
 
 ## 2. Available Methods
 
-### 1. **Get File or Directory Contents**
-   - **What it does**: Retrieves the contents of a specific file or the listing of a directory from a Bitbucket repository.
-   - **Configuration**:
-     - Requires authentication via a Bitbucket API token with `repository:read` permissions.
-     - You need to provide the repository, branch, and the file or directory path.
-   - **Example Request**:
-     ```plaintext
-     GET https://api.bitbucket.org/2.0/repositories/{{workspaceSlug}}/{{repoSlug}}/src/{{commit}}/{{path}}?max_depth=3&pagelen=100
-     ```
-   - **What it returns**: Lists files or the content of a specific file in the repository, starting from the provided path.
+### 1. **List Repository Tree**
+   - **Endpoint**: `GET https://gitlab.com/api/v4/projects/{{projectId}}/repository/tree?recursive=true`
+   - **What it does**: Retrieves the file and folder structure of a specific GitLab project.
+   - **Configuration**: 
+     - Requires `projectId`, the ID of the GitLab project.
+     - Requires a GitLab API token with `read_repository` permissions.
+   - **Use case**: Useful for fetching the entire structure of a repository when preparing to upload specific files to Pinecone.
 
-### 2. **Fetch File by Path**
-   - **What it does**: Fetches a specific file from a Bitbucket repository using its exact path.
-   - **Configuration**:
-     - Requires authentication via a Bitbucket API token with `repository:read` permissions.
-     - You need to provide the repository, branch, and the file path.
-   - **Example Request**:
-     ```plaintext
-     GET https://api.bitbucket.org/2.0/repositories/{{workspaceSlug}}/{{repoSlug}}/src/{{commit}}/{{path}}
-     ```
-   - **What it returns**: The content of the specified file.
+### 2. **Fetch a File**
+   - **Endpoint**: `GET https://gitlab.com/api/v4/projects/{{projectId}}/repository/files/{{filePath}}/raw`
+   - **What it does**: Fetches the raw content of a file from the GitLab repository.
+   - **Configuration**: 
+     - Requires `projectId` and `filePath` (the path to the file within the repository).
+     - Requires a GitLab API token with `read_repository` permissions.
+   - **Use case**: Retrieve files from GitLab projects for further analysis or to upload to Pinecone.
 
-### 3. **List Repositories in a Workspace**
-   - **What it does**: Lists all repositories within a specific workspace.
+### 3. **Upload File to Pinecone Assistant**
+   - **Endpoint**: `POST https://prod-1-data.ke.pinecone.io/assistant/files/{{ASSISTANT_NAME}}`
+   - **What it does**: Uploads a file from GitLab directly into Pinecone for vector storage and analysis.
    - **Configuration**:
-     - Requires authentication via a Bitbucket API token with `repository:read` or `account:read` permissions.
-     - You need to provide the workspace slug.
-   - **Example Request**:
-     ```plaintext
-     GET https://api.bitbucket.org/2.0/repositories/{{workspaceSlug}}
-     ```
-   - **What it returns**: A list of repositories within the specified workspace.
-
-### 4. **List Workspaces for User**
-   - **What it does**: Fetches a list of workspaces associated with the authenticated user in Bitbucket.
-   - **Configuration**:
-     - Requires authentication via a Bitbucket API token with `account:read` permissions.
-   - **Example Request**:
-     ```plaintext
-     GET https://api.bitbucket.org/2.0/workspaces
-     ```
-   - **What it returns**: A list of workspaces associated with the authenticated user.
-
-### 5. **Create a Commit by Uploading a File**
-   - **What it does**: Creates a new commit in a Bitbucket repository by uploading a file.
-   - **Configuration**:
-     - Requires authentication via a Bitbucket API token with `repository:write` permissions.
-     - You need to provide the repository, branch, file path, commit message, and author information.
-   - **Example Request**:
-     ```json
-     {
-       "files": "file_path",
-       "branch": "main",
-       "message": "Commit message",
-       "author": "Author Name <email@example.com>"
-     }
-     ```
-   - **What it returns**: A response confirming the successful creation of the commit in the repository.
+     - Requires `ASSISTANT_NAME`, the name of your Pinecone assistant.
+     - Requires an API key from Pinecone.
+     - The file fetched from GitLab must be provided in the request body.
+   - **Use case**: Store files fetched from GitLab into Pinecone for vector-based data processing or future retrieval.
 
 ## 3. Configuration
 
-To use this plugin, you need to authenticate with Bitbucket using an API token (app password). Here's how to set it up:
+To configure and use this plugin, you will need the following:
 
-### **Bitbucket API Token (App Password)**
+### 1. **GitLab API Token**
+   - Generate a personal access token from GitLab with the required scopes (`read_repository`).
+   - To create a token:
+     - Log in to GitLab.
+     - Navigate to **Settings** > **Access Tokens**.
+     - Create a token with the necessary scopes.
+     - Store this token securely and include it in the plugin configuration.
 
-To generate a personal access token (app password) in Bitbucket:
+### 2. **Pinecone API Key**
+   - You will need an API key from Pinecone to upload files.
+   - Refer to Pinecone's API documentation to obtain your key and configure it for the assistant.
 
-1. **Log in** to your Bitbucket account.
-2. Navigate to **Personal Settings** > **App passwords**.
-3. Click **Create app password** and assign the necessary permissions for the methods you want to use:
-   - **repository:read** for fetching files or listing repositories.
-   - **repository:write** for creating commits.
-   - **account:read** for listing workspaces.
-4. Generate the token and store it securely, as you won't be able to view it again after creation.
-
-### Example JSON Configuration:
-
+### 3. **JSON Configuration Example**
+  
 ```json
 {
-  "Repository_Access_Token": "your_bitbucket_access_token"
+  "GitLab_token": "your_gitlab_personal_access_token",
+  "Pinecone_API_key": "your_pinecone_api_key"
 }
 ```
 
 ## 4. Links to Documentation
 
-- [Bitbucket REST API Documentation](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#authentication)
-- [Creating a Repository Access Token in Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/)
+- [GitLab REST API Documentation](https://docs.gitlab.com/ee/api/)
+- [Create GitLab Personal Access Token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html)
+- [Pinecone API Documentation](https://docs.pinecone.io)
+
+This documentation ensures that you can fully utilize the integration of GitLab's repository and file management capabilities with Pinecone's advanced data processing tools.
