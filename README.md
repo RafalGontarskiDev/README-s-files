@@ -1,68 +1,64 @@
 # README-s-files for plugins in NoCode-x
 
 
-# GitLab Pinecone Assistant Documentation
+# GitLab API Plugin Documentation
 
 ## 1. Overview
 
-The GitLab Pinecone Assistant plugin allows integration between GitLab and Pinecone. It enables users to access and manage GitLab repositories, fetch files, and seamlessly upload files to Pinecone for further data processing or analysis. This plugin combines the functionality of GitLab's project and file management with Pinecone's vector database for optimized data interaction.
+This plugin provides integration with the GitLab API, enabling various interactions with GitLab's user data, repositories, and files. It allows you to retrieve information about users, access project repositories, and download files from the GitLab repository. Authentication is managed through personal access tokens, ensuring secure access to the necessary GitLab resources.
 
 ## 2. Available Methods
 
-### 1. **List Repository Tree**
-   - **Endpoint**: `GET https://gitlab.com/api/v4/projects/{{projectId}}/repository/tree?recursive=true`
-   - **What it does**: Retrieves the file and folder structure of a specific GitLab project.
+### 1. **Get Users List**
+   - **Endpoint**: `GET https://gitlab.com/api/v4/users`
+   - **What it does**: Retrieves a list of users in the GitLab instance.
    - **Configuration**: 
-     - Requires `projectId`, the ID of the GitLab project.
-     - Requires a GitLab API token with `read_repository` permissions.
-   - **Use case**: Useful for fetching the entire structure of a repository when preparing to upload specific files to Pinecone.
+     - Requires a GitLab API token with the `read_user` scope.
+   - **Use case**: Useful for fetching information about users within the GitLab system, such as when creating a user directory or managing user-related tasks.
 
-### 2. **Fetch a File**
+### 2. **List Repository Tree**
+   - **Endpoint**: `GET https://gitlab.com/api/v4/projects/{{projectId}}/repository/tree`
+   - **What it does**: Fetches the structure of a specific project repository, including files and folders.
+   - **Configuration**: 
+     - Requires `projectId`, the unique ID of the GitLab project.
+     - Requires a GitLab API token with `read_repository` permission.
+   - **Use case**: Use this method to retrieve the entire file structure of a repository, which can help in navigating large projects or preparing for file downloads.
+
+### 3. **Downloading a File from the Project Repository**
    - **Endpoint**: `GET https://gitlab.com/api/v4/projects/{{projectId}}/repository/files/{{filePath}}/raw`
-   - **What it does**: Fetches the raw content of a file from the GitLab repository.
-   - **Configuration**: 
-     - Requires `projectId` and `filePath` (the path to the file within the repository).
-     - Requires a GitLab API token with `read_repository` permissions.
-   - **Use case**: Retrieve files from GitLab projects for further analysis or to upload to Pinecone.
-
-### 3. **Upload File to Pinecone Assistant**
-   - **Endpoint**: `POST https://prod-1-data.ke.pinecone.io/assistant/files/{{ASSISTANT_NAME}}`
-   - **What it does**: Uploads a file from GitLab directly into Pinecone for vector storage and analysis.
+   - **What it does**: Fetches the raw content of a specified file from the GitLab repository.
    - **Configuration**:
-     - Requires `ASSISTANT_NAME`, the name of your Pinecone assistant.
-     - Requires an API key from Pinecone.
-     - The file fetched from GitLab must be provided in the request body.
-   - **Use case**: Store files fetched from GitLab into Pinecone for vector-based data processing or future retrieval.
+     - Requires `projectId` and `filePath`, the exact path to the file in the repository.
+     - Requires a GitLab API token with `read_repository` permission.
+   - **Use case**: This method is useful for downloading files directly from the GitLab repository, such as for local development, code reviews, or data analysis.
 
 ## 3. Configuration
 
-To configure and use this plugin, you will need the following:
+To use this plugin, you'll need to provide a GitLab **personal access token**. The token must have the appropriate scopes (permissions) for the methods described above. Here’s how you can set up the configuration:
 
-### 1. **GitLab API Token**
-   - Generate a personal access token from GitLab with the required scopes (`read_repository`).
-   - To create a token:
-     - Log in to GitLab.
-     - Navigate to **Settings** > **Access Tokens**.
-     - Create a token with the necessary scopes.
-     - Store this token securely and include it in the plugin configuration.
+### 1. **Personal Access Token**
+   - Personal access tokens are required to authenticate requests to GitLab's API.
+   - You must create a token with the necessary permissions, such as `read_user` and `read_repository`, depending on which methods you intend to use.
 
-### 2. **Pinecone API Key**
-   - You will need an API key from Pinecone to upload files.
-   - Refer to Pinecone's API documentation to obtain your key and configure it for the assistant.
+### 2. **Steps to Generate Personal Access Token**
+   - Log in to your GitLab account.
+   - Navigate to **Settings** > **Access Tokens**.
+   - Create a new token and select the required scopes based on the methods you will use (e.g., `read_user`, `read_repository`).
+   - Once generated, securely store this token, as it will be needed for all API requests.
 
 ### 3. **JSON Configuration Example**
-  
+
 ```json
 {
-  "GitLab_token": "your_gitlab_personal_access_token",
-  "Pinecone_API_key": "your_pinecone_api_key"
+  "Personal_access_token": "your_gitlab_personal_access_token"
 }
 ```
+
+This configuration will allow the plugin to authenticate with GitLab and access user lists, project repositories, and files using the provided methods.
 
 ## 4. Links to Documentation
 
 - [GitLab REST API Documentation](https://docs.gitlab.com/ee/api/)
-- [Create GitLab Personal Access Token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html)
-- [Pinecone API Documentation](https://docs.pinecone.io)
+- [GitLab Personal Access Token Guide](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html)
 
-This documentation ensures that you can fully utilize the integration of GitLab's repository and file management capabilities with Pinecone's advanced data processing tools.
+This documentation provides an easy guide to accessing and interacting with GitLab's API, ensuring secure access and efficient use of repository and user data.
