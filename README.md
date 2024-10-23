@@ -1,71 +1,80 @@
 # README-s-files for plugins in NoCode-x
 
 
-# GitHub Pinecone Assistant Documentation
+# GitHub API Plugin Documentation
 
 ## 1. Overview
 
-The **GitHub Pinecone Assistant** plugin allows seamless integration between GitHub and Pinecone. It enables users to interact with GitHub repositories, fetch repository contents, and upload files directly to Pinecone for advanced vector-based processing. This plugin makes it easy to manage and transfer data between GitHub repositories and Pinecone's vector database.
+The GitHub API plugin enables interaction with GitHub's user and repository data. This plugin allows you to retrieve user details, access repository content, and create new repositories using GitHub's API. Authentication is handled through personal access tokens, ensuring secure access to GitHub resources.
 
 ## 2. Available Methods
 
-### 1. **Get Repository Content List**
+### 1. **Get User by ID**
+   - **Endpoint**: `GET https://api.github.com/user/{{id}}`
+   - **What it does**: Retrieves information about a specific GitHub user by their user ID.
+   - **Configuration**: 
+     - Requires `id`, which is the GitHub user's unique ID.
+     - Requires a GitHub API token with `user` scope.
+   - **Use case**: Use this method to fetch detailed information about a user, such as their profile, public repositories, and activity.
+
+### 2. **Get Repository Content List**
    - **Endpoint**: `GET https://api.github.com/repos/{{owner}}/{{repo}}/contents`
-   - **What it does**: Retrieves a list of all files and directories in a GitHub repository.
+   - **What it does**: Fetches the content (files and directories) of a specified GitHub repository.
    - **Configuration**:
      - Requires `owner` (the GitHub username or organization name) and `repo` (the repository name).
      - Requires a GitHub API token with `repo` scope to access private repositories.
-   - **Use case**: Use this method to fetch an overview of the files and folders in a repository, helping in navigation or selection of files for further processing.
+   - **Use case**: Retrieve the structure of a repository to view and interact with its content.
 
-### 2. **Get Repository Content File by Path**
+### 3. **Get Repository Content File by Path**
    - **Endpoint**: `GET https://api.github.com/repos/{{owner}}/{{repo}}/contents/{{path}}`
-   - **What it does**: Retrieves the content of a specific file from a GitHub repository.
+   - **What it does**: Retrieves the content of a specific file within a repository.
    - **Configuration**:
-     - Requires `owner`, `repo`, and `path`, which is the exact path to the file within the repository.
+     - Requires `owner`, `repo`, and `path` (the exact file path in the repository).
      - Requires a GitHub API token with `repo` scope for private repositories.
-   - **Use case**: This method is useful for accessing the raw content of a file, whether for downloading it locally or preparing it for further processing (e.g., uploading to Pinecone).
+   - **Use case**: Useful for accessing raw file data in a repository for local use or further analysis.
 
-### 3. **Upload File to Pinecone Assistant**
-   - **Endpoint**: `POST https://prod-1-data.ke.pinecone.io/assistant/files/{{ASSISTANT_NAME}}`
-   - **What it does**: Uploads a file from GitHub directly into Pinecone for storage and further processing in Pinecone's vector database.
+### 4. **Create Repository**
+   - **Endpoint**: `POST https://api.github.com/user/repos`
+   - **What it does**: Creates a new repository under the authenticated user's GitHub account.
    - **Configuration**:
-     - Requires `ASSISTANT_NAME`, the name of the Pinecone assistant.
-     - The file fetched from GitHub must be provided in the request body.
-     - Requires a valid Pinecone API key.
-   - **Use case**: Store files retrieved from GitHub into Pinecone for vector analysis, processing, or future retrieval.
+     - Requires a GitHub API token with `repo` and `public_repo` scopes.
+     - The request body must include parameters such as `name` (repository name), `description`, `private` (whether the repo is private), etc.
+   - **Use case**: Use this method to programmatically create a new repository for code management, collaboration, or version control.
 
-## 3. Configuration
-
-To use this plugin, you need to provide **GitHub** and **Pinecone API tokens**. Here's how to configure and set up the necessary credentials.
-
-### 1. **GitHub Personal Access Token**
-   - This token is required to authenticate requests to GitHub's API.
-   - To generate a token:
-     - Log in to GitHub.
-     - Navigate to **Settings** > **Developer Settings** > **Personal Access Tokens**.
-     - Create a new token with the necessary scopes (e.g., `repo` for repository access).
-     - Store the token securely and include it in the plugin configuration.
-
-### 2. **Pinecone API Key**
-   - Pinecone's API key is required to upload files into Pinecone's vector database.
-   - Obtain the API key from the Pinecone dashboard after creating an assistant.
-   - This key will be used in conjunction with the upload endpoint for file transfer.
-
-### 3. **JSON Configuration Example**
-
+#### Example Request Body:
 ```json
 {
-  "GitHub_token": "your_github_personal_access_token",
-  "Pinecone_API_key": "your_pinecone_api_key"
+  "name": "new-repo",
+  "description": "This is your repository",
+  "private": false
 }
 ```
 
-This configuration allows you to authenticate with GitHub and Pinecone, enabling seamless data interaction between both platforms.
+## 3. Configuration
+
+To use this plugin, you will need to provide a GitHub **personal access token**. The token must have the appropriate scopes (permissions) based on the methods you intend to use.
+
+### 1. **GitHub Personal Access Token**
+   - Personal access tokens are required for authenticating requests to GitHub's API.
+   - Steps to generate a token:
+     - Log in to GitHub.
+     - Go to **Settings** > **Developer Settings** > **Personal Access Tokens**.
+     - Create a new token and select the required scopes (e.g., `user`, `repo`, `public_repo`).
+     - Securely store the token, as it will be used for all API requests.
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "GitHub_token": "your_github_personal_access_token"
+}
+```
+
+This configuration allows the plugin to authenticate with GitHub and perform the described actions.
 
 ## 4. Links to Documentation
 
 - [GitHub REST API Documentation](https://docs.github.com/en/rest)
 - [GitHub Personal Access Token Guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-- [Pinecone API Documentation](https://docs.pinecone.io)
 
-This documentation will help you leverage the power of GitHub's repository management along with Pinecone's advanced vector database, allowing for efficient data handling and analysis.
+This documentation provides everything you need to interact with GitHub’s user and repository management system via its API.
