@@ -1,0 +1,112 @@
+# Microsoft OneNote API Plugin Documentation
+
+## 1. Overview
+
+The **Microsoft OneNote API Plugin** allows integration with Microsoft OneNote to manage notebooks, pages, and other OneNote resources. The API enables users to list notebooks, retrieve specific pages, and create notebooks or pages. Authentication is managed through a **Bearer Access Token** using `microsoft_access_token`.
+
+## 2. Available Methods
+
+### 1. **List Notebooks**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userId}}/onenote/notebooks`
+   - **What it does**: Retrieves a list of all OneNote notebooks for a specified user.
+   - **Configuration**:
+     - Requires `userId`, the unique identifier of the user.
+     - Requires **Bearer Token** authentication using `microsoft_access_token`.
+   - **Use case**: Use this method to list all OneNote notebooks associated with a user for note organization or review.
+
+#### Example Request:
+```http
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/onenote/notebooks
+Authorization: Bearer {{microsoft_access_token}}
+```
+
+### 2. **Get OneNote Page**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userId}}/onenote/pages/{{pageId}}`
+   - **What it does**: Retrieves the content and metadata of a specific OneNote page.
+   - **Configuration**:
+     - Requires `userId` and `pageId` (the unique identifiers for the user and the page).
+     - Requires **Bearer Token** authentication using `microsoft_access_token`.
+   - **Use case**: Use this method to fetch details of a specific page for reading or further processing.
+
+#### Example Request:
+```http
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/onenote/pages/{{pageId}}
+Authorization: Bearer {{microsoft_access_token}}
+```
+
+### 3. **Create Notebook**
+   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/users/{{userId}}/onenote/notebooks`
+   - **What it does**: Creates a new OneNote notebook for a specified user.
+   - **Configuration**:
+     - Requires `userId` (the unique identifier for the user).
+     - Requires **Bearer Token** authentication using `microsoft_access_token`.
+     - The request body must contain the notebook title.
+   - **Use case**: Use this method to programmatically create a new notebook for organizing notes.
+
+#### Example Request Body:
+```json
+{
+  "displayName": "New Notebook"
+}
+```
+
+#### Example Request:
+```http
+POST https://graph.microsoft.com/v1.0/users/{{userId}}/onenote/notebooks
+Authorization: Bearer {{microsoft_access_token}}
+Content-Type: application/json
+```
+
+### 4. **Create OneNote Page**
+   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/users/{{userId}}/onenote/pages`
+   - **What it does**: Creates a new page in OneNote for a specified user.
+   - **Configuration**:
+     - Requires `userId` (the unique identifier of the user).
+     - Requires **Bearer Token** authentication using `microsoft_access_token`.
+     - The request body should include the HTML content of the new page.
+   - **Use case**: Use this method to add new notes or content to a OneNote notebook programmatically.
+
+#### Example Request Body:
+```html
+{
+  "content": "<html><head><title>New Page</title></head><body><p>Hello, this is a new note!</p></body></html>"
+}
+```
+
+#### Example Request:
+```http
+POST https://graph.microsoft.com/v1.0/users/{{userId}}/onenote/pages
+Authorization: Bearer {{microsoft_access_token}}
+Content-Type: text/html
+```
+
+## 3. Configuration
+
+To use the Microsoft OneNote API, you must authenticate using an **OAuth2 Bearer Token**. This token provides access to the user's notebooks and pages for managing OneNote content.
+
+### 1. **Bearer Token Setup**
+   - The Microsoft Graph API requires OAuth2 authentication to generate an access token.
+   - Obtain an access token by following the OAuth2 flow for Microsoft services, using the **Microsoft Identity platform**.
+   - The access token must be included in the Authorization header for each API request.
+
+### 2. **Required Scopes**
+   The following OAuth2 scopes are typically required:
+   - `Notes.Read`: Allows reading OneNote notebooks and pages.
+   - `Notes.ReadWrite`: Allows reading and writing to OneNote notebooks and pages.
+
+### 3. **JSON Configuration Example**
+
+```json
+{
+  "microsoft_access_token": "your_microsoft_oauth2_access_token"
+}
+```
+
+This configuration allows secure access to Microsoft OneNote for listing, creating, and managing notebooks and pages.
+
+## 4. Links to Documentation
+
+- [Microsoft OneNote API Documentation](https://learn.microsoft.com/en-us/graph/api/resources/onenote-api-overview?view=graph-rest-1.0)
+- [Microsoft Graph API Access Setup](https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+
+This documentation provides a detailed guide to interacting with the Microsoft OneNote API for managing notebooks and pages using OAuth2 Bearer Token authentication.
