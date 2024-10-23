@@ -1,0 +1,62 @@
+# Monday API Plugin Documentation
+
+## 1. Overview
+
+The **Monday API Plugin** allows you to interact with Monday.com to retrieve user data and create notifications. This plugin facilitates seamless integration with Monday’s platform, enabling users to fetch information and automate notifications using a **Bearer API Token** for authentication.
+
+## 2. Available Methods
+
+### 1. **Get User Data**
+   - **Endpoint**: `POST https://api.monday.com/v2`
+   - **What it does**: Retrieves user data from Monday.com.
+   - **Configuration**:
+     - Requires a Bearer Token (`Api_token`) for authentication.
+     - The request must contain a GraphQL query to retrieve user-specific details such as name, email, and workspace information.
+   - **Use case**: Use this method to get information about the authenticated user or other users in your Monday workspace for management or reporting purposes.
+
+#### Example Request Body:
+```json
+{
+  "query": "query { users { id name email } }"
+}
+```
+
+### 2. **Create a Notification**
+   - **Endpoint**: `POST https://api.monday.com/v2`
+   - **What it does**: Creates a new notification on Monday.com for a user or board.
+   - **Configuration**:
+     - Requires a Bearer Token (`Api_token`) for authentication.
+     - The request must contain a GraphQL mutation to specify the recipient, message, and context of the notification.
+   - **Use case**: Use this method to send notifications to users about project updates, task deadlines, or important events within a Monday.com board or workspace.
+
+#### Example Request Body:
+```json
+{
+  "query": "mutation { create_notification (user_id: 123456, text: \"Your task is due tomorrow!\", target_id: 654321, target_type: Project) { id } }"
+}
+```
+
+## 3. Configuration
+
+To use this plugin, you will need to authenticate using a **Bearer API Token**. This token must have the appropriate permissions to interact with the Monday.com API based on the actions you intend to perform (fetching user data or creating notifications).
+
+### 1. **Bearer Token Setup**
+   - In Monday.com, you can generate an API token by navigating to your profile settings.
+   - This API token should be included in the headers of all requests to the Monday.com API.
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "Api_token": "your_monday_api_token"
+}
+```
+
+This configuration ensures secure access to Monday.com’s API for retrieving user data and sending notifications.
+
+## 4. Links to Documentation
+
+- [Monday API Documentation](https://api.developer.monday.com/docs)
+- [Monday API Access Setup](https://support.monday.com/hc/en-us/articles/360013483119-How-to-get-started-with-our-API)
+
+This documentation provides a detailed guide to working with Monday.com's API, enabling interaction with user data and notifications using secure Bearer Token authentication.
