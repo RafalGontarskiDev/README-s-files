@@ -1,0 +1,124 @@
+# Stripe | Products | Prices API Plugin Documentation
+
+## 1. Overview
+
+The **Stripe Products | Prices API Plugin** allows integration with Stripe’s pricing management functionalities, enabling users to create, retrieve, update, and list product prices. Authentication is managed through **Basic Authentication** using `secret_key`, ensuring secure access to Stripe resources.
+
+## 2. Available Methods
+
+### 1. **Create a Price**
+   - **Endpoint**: `POST https://api.stripe.com/v1/prices`
+   - **What it does**: Creates a new price for a specific product in Stripe. Prices are used to define the cost of a product or service, including currency, recurring intervals, and amounts.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `secret_key`.
+     - The request body must include the product `id`, currency, amount, and optionally, billing intervals for subscription-based products.
+   - **Use case**: Use this method to create a new price for a product or subscription service in Stripe.
+
+#### Example Request Body:
+```json
+{
+  "unit_amount": 5000,
+  "currency": "usd",
+  "product": "prod_12345",
+  "recurring[interval]": "month"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.stripe.com/v1/prices
+Authorization: Basic {{base64_encoded(secret_key:)}}
+Content-Type: application/x-www-form-urlencoded
+```
+
+### 2. **List All Prices**
+   - **Endpoint**: `GET https://api.stripe.com/v1/prices`
+   - **What it does**: Retrieves a list of all prices in your Stripe account. You can filter by product, active status, or billing intervals.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `secret_key`.
+     - Optional query parameters can be used to filter and paginate the results.
+   - **Use case**: Use this method to list all the prices associated with your Stripe products for managing or reporting purposes.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/prices
+Authorization: Basic {{base64_encoded(secret_key:)}}
+```
+
+### 3. **Retrieve a Price**
+   - **Endpoint**: `GET https://api.stripe.com/v1/prices/{{priceId}}`
+   - **What it does**: Retrieves details about a specific price by its `priceId`.
+   - **Configuration**:
+     - Requires `priceId`, the unique identifier of the price.
+     - Requires **Basic Authentication** using `secret_key`.
+   - **Use case**: Use this method to retrieve detailed information about a price, including the currency, amount, and billing intervals.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/prices/{{priceId}}
+Authorization: Basic {{base64_encoded(secret_key:)}}
+```
+
+### 4. **Search Prices**
+   - **Endpoint**: `GET https://api.stripe.com/v1/prices/search`
+   - **What it does**: Searches for prices using specific query parameters such as price amount, product, or active status.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `secret_key`.
+     - The query parameters must define the search criteria (e.g., product, active status).
+   - **Use case**: Use this method to find prices that meet specific criteria, such as prices related to a particular product or active subscription.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/prices/search?query=product:"prod_12345"
+Authorization: Basic {{base64_encoded(secret_key:)}}
+```
+
+### 5. **Update a Price**
+   - **Endpoint**: `POST https://api.stripe.com/v1/prices/{{priceId}}`
+   - **What it does**: Updates an existing price by modifying its details, such as metadata or status.
+   - **Configuration**:
+     - Requires `priceId`, the unique identifier of the price.
+     - Requires **Basic Authentication** using `secret_key`.
+     - The request body must include the fields to be updated, such as `active` status or metadata.
+   - **Use case**: Use this method to update price details like making a price active/inactive or changing its description.
+
+#### Example Request Body:
+```json
+{
+  "metadata[description]": "Updated description for price"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.stripe.com/v1/prices/{{priceId}}
+Authorization: Basic {{base64_encoded(secret_key:)}}
+Content-Type: application/x-www-form-urlencoded
+```
+
+## 3. Configuration
+
+To use the Stripe Prices API, you must authenticate using **Basic Authentication** with your `secret_key`. The API key is passed as the username in the Basic Authentication scheme.
+
+### 1. **Basic Authentication Setup**
+   - Use your Stripe secret key as the `username` for Basic Authentication.
+   - No password is required, but the `:` character is still used in the `base64` encoding.
+   - The Authorization header will look like this:
+     - `Authorization: Basic base64(secret_key:)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "secret_key": "your_stripe_secret_key"
+}
+```
+
+This configuration allows secure access to Stripe for managing prices, creating new prices, and retrieving or updating existing prices.
+
+## 4. Links to Documentation
+
+- [Stripe Prices API Documentation](https://stripe.com/docs/api/prices)
+- [Stripe API Access Setup](https://stripe.com/docs/keys)
+
+This documentation provides a guide to interacting with the Stripe Prices API, enabling secure creation, management, and retrieval of prices using Basic Authentication with your Stripe secret key.
