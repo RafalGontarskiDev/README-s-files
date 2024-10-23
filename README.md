@@ -1,61 +1,97 @@
-# Microsoft Outlook (Mail) API Plugin Documentation
+# Microsoft Calendar API Plugin Documentation
 
 ## 1. Overview
 
-The **Microsoft Outlook (Mail) API Plugin** allows integration with Microsoft Outlook email services, enabling users to list, filter, and create email messages. Authentication is managed through a **Bearer Access Token** using `microsoft_access_token`, providing secure access to users' mailboxes via Microsoft Graph API.
+The **Microsoft Calendar API Plugin** allows integration with Microsoft Calendar, enabling users to manage calendars, events, and calendar views. Authentication is managed through a **Bearer Access Token** using `microsoft_access_token`, providing secure access to user calendars via Microsoft Graph API.
 
 ## 2. Available Methods
 
-### 1. **List Messages**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userId}}/messages`
-   - **What it does**: Retrieves a list of email messages from a specified user's mailbox.
+### 1. **List Calendar View**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userId}}/calendars/{{calendarId}}/calendarView?startDateTime={{startDatetime}}&endDateTime={{endDatetime}}`
+   - **What it does**: Retrieves the events from a specific calendar within a date-time range.
    - **Configuration**:
-     - Requires `userId` (the unique identifier of the user).
+     - Requires `userId`, `calendarId`, `startDatetime`, and `endDatetime` in ISO 8601 format.
      - Requires **Bearer Token** authentication using `microsoft_access_token`.
-   - **Use case**: Use this method to list all messages in the user's mailbox for reading or processing.
+   - **Use case**: Use this method to retrieve all calendar events in a specific date range, such as meetings or appointments within a week or month.
 
 #### Example Request:
 ```http
-GET https://graph.microsoft.com/v1.0/users/{{userId}}/messages
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/calendars/{{calendarId}}/calendarView?startDateTime=2024-10-01T00:00:00Z&endDateTime=2024-10-31T23:59:59Z
 Authorization: Bearer {{microsoft_access_token}}
 ```
 
-### 2. **Get Message by ID**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userId}}/messages/{{messageId}}`
-   - **What it does**: Retrieves the details of a specific email message by its `messageId`.
-   - **Configuration**:
-     - Requires `userId` and `messageId` (the unique identifiers for the user and message).
-     - Requires **Bearer Token** authentication using `microsoft_access_token`.
-   - **Use case**: Use this method to get detailed information about a particular email message, such as the sender, recipients, subject, and content.
-
-#### Example Request:
-```http
-GET https://graph.microsoft.com/v1.0/users/{{userId}}/messages/{{messageId}}
-Authorization: Bearer {{microsoft_access_token}}
-```
-
-### 3. **Create Draft Message**
-   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/users/{{userId}}/messages`
-   - **What it does**: Creates a draft email message for a specified user.
+### 2. **List Calendars**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userId}}/calendars`
+   - **What it does**: Retrieves a list of all calendars associated with a user.
    - **Configuration**:
      - Requires `userId` (the unique identifier of the user).
      - Requires **Bearer Token** authentication using `microsoft_access_token`.
-     - The request body must include the email content, such as subject, body, and recipients.
-   - **Use case**: Use this method to programmatically create draft emails that can be later sent by the user.
+   - **Use case**: Use this method to list all calendars for a specific user, such as personal, work, or shared calendars.
+
+#### Example Request:
+```http
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/calendars
+Authorization: Bearer {{microsoft_access_token}}
+```
+
+### 3. **Create Calendar**
+   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/users/{{userId}}/calendars`
+   - **What it does**: Creates a new calendar for a specific user.
+   - **Configuration**:
+     - Requires `userId` (the unique identifier of the user).
+     - Requires **Bearer Token** authentication using `microsoft_access_token`.
+     - The request body must contain the calendar name and other optional details.
+   - **Use case**: Use this method to programmatically create new calendars for organizing events or meetings.
 
 #### Example Request Body:
 ```json
 {
-  "subject": "Project Update",
+  "name": "New Calendar"
+}
+```
+
+#### Example Request:
+```http
+POST https://graph.microsoft.com/v1.0/users/{{userId}}/calendars
+Authorization: Bearer {{microsoft_access_token}}
+Content-Type: application/json
+```
+
+### 4. **Create Event**
+   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/users/{{userId}}/calendars/{{calendarId}}/events`
+   - **What it does**: Creates a new event in a specified calendar for a specific user.
+   - **Configuration**:
+     - Requires `userId`, `calendarId` (the unique identifiers of the user and calendar).
+     - Requires **Bearer Token** authentication using `microsoft_access_token`.
+     - The request body must include details of the event such as subject, start and end time, location, and attendees.
+   - **Use case**: Use this method to schedule meetings, appointments, or reminders programmatically.
+
+#### Example Request Body:
+```json
+{
+  "subject": "Team Meeting",
   "body": {
     "contentType": "HTML",
-    "content": "Here's the latest update on the project..."
+    "content": "Discuss project updates."
   },
-  "toRecipients": [
+  "start": {
+    "dateTime": "2024-10-10T14:00:00",
+    "timeZone": "Pacific Standard Time"
+  },
+  "end": {
+    "dateTime": "2024-10-10T15:00:00",
+    "timeZone": "Pacific Standard Time"
+  },
+  "location": {
+    "displayName": "Conference Room"
+  },
+  "attendees": [
     {
       "emailAddress": {
-        "address": "recipient@example.com"
-      }
+        "address": "user@example.com",
+        "name": "User Example"
+      },
+      "type": "required"
     }
   ]
 }
@@ -63,42 +99,28 @@ Authorization: Bearer {{microsoft_access_token}}
 
 #### Example Request:
 ```http
-POST https://graph.microsoft.com/v1.0/users/{{userId}}/messages
+POST https://graph.microsoft.com/v1.0/users/{{userId}}/calendars/{{calendarId}}/events
 Authorization: Bearer {{microsoft_access_token}}
 Content-Type: application/json
 ```
 
-### 4. **Filter Messages Since a Certain Date**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userId}}/messages?$filter=receivedDateTime ge {{certainDate}}`
-   - **What it does**: Retrieves a list of messages received since a specific date.
+### 5. **Get Calendar**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userId}}/calendars/{{calendarId}}`
+   - **What it does**: Retrieves details of a specific calendar by its `calendarId`.
    - **Configuration**:
-     - Requires `userId` and `certainDate` (in ISO 8601 format).
+     - Requires `userId` and `calendarId` (the unique identifiers of the user and the calendar).
      - Requires **Bearer Token** authentication using `microsoft_access_token`.
-   - **Use case**: Use this method to filter and retrieve messages based on the date they were received, useful for narrowing down email searches.
+   - **Use case**: Use this method to retrieve details about a specific calendar, such as its name, owner, and events.
 
 #### Example Request:
 ```http
-GET https://graph.microsoft.com/v1.0/users/{{userId}}/messages?$filter=receivedDateTime ge 2024-10-01T00:00:00Z
-Authorization: Bearer {{microsoft_access_token}}
-```
-
-### 5. **Filter Messages by Attachments**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userId}}/messages?$filter=hasAttachments eq true`
-   - **What it does**: Retrieves a list of messages that have attachments.
-   - **Configuration**:
-     - Requires `userId` (the unique identifier of the user).
-     - Requires **Bearer Token** authentication using `microsoft_access_token`.
-   - **Use case**: Use this method to retrieve only the messages that include file attachments.
-
-#### Example Request:
-```http
-GET https://graph.microsoft.com/v1.0/users/{{userId}}/messages?$filter=hasAttachments eq true
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/calendars/{{calendarId}}
 Authorization: Bearer {{microsoft_access_token}}
 ```
 
 ## 3. Configuration
 
-To use the Microsoft Outlook API, you must authenticate using an **OAuth2 Bearer Token**. This token provides access to the user's email messages and allows for the creation, filtering, and retrieval of messages.
+To use the Microsoft Calendar API, you must authenticate using an **OAuth2 Bearer Token**. This token provides access to the user's calendars and events for managing their schedule programmatically.
 
 ### 1. **Bearer Token Setup**
    - The Microsoft Graph API requires OAuth2 authentication to generate an access token.
@@ -107,8 +129,8 @@ To use the Microsoft Outlook API, you must authenticate using an **OAuth2 Bearer
 
 ### 2. **Required Scopes**
    The following OAuth2 scopes are typically required:
-   - `Mail.Read`: Allows reading user email messages.
-   - `Mail.ReadWrite`: Allows reading and writing user email messages.
+   - `Calendars.Read`: Allows reading user calendars.
+   - `Calendars.ReadWrite`: Allows reading and writing user calendars and events.
 
 ### 3. **JSON Configuration Example**
 
@@ -118,11 +140,11 @@ To use the Microsoft Outlook API, you must authenticate using an **OAuth2 Bearer
 }
 ```
 
-This configuration allows secure access to Microsoft Outlook for managing, filtering, and retrieving emails programmatically.
+This configuration allows secure access to Microsoft Calendar for managing and retrieving user calendars and events.
 
 ## 4. Links to Documentation
 
-- [Microsoft Outlook (Mail) API Documentation](https://learn.microsoft.com/en-us/graph/api/resources/mail-api-overview?view=graph-rest-1.0)
+- [Microsoft Calendar API Documentation](https://learn.microsoft.com/en-us/graph/api/resources/calendar?view=graph-rest-1.0)
 - [Microsoft Graph API Access Setup](https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)
 
-This documentation provides a guide to interacting with the Microsoft Outlook (Mail) API, enabling secure access to email messages and supporting features like filtering, listing, and creating draft messages using OAuth2 Bearer Token authentication.
+This documentation provides a guide to interacting with the Microsoft Calendar API, enabling secure access to calendars and events with OAuth2 Bearer Token authentication.
