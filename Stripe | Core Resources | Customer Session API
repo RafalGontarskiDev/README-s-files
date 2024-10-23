@@ -1,0 +1,60 @@
+# Stripe | Core Resources | Customer Session API Plugin Documentation
+
+## 1. Overview
+
+The **Stripe Core Resources | Customer Session API Plugin** allows integration with Stripe’s Customer Session API, enabling users to create customer sessions for managing customer interactions. Authentication is managed through **Basic Authentication** using `api_key` (your Stripe API key), ensuring secure access to Stripe resources.
+
+## 2. Available Methods
+
+### 1. **Create a Customer Session**
+   - **Endpoint**: `POST https://api.stripe.com/v1/customer_sessions`
+   - **What it does**: Creates a customer session in Stripe, used to manage and track a customer's activity, typically during payment processing or subscriptions.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `api_key` as the username.
+     - The request body must include relevant customer information, such as `customer`, and session details like `mode` (payment, subscription, etc.).
+   - **Use case**: Use this method to create a new customer session for handling payments, subscriptions, or checkout events.
+
+#### Example Request Body:
+```json
+{
+  "customer": "cus_12345",
+  "payment_method_types[]": "card",
+  "mode": "payment",
+  "success_url": "https://your-success-url.com",
+  "cancel_url": "https://your-cancel-url.com"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.stripe.com/v1/customer_sessions
+Authorization: Basic {{base64_encoded(api_key:)}}
+Content-Type: application/x-www-form-urlencoded
+```
+
+## 3. Configuration
+
+To use the Stripe Customer Session API, you must authenticate using **Basic Authentication** with your `api_key`. The API key is passed as the username in the Basic Authentication scheme.
+
+### 1. **Basic Authentication Setup**
+   - Use your Stripe API key as the `username` for Basic Authentication.
+   - No password is required, but the `:` character is still used in the `base64` encoding.
+   - The Authorization header will look like this:
+     - `Authorization: Basic base64(api_key:)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "api_key": "your_stripe_api_key"
+}
+```
+
+This configuration allows secure access to Stripe for creating and managing customer sessions.
+
+## 4. Links to Documentation
+
+- [Stripe Customer Session API Documentation](https://docs.stripe.com/api/customer_sessions)
+- [Stripe API Access Setup](https://stripe.com/docs/keys)
+
+This documentation provides a guide to interacting with the Stripe Customer Session API, enabling secure access to customer sessions using Basic Authentication with your Stripe API key.
