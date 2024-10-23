@@ -1,0 +1,88 @@
+# Mollie API Plugin Documentation
+
+## 1. Overview
+
+The **Mollie API Plugin** allows integration with Mollie's payment platform, enabling users to create and manage payments. Authentication is managed through **Bearer Authentication** using `Test_Api_key`, ensuring secure access to Mollie's resources.
+
+## 2. Available Methods
+
+### 1. **Create a Payment**
+   - **Endpoint**: `POST https://api.mollie.com/v2/payments`
+   - **What it does**: Creates a new payment, allowing customers to complete their payments through Mollie’s supported payment methods.
+   - **Configuration**:
+     - Requires **Bearer Authentication** using `Test_Api_key`.
+     - The request body must include details such as the payment amount, currency, and the redirect URL after payment.
+   - **Use case**: Use this method to create a payment for products or services and redirect the customer to complete their payment.
+
+#### Example Request Body:
+```json
+{
+  "amount": {
+    "currency": "EUR",
+    "value": "10.00"
+  },
+  "description": "Order #12345",
+  "redirectUrl": "https://your-shop.com/thank-you"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.mollie.com/v2/payments
+Authorization: Bearer {{Test_Api_key}}
+Content-Type: application/json
+```
+
+### 2. **List Payments**
+   - **Endpoint**: `GET https://api.mollie.com/v2/payments?limit={{limit}}`
+   - **What it does**: Retrieves a list of all payments processed through your Mollie account. You can limit the number of results returned using the `limit` parameter.
+   - **Configuration**:
+     - Requires **Bearer Authentication** using `Test_Api_key`.
+     - Optional query parameters can be used to filter and limit the results.
+   - **Use case**: Use this method to retrieve a list of recent payments for tracking and reporting.
+
+#### Example Request:
+```http
+GET https://api.mollie.com/v2/payments?limit=10
+Authorization: Bearer {{Test_Api_key}}
+```
+
+### 3. **Get Payment**
+   - **Endpoint**: `GET https://api.mollie.com/v2/payments/{{id}}`
+   - **What it does**: Retrieves detailed information about a specific payment by its `id`.
+   - **Configuration**:
+     - Requires `id`, the unique identifier of the payment.
+     - Requires **Bearer Authentication** using `Test_Api_key`.
+   - **Use case**: Use this method to retrieve detailed information about a specific payment, including its status, amount, and customer details.
+
+#### Example Request:
+```http
+GET https://api.mollie.com/v2/payments/{{id}}
+Authorization: Bearer {{Test_Api_key}}
+```
+
+## 3. Configuration
+
+To use the Mollie API, you must authenticate using **Bearer Authentication** with your `Test_Api_key`. The API key is included in the Authorization header for all API requests.
+
+### 1. **Bearer Token Setup**
+   - Include your Mollie API key as a Bearer token in the Authorization header.
+   - The Authorization header will look like this:
+     - `Authorization: Bearer your_test_api_key`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "Test_Api_key": "your_mollie_test_api_key"
+}
+```
+
+This configuration ensures secure access to Mollie's payment platform for creating, listing, and retrieving payments.
+
+## 4. Links to Documentation
+
+- [Mollie API Documentation](https://docs.mollie.com/reference/v2/payments-api/create-payment)
+- [Mollie API Access Setup](https://docs.mollie.com/overview/authentication)
+
+This documentation provides a guide to interacting with the Mollie API, enabling secure payment creation and management using Bearer Authentication with your Mollie Test API key.
