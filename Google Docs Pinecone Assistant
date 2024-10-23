@@ -1,0 +1,64 @@
+# Google Docs Pinecone Assistant Documentation
+
+## 1. Overview
+
+The **Google Docs Pinecone Assistant** plugin integrates Google Drive and Google Docs with Pinecone, allowing seamless access to Google documents, file management, and advanced data processing through Pinecone’s vector database. This plugin enables users to retrieve documents from Google Drive and Google Docs and upload them to Pinecone for further analysis or storage.
+
+## 2. Available Methods
+
+### 1. **Get Files List from Google Drive**
+   - **Endpoint**: `GET https://www.googleapis.com/drive/v3/files`
+   - **What it does**: Retrieves a list of files from Google Drive.
+   - **Configuration**:
+     - Requires OAuth2 authentication with the `https://www.googleapis.com/auth/drive.readonly` or `https://www.googleapis.com/auth/drive` scopes.
+   - **Use case**: Fetch a list of files stored in a user's Google Drive, enabling users to select a document for further processing or upload.
+
+### 2. **Get Document by ID from Google Docs**
+   - **Endpoint**: `GET https://docs.googleapis.com/v1/documents/{{documentId}}`
+   - **What it does**: Retrieves the content and metadata of a Google Document by its unique `documentId`.
+   - **Configuration**:
+     - Requires OAuth2 authentication with the `https://www.googleapis.com/auth/documents.readonly` or `https://www.googleapis.com/auth/documents` scope.
+     - Requires `documentId`, the unique identifier for the document in Google Docs.
+   - **Use case**: Retrieve the contents of a Google Doc for viewing, editing, or uploading to Pinecone.
+
+### 3. **Upload File to Pinecone Assistant**
+   - **Endpoint**: `POST https://prod-1-data.ke.pinecone.io/assistant/files/{{ASSISTANT_NAME}}`
+   - **What it does**: Uploads a document from Google Docs or Google Drive into Pinecone for vector-based storage and further analysis.
+   - **Configuration**:
+     - Requires `ASSISTANT_NAME`, the name of the Pinecone assistant.
+     - Requires a valid Pinecone API key to authorize the upload.
+     - The document fetched from Google Docs or Google Drive must be provided in the request body.
+   - **Use case**: Store the contents of a Google Document or a file from Google Drive in Pinecone for processing, analysis, or future retrieval.
+
+## 3. Configuration
+
+### 1. **OAuth2 Setup for Google APIs**
+   - **Google Drive API** and **Google Docs API** require OAuth2 for authentication, allowing the plugin to act on behalf of the user with delegated access.
+   - The following OAuth2 scopes should be added based on the methods you intend to use:
+     - `https://www.googleapis.com/auth/drive.readonly` for read-only access to Google Drive.
+     - `https://www.googleapis.com/auth/drive` for full access to Google Drive.
+     - `https://www.googleapis.com/auth/documents.readonly` for read-only access to Google Docs.
+     - `https://www.googleapis.com/auth/documents` for full access to Google Docs.
+
+### 2. **Pinecone API Key**
+   - You will need an API key from Pinecone to upload files into the vector database.
+   - The Pinecone assistant will handle the file storage and analysis based on the documents retrieved from Google Drive or Google Docs.
+
+### 3. **JSON Configuration Example**
+
+```json
+{
+  "Google_OAuth_token": "your_google_oauth_access_token",
+  "Pinecone_API_key": "your_pinecone_api_key"
+}
+```
+
+This configuration ensures secure access to Google APIs and Pinecone, enabling the plugin to interact with both platforms efficiently.
+
+## 4. Links to Documentation
+
+- [Google Drive API Documentation](https://developers.google.com/drive/api/v3/reference)
+- [Google Docs API Documentation](https://developers.google.com/docs/api/reference/rest)
+- [Pinecone API Documentation](https://docs.pinecone.io)
+
+This documentation provides a detailed guide for integrating Google Drive, Google Docs, and Pinecone, enabling seamless interaction between document storage, file retrieval, and vector-based data processing.
