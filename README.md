@@ -1,72 +1,22 @@
-# Jotform API Plugin Documentation
+# Jotform Dashboard Documentation
 
 ## 1. Overview
 
-The **Jotform API Plugin** provides integration with Jotform, allowing users to retrieve forms, create new forms, and access form submissions. The plugin utilizes API key authentication to securely interact with Jotform data. It simplifies form management and submissions retrieval for a variety of use cases, including automation, reporting, and data analysis.
+The **Jotform Dashboard** integrates with the Jotform API to create a user-friendly interface for managing and viewing forms. It provides an overview of existing forms and allows you to easily interact with them, offering templates for root pages and forms that display a list of forms (Overview). The dashboard can be customized to include additional features like form submissions, creation, and editing.
 
-## 2. Available Methods
+## 2. Integration with Jotform API
 
-### 1. **Get Form by ID**
-   - **Endpoint**: `GET https://eu-api.jotform.com/form/{{formID}}`
-   - **What it does**: Retrieves a specific form by its unique form ID.
-   - **Configuration**:
-     - Requires `formID`, the unique identifier of the form in Jotform.
-     - Requires an API key with read access to the form.
-   - **Use case**: Use this method to retrieve the structure, settings, and details of a specific form for display or analysis.
+This dashboard leverages the **Jotform API** to retrieve, display, and manage forms. Using the API, the dashboard pulls the list of forms associated with a user and provides an easy-to-use interface for viewing and interacting with those forms.
 
-### 2. **Create Form**
-   - **Endpoint**: `POST https://eu-api.jotform.com/form`
-   - **What it does**: Creates a new form in Jotform.
-   - **Configuration**:
-     - Requires an API key with full access to create forms.
-     - The request body should contain the necessary form details, such as the form title, questions, and other settings.
-   - **Use case**: Automatically generate new forms for various use cases like surveys, feedback collection, or registration forms.
+## 3. Templates
 
-#### Example Request Body:
-```json
-{
-  "title": "New Form",
-  "questions": [
-    {
-      "type": "control_textbox",
-      "text": "Your Name",
-      "name": "q1"
-    }
-  ]
-}
-```
+### 1. **Form Overview Page (List of Forms)**
+This template displays an overview of all the forms retrieved from the Jotform API. The form list provides a basic view of each form’s title, ID, and options to view submissions or edit the form.
 
-### 3. **Get Form Submissions**
-   - **Endpoint**: `GET https://eu-api.jotform.com/form/{{formId}}/submissions`
-   - **What it does**: Retrieves the submissions of a specified form by its unique form ID.
-   - **Configuration**:
-     - Requires `formId`, the unique identifier of the form.
-     - Requires an API key with read access to the form and its submissions.
-   - **Use case**: Use this method to gather form responses for analysis, reporting, or exporting submission data to other systems.
+[Forms Ovierview](https://github.com/RafalGontarskiDev/README-s-files/blob/main/Jotform%20Forms%20Overview.png)
 
-## 3. Configuration
-
-To use this plugin, you will need to authenticate using a **Jotform API key**. The API key must have the appropriate permissions based on the actions you intend to perform (read access for retrieving forms or submissions, full access for creating forms).
-
-### 1. **Jotform API Key**
-   - You can generate an API key by logging into your Jotform account:
-     - Navigate to **My Account** > **API**.
-     - Generate a new API key with the necessary permissions (e.g., read, create).
-     - Store this key securely, as it will be required for all API requests.
-
-### 2. **JSON Configuration Example**
-
-```json
-{
-  "API_Key": "your_jotform_api_key"
-}
-```
-
-This configuration allows you to authenticate with Jotform and use the described methods to interact with forms and submissions.
-
-## 4. Links to Documentation
+## 4. Links to Jotform API
 
 - [Jotform API Documentation](https://api.jotform.com/docs/)
-- [Jotform API Key Setup](https://www.jotform.com/help/253-how-to-create-a-jotform-api-key)
 
-This documentation provides a detailed guide to working with the Jotform API, ensuring smooth interaction with forms and submissions while maintaining secure API key access.
+This dashboard integrates with the Jotform API, allowing seamless interaction with your forms and offering a smooth user experience for managing form-related activities.
