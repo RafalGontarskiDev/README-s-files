@@ -1,65 +1,123 @@
-# Microsoft Planner API Plugin Documentation
+# Microsoft Sites and Lists API Plugin Documentation
 
 ## 1. Overview
 
-The **Microsoft Planner API Plugin** provides integration with Microsoft Planner, allowing users to retrieve, create, and manage plans and buckets. Authentication is handled through a **Bearer Access Token** using the `microsoft_access_token`. This API enables smooth task management and project organization in Microsoft Planner.
+The **Microsoft Sites and Lists API Plugin** allows interaction with Microsoft SharePoint sites and lists. You can retrieve, search, create, and manage sites, lists, and list items. Authentication is handled through a **Bearer Access Token** using the `microsoft_access_token`, ensuring secure access to resources within Microsoft SharePoint.
 
 ## 2. Available Methods
 
-### 1. **Get Planner Plan**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/planner/plans/{{planId}}`
-   - **What it does**: Retrieves the details of a specific plan by its `planId`.
+### 1. **Get Site by Server Relative URL**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/sites/{{hostname}}:/sites/{{serverRelativePath}}`
+   - **What it does**: Retrieves a site by its server-relative URL.
    - **Configuration**:
-     - Requires `planId`, the unique identifier of the plan.
+     - Requires `hostname` (e.g., `example.sharepoint.com`).
+     - Requires `serverRelativePath`, the path to the site.
      - Requires **Bearer Token** authentication using `microsoft_access_token`.
-   - **Use case**: Use this method to get detailed information about a specific Microsoft Planner plan, such as the plan title, owner, and creation date.
+   - **Use case**: Use this method to retrieve site metadata and details based on the server-relative URL.
 
 #### Example Request:
 ```http
-GET https://graph.microsoft.com/v1.0/planner/plans/{{planId}}
+GET https://graph.microsoft.com/v1.0/sites/{{hostname}}:/sites/{{serverRelativePath}}
 Authorization: Bearer {{microsoft_access_token}}
 ```
 
-### 2. **List Buckets in a Plan**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/planner/plans/{{planId}}/buckets`
-   - **What it does**: Retrieves a list of all buckets within a specific plan.
+### 2. **Get Metadata for a List**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/sites/{{siteId}}/lists/{{listId}}`
+   - **What it does**: Retrieves metadata for a specific list by its `listId`.
    - **Configuration**:
-     - Requires `planId`, the unique identifier of the plan.
+     - Requires `siteId` and `listId`.
      - Requires **Bearer Token** authentication using `microsoft_access_token`.
-   - **Use case**: Use this method to get a list of all buckets (task categories) in a specific plan for task organization.
+   - **Use case**: Use this method to retrieve information about a specific list on a SharePoint site.
 
 #### Example Request:
 ```http
-GET https://graph.microsoft.com/v1.0/planner/plans/{{planId}}/buckets
+GET https://graph.microsoft.com/v1.0/sites/{{siteId}}/lists/{{listId}}
 Authorization: Bearer {{microsoft_access_token}}
 ```
 
-### 3. **Create Planner Plan**
-   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/planner/plans`
-   - **What it does**: Creates a new plan in Microsoft Planner.
+### 3. **Get List Item**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/sites/{{siteId}}/lists/{{listId}}/items/{{itemId}}`
+   - **What it does**: Retrieves a specific item from a list by its `itemId`.
    - **Configuration**:
+     - Requires `siteId`, `listId`, and `itemId`.
      - Requires **Bearer Token** authentication using `microsoft_access_token`.
-     - The request body must include details such as the title of the plan and the owner group ID.
-   - **Use case**: Use this method to programmatically create new plans for project management or task organization in Microsoft Planner.
+   - **Use case**: Use this method to fetch a specific item (e.g., a task or document) from a SharePoint list.
+
+#### Example Request:
+```http
+GET https://graph.microsoft.com/v1.0/sites/{{siteId}}/lists/{{listId}}/items/{{itemId}}
+Authorization: Bearer {{microsoft_access_token}}
+```
+
+### 4. **Search for Sites**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/sites?search={{query}}`
+   - **What it does**: Searches for sites within a tenant based on a query string.
+   - **Configuration**:
+     - Requires `query`, the search term to find matching sites.
+     - Requires **Bearer Token** authentication using `microsoft_access_token`.
+   - **Use case**: Use this method to search for SharePoint sites matching a specific query (e.g., "marketing" or "projects").
+
+#### Example Request:
+```http
+GET https://graph.microsoft.com/v1.0/sites?search={{query}}
+Authorization: Bearer {{microsoft_access_token}}
+```
+
+### 5. **Create a New List**
+   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/sites/{{siteId}}/lists`
+   - **What it does**: Creates a new list on a specified SharePoint site.
+   - **Configuration**:
+     - Requires `siteId`, the unique identifier of the site.
+     - Requires **Bearer Token** authentication using `microsoft_access_token`.
+     - The request body must contain the list name and other relevant details.
+   - **Use case**: Use this method to create a new list for managing items such as tasks, documents, or inventory.
 
 #### Example Request Body:
 ```json
 {
-  "title": "New Project Plan",
-  "owner": "group-id"
+  "displayName": "New List",
+  "list": {
+    "template": "genericList"
+  }
 }
 ```
 
 #### Example Request:
 ```http
-POST https://graph.microsoft.com/v1.0/planner/plans
+POST https://graph.microsoft.com/v1.0/sites/{{siteId}}/lists
+Authorization: Bearer {{microsoft_access_token}}
+Content-Type: application/json
+```
+
+### 6. **Create a List Item**
+   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/sites/{{siteId}}/lists/{{listId}}/items`
+   - **What it does**: Adds a new item to a specific list on a SharePoint site.
+   - **Configuration**:
+     - Requires `siteId` and `listId`.
+     - Requires **Bearer Token** authentication using `microsoft_access_token`.
+     - The request body should contain the fields and values for the new item.
+   - **Use case**: Use this method to programmatically add items to an existing list, such as tasks or records.
+
+#### Example Request Body:
+```json
+{
+  "fields": {
+    "Title": "New Task",
+    "Description": "Description for the new task"
+  }
+}
+```
+
+#### Example Request:
+```http
+POST https://graph.microsoft.com/v1.0/sites/{{siteId}}/lists/{{listId}}/items
 Authorization: Bearer {{microsoft_access_token}}
 Content-Type: application/json
 ```
 
 ## 3. Configuration
 
-To use the Microsoft Planner API, you need to authenticate using an **OAuth2 Bearer Token**. This token provides access to Planner resources like plans and buckets for the authenticated user.
+To use the Microsoft Sites and Lists API, you need to authenticate using an **OAuth2 Bearer Token**. This token provides access to SharePoint sites and lists for the authenticated user.
 
 ### 1. **Bearer Token Setup**
    - The Microsoft Graph API requires OAuth2 authentication to generate an access token.
@@ -68,8 +126,8 @@ To use the Microsoft Planner API, you need to authenticate using an **OAuth2 Bea
 
 ### 2. **Required Scopes**
    The following OAuth2 scopes are typically required:
-   - `Tasks.Read`: Allows reading Microsoft Planner tasks and plans.
-   - `Tasks.ReadWrite`: Allows reading and writing Microsoft Planner tasks and plans.
+   - `Sites.Read.All`: Allows reading SharePoint sites and lists.
+   - `Sites.ReadWrite.All`: Allows reading and writing to SharePoint sites and lists.
 
 ### 3. **JSON Configuration Example**
 
@@ -79,11 +137,11 @@ To use the Microsoft Planner API, you need to authenticate using an **OAuth2 Bea
 }
 ```
 
-This configuration allows secure access to Microsoft Planner for retrieving and managing plans and buckets.
+This configuration allows secure access to Microsoft SharePoint sites and lists for managing content programmatically.
 
 ## 4. Links to Documentation
 
-- [Microsoft Planner API Documentation](https://learn.microsoft.com/en-us/graph/api/resources/planner-overview?view=graph-rest-1.0)
+- [Microsoft Sites and Lists API Documentation](https://learn.microsoft.com/en-us/graph/api/resources/sharepoint?view=graph-rest-1.0)
 - [Microsoft Graph API Access Setup](https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)
 
-This documentation provides an easy guide to integrating with Microsoft Planner through the Graph API, allowing for secure and efficient management of plans and buckets using OAuth2 Bearer Token authentication.
+This documentation provides a clear guide to interacting with Microsoft SharePoint sites and lists using the Microsoft Graph API with OAuth2 Bearer Token authentication.
