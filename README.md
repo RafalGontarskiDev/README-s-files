@@ -1,83 +1,59 @@
-# Microsoft Teams API Plugin Documentation
+# Microsoft Contacts API Plugin Documentation
 
 ## 1. Overview
 
-The **Microsoft Teams API Plugin** allows integration with Microsoft Teams for managing teams, adding members, and creating new teams. Authentication is handled through a **Bearer Access Token** using `microsoft_access_token`, which enables secure access to Teams resources via Microsoft Graph API.
+The **Microsoft Contacts API Plugin** allows integration with Microsoft Contacts, enabling users to manage their contacts by retrieving and creating contact information. Authentication is managed through a **Bearer Access Token** using `microsoft_access_token`, which provides secure access to user contacts via the Microsoft Graph API.
 
 ## 2. Available Methods
 
-### 1. **Get Team**
-   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/teams/{{teamId}}`
-   - **What it does**: Retrieves details of a specific team by its `teamId`.
+### 1. **Get Contact**
+   - **Endpoint**: `GET https://graph.microsoft.com/v1.0/users/{{userId}}/contacts/{{contactId}}`
+   - **What it does**: Retrieves a specific contact by its `contactId` for a given user.
    - **Configuration**:
-     - Requires `teamId`, the unique identifier of the team.
+     - Requires `userId` and `contactId` (the unique identifiers for the user and the contact).
      - Requires **Bearer Token** authentication using `microsoft_access_token`.
-   - **Use case**: Use this method to fetch information about a team, such as team name, description, members, and settings.
+   - **Use case**: Use this method to fetch detailed information about a specific contact, including their name, email, phone number, and other details.
 
 #### Example Request:
 ```http
-GET https://graph.microsoft.com/v1.0/teams/{{teamId}}
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/contacts/{{contactId}}
 Authorization: Bearer {{microsoft_access_token}}
 ```
 
-### 2. **Add Member to a Team**
-   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/teams/{{teamId}}/members`
-   - **What it does**: Adds a new member to a specific team.
+### 2. **Create Contact**
+   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/users/{{userId}}/contacts`
+   - **What it does**: Creates a new contact for a specific user.
    - **Configuration**:
-     - Requires `teamId`, the unique identifier of the team.
+     - Requires `userId`, the unique identifier of the user.
      - Requires **Bearer Token** authentication using `microsoft_access_token`.
-     - The request body must include the member's user details and role (e.g., owner or member).
-   - **Use case**: Use this method to add new members to a team, either as team owners or regular members.
+     - The request body must contain the contact details such as name, email, and phone number.
+   - **Use case**: Use this method to programmatically add new contacts to a user's address book.
 
 #### Example Request Body:
 ```json
 {
-  "@odata.type": "#microsoft.graph.aadUserConversationMember",
-  "roles": ["member"],
-  "user@odata.bind": "https://graph.microsoft.com/v1.0/users/{{userId}}"
-}
-```
-
-#### Example Request:
-```http
-POST https://graph.microsoft.com/v1.0/teams/{{teamId}}/members
-Authorization: Bearer {{microsoft_access_token}}
-Content-Type: application/json
-```
-
-### 3. **Create Team**
-   - **Endpoint**: `POST https://graph.microsoft.com/v1.0/teams`
-   - **What it does**: Creates a new team in Microsoft Teams.
-   - **Configuration**:
-     - Requires **Bearer Token** authentication using `microsoft_access_token`.
-     - The request body must include the team's details, such as display name, description, and member settings.
-   - **Use case**: Use this method to create a new Microsoft Teams team for collaboration, project management, or communication.
-
-#### Example Request Body:
-```json
-{
-  "displayName": "New Team",
-  "description": "This is a new team created via the API",
-  "members": [
+  "givenName": "John",
+  "surname": "Doe",
+  "emailAddresses": [
     {
-      "@odata.type": "#microsoft.graph.aadUserConversationMember",
-      "roles": ["owner"],
-      "user@odata.bind": "https://graph.microsoft.com/v1.0/users/{{userId}}"
+      "address": "johndoe@example.com",
+      "name": "John Doe"
     }
-  ]
+  ],
+  "businessPhones": ["+1 555 555 5555"]
 }
 ```
 
 #### Example Request:
 ```http
-POST https://graph.microsoft.com/v1.0/teams
+POST https://graph.microsoft.com/v1.0/users/{{userId}}/contacts
 Authorization: Bearer {{microsoft_access_token}}
 Content-Type: application/json
 ```
 
 ## 3. Configuration
 
-To use the Microsoft Teams API, you need to authenticate using an **OAuth2 Bearer Token**. This token provides access to Teams resources for managing teams, members, and other settings.
+To use the Microsoft Contacts API, you need to authenticate using an **OAuth2 Bearer Token**. This token provides access to the user's contacts for retrieving or adding contact information.
 
 ### 1. **Bearer Token Setup**
    - The Microsoft Graph API requires OAuth2 authentication to generate an access token.
@@ -86,8 +62,8 @@ To use the Microsoft Teams API, you need to authenticate using an **OAuth2 Beare
 
 ### 2. **Required Scopes**
    The following OAuth2 scopes are typically required:
-   - `Group.ReadWrite.All`: Allows reading and writing Microsoft Teams groups and their properties.
-   - `User.ReadBasic.All`: Allows reading basic user profiles.
+   - `Contacts.Read`: Allows reading user contacts.
+   - `Contacts.ReadWrite`: Allows reading and writing user contacts.
 
 ### 3. **JSON Configuration Example**
 
@@ -97,11 +73,11 @@ To use the Microsoft Teams API, you need to authenticate using an **OAuth2 Beare
 }
 ```
 
-This configuration allows secure access to Microsoft Teams for managing teams, members, and related settings.
+This configuration allows secure access to Microsoft Contacts for managing and retrieving user contacts programmatically.
 
 ## 4. Links to Documentation
 
-- [Microsoft Teams API Documentation](https://learn.microsoft.com/en-us/graph/teams-concept-overview)
+- [Microsoft Contacts API Documentation](https://learn.microsoft.com/en-us/graph/api/resources/contact?view=graph-rest-1.0)
 - [Microsoft Graph API Access Setup](https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)
 
-This documentation provides a guide to interacting with the Microsoft Teams API, enabling secure and efficient management of teams and their members using OAuth2 Bearer Token authentication.
+This documentation provides a guide to interacting with the Microsoft Contacts API, allowing secure access to contacts and enabling the creation and retrieval of contact information using OAuth2 Bearer Token authentication.
