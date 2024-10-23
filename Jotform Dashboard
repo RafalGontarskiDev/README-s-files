@@ -1,0 +1,22 @@
+# Jotform Dashboard Documentation
+
+## 1. Overview
+
+The **Jotform Dashboard** integrates with the Jotform API to create a user-friendly interface for managing and viewing forms. It provides an overview of existing forms and allows you to easily interact with them, offering templates for root pages and forms that display a list of forms (Overview). The dashboard can be customized to include additional features like form submissions, creation, and editing.
+
+## 2. Integration with Jotform API
+
+This dashboard leverages the **Jotform API** to retrieve, display, and manage forms. Using the API, the dashboard pulls the list of forms associated with a user and provides an easy-to-use interface for viewing and interacting with those forms.
+
+## 3. Templates
+
+### 1. **Form Overview Page (List of Forms)**
+This template displays an overview of all the forms retrieved from the Jotform API. The form list provides a basic view of each form’s title, ID, and options to view submissions or edit the form.
+
+
+
+## 4. Links to Jotform API
+
+- [Jotform API Documentation](https://api.jotform.com/docs/)
+
+This dashboard integrates with the Jotform API, allowing seamless interaction with your forms and offering a smooth user experience for managing form-related activities.
