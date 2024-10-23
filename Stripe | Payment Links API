@@ -1,0 +1,58 @@
+# Stripe Payment Links API Plugin Documentation
+
+## 1. Overview
+
+The **Stripe Payment Links API Plugin** allows integration with Stripe's Payment Links, enabling users to create payment links for accepting payments without needing to integrate a full checkout page. Authentication is managed through **Basic Authentication** using `secret_key`, ensuring secure access to Stripe resources.
+
+## 2. Available Methods
+
+### 1. **Create a Payment Link**
+   - **Endpoint**: `POST https://api.stripe.com/v1/payment_links`
+   - **What it does**: Creates a new payment link that can be shared with customers to complete payments using Stripe’s hosted checkout.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `secret_key`.
+     - The request body must include details such as `line_items`, `amount`, `currency`, and any other necessary payment information.
+   - **Use case**: Use this method to generate payment links for specific products or services that can be shared with customers via email, social media, or websites.
+
+#### Example Request Body:
+```json
+{
+  "line_items[0][price]": "price_12345",
+  "line_items[0][quantity]": 1,
+  "after_completion[redirect][url]": "https://your-success-url.com"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.stripe.com/v1/payment_links
+Authorization: Basic {{base64_encoded(secret_key:)}}
+Content-Type: application/x-www-form-urlencoded
+```
+
+## 3. Configuration
+
+To use the Stripe Payment Links API, you must authenticate using **Basic Authentication** with your `secret_key`. The API key is passed as the username in the Basic Authentication scheme.
+
+### 1. **Basic Authentication Setup**
+   - Use your Stripe secret key as the `username` for Basic Authentication.
+   - No password is required, but the `:` character is still used in the `base64` encoding.
+   - The Authorization header will look like this:
+     - `Authorization: Basic base64(secret_key:)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "secret_key": "your_stripe_secret_key"
+}
+```
+
+This configuration allows secure access to Stripe for creating and managing payment links.
+
+## 4. Links to Documentation
+
+- [Stripe Payment Links API Documentation](https://stripe.com/docs/api/payment_links)
+- [Stripe API Access Setup](https://stripe.com/docs/keys)
+
+This documentation provides a guide to interacting with the Stripe Payment Links API, enabling secure creation of payment links using Basic Authentication with your Stripe secret key.
