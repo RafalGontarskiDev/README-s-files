@@ -1,163 +1,140 @@
-# Typeform API Plugin Documentation
+# Google Photos API Plugin Documentation
 
 ## 1. Overview
 
-The **Typeform API Plugin** allows integration with Typeform, enabling users to manage workspaces, forms, and themes. This plugin supports retrieving, creating, and updating workspaces, forms, and themes using **Bearer Personal Access Token** authentication. The API provides robust methods to manage your Typeform data and streamline form workflows.
+The **Google Photos API Plugin** enables seamless interaction with Google Photos, allowing users to manage albums, media items, and create new albums or upload photos. Authentication is managed through **OAuth2 Bearer Access Token**, which includes delegated user access and necessary scopes for secure interaction with the Google Photos API.
 
 ## 2. Available Methods
 
-### 1. **Retrieve Workspaces**
-   - **Endpoint**: `GET https://api.typeform.com/workspaces`
-   - **What it does**: Fetches a list of all workspaces in the account.
+### 1. **Albums List**
+   - **Endpoint**: `GET https://photoslibrary.googleapis.com/v1/albums`
+   - **What it does**: Retrieves a list of albums from the user's Google Photos library.
    - **Configuration**:
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-   - **Use case**: Use this method to retrieve a list of workspaces that are available in your Typeform account for organization or management purposes.
+     - Requires Bearer Token authentication with proper OAuth2 scopes.
+     - **Scopes required**: `https://www.googleapis.com/auth/photoslibrary.readonly`
+   - **Use case**: Use this method to fetch a list of all albums in a user's Google Photos account for display or management.
 
 #### Example Request:
 ```http
-GET https://api.typeform.com/workspaces
-Authorization: Bearer {{PERSONAL_ACCESS_TOKEN}}
+GET https://photoslibrary.googleapis.com/v1/albums
+Authorization: Bearer {{access_token}}
 ```
 
-### 2. **Retrieve Workspace**
-   - **Endpoint**: `GET https://api.typeform.com/workspaces/{{workspaceId}}`
-   - **What it does**: Retrieves information about a specific workspace by its `workspaceId`.
+### 2. **Get Album by ID**
+   - **Endpoint**: `GET https://photoslibrary.googleapis.com/v1/albums/{{albumId}}`
+   - **What it does**: Retrieves details of a specific album by its unique `albumId`.
    - **Configuration**:
-     - Requires `workspaceId`, the unique identifier of the workspace.
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-   - **Use case**: Fetch detailed information about a specific workspace to view its settings, forms, and members.
+     - Requires `albumId`, the unique identifier of the album.
+     - Requires Bearer Token authentication with proper OAuth2 scopes.
+     - **Scopes required**: `https://www.googleapis.com/auth/photoslibrary.readonly`
+   - **Use case**: Use this method to fetch detailed information about a specific album in Google Photos.
 
 #### Example Request:
 ```http
-GET https://api.typeform.com/workspaces/{{workspaceId}}
-Authorization: Bearer {{PERSONAL_ACCESS_TOKEN}}
+GET https://photoslibrary.googleapis.com/v1/albums/{{albumId}}
+Authorization: Bearer {{access_token}}
 ```
 
-### 3. **Retrieve Account Workspaces**
-   - **Endpoint**: `GET https://api.typeform.com/accounts/{{accountId}}/workspaces`
-   - **What it does**: Retrieves all workspaces associated with a specific account.
+### 3. **MediaItems List**
+   - **Endpoint**: `GET https://photoslibrary.googleapis.com/v1/mediaItems`
+   - **What it does**: Retrieves a list of media items (photos and videos) from the user's Google Photos library.
    - **Configuration**:
-     - Requires `accountId`, the unique identifier of the account.
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-   - **Use case**: Use this method to fetch all workspaces tied to a specific Typeform account for organization or auditing purposes.
+     - Requires Bearer Token authentication with proper OAuth2 scopes.
+     - **Scopes required**: `https://www.googleapis.com/auth/photoslibrary.readonly`
+   - **Use case**: Use this method to list all media items (photos and videos) in the user’s Google Photos library.
 
 #### Example Request:
 ```http
-GET https://api.typeform.com/accounts/{{accountId}}/workspaces
-Authorization: Bearer {{PERSONAL_ACCESS_TOKEN}}
+GET https://photoslibrary.googleapis.com/v1/mediaItems
+Authorization: Bearer {{access_token}}
 ```
 
-### 4. **Create Account Workspace**
-   - **Endpoint**: `POST https://api.typeform.com/accounts/{{account_id}}/workspaces`
-   - **What it does**: Creates a new workspace under a specified account.
+### 4. **Media Items Batch Create**
+   - **Endpoint**: `POST https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate`
+   - **What it does**: Uploads new media items (photos or videos) to the user's Google Photos library in batch.
    - **Configuration**:
-     - Requires `account_id`, the unique identifier of the account.
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-     - The request body must contain details like the workspace name.
-   - **Use case**: Use this method to create a new workspace under a specific account for organizing forms and other resources.
+     - Requires Bearer Token authentication with proper OAuth2 scopes.
+     - **Scopes required**: `https://www.googleapis.com/auth/photoslibrary.appendonly`
+     - The request body must include the media items to be uploaded.
+   - **Use case**: Use this method to programmatically upload photos or videos to the user’s Google Photos library.
 
 #### Example Request Body:
 ```json
 {
-  "name": "New Workspace"
-}
-```
-
-### 5. **Create Workspace**
-   - **Endpoint**: `POST https://api.typeform.com/workspaces`
-   - **What it does**: Creates a new workspace for organizing forms and resources.
-   - **Configuration**:
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-     - The request body must contain details like the workspace name.
-   - **Use case**: Use this method to create a new workspace for better resource management within Typeform.
-
-#### Example Request Body:
-```json
-{
-  "name": "Marketing Workspace"
-}
-```
-
-### 6. **Create Theme**
-   - **Endpoint**: `POST https://api.typeform.com/themes`
-   - **What it does**: Creates a new theme that can be applied to forms.
-   - **Configuration**:
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-     - The request body must include details like the theme name and styles (e.g., colors, fonts).
-   - **Use case**: Use this method to define custom themes for Typeform forms, aligning them with branding or visual preferences.
-
-#### Example Request Body:
-```json
-{
-  "name": "Corporate Theme",
-  "colors": {
-    "question": "#000000",
-    "answer": "#ffffff"
-  }
-}
-```
-
-### 7. **Create Form**
-   - **Endpoint**: `POST https://api.typeform.com/forms`
-   - **What it does**: Creates a new form in Typeform.
-   - **Configuration**:
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-     - The request body should include form fields, logic, and layout.
-   - **Use case**: Use this method to programmatically create new forms for surveys, data collection, or feedback.
-
-#### Example Request Body:
-```json
-{
-  "title": "Customer Feedback",
-  "fields": [
+  "newMediaItems": [
     {
-      "title": "How satisfied are you with our service?",
-      "type": "rating",
-      "properties": {
-        "steps": 5
+      "description": "Vacation photo",
+      "simpleMediaItem": {
+        "uploadToken": "your_upload_token"
       }
     }
   ]
 }
 ```
 
-### 8. **Update Workspace**
-   - **Endpoint**: `PATCH https://api.typeform.com/workspaces/{{workspaceId}}`
-   - **What it does**: Updates details of a specific workspace, such as its name or members.
+#### Example Request:
+```http
+POST https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+```
+
+### 5. **Create Album**
+   - **Endpoint**: `POST https://photoslibrary.googleapis.com/v1/albums`
+   - **What it does**: Creates a new album in the user's Google Photos library.
    - **Configuration**:
-     - Requires `workspaceId`, the unique identifier of the workspace.
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-     - The request body must include the fields to update, such as the new name or updated members.
-   - **Use case**: Use this method to modify existing workspaces, update their configurations, or rename them for better organization.
+     - Requires Bearer Token authentication with proper OAuth2 scopes.
+     - **Scopes required**: `https://www.googleapis.com/auth/photoslibrary`
+     - The request body must contain details about the new album, such as its title.
+   - **Use case**: Use this method to create new albums for organizing photos and videos in Google Photos.
 
 #### Example Request Body:
 ```json
 {
-  "name": "Updated Workspace Name"
+  "album": {
+    "title": "New Album"
+  }
 }
+```
+
+#### Example Request:
+```http
+POST https://photoslibrary.googleapis.com/v1/albums
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
 ```
 
 ## 3. Configuration
 
-To use this plugin, you need to authenticate using a **Bearer Personal Access Token**. This token should be securely stored and passed in the headers of all requests to the Typeform API.
+To use this plugin, you must authenticate using **OAuth2 Bearer Access Token** with the appropriate scopes for each method. The access token grants permission for specific actions on behalf of the user.
 
-### 1. **Bearer Token Setup**
-   - You can generate a Personal Access Token from your Typeform account settings.
-   - This token should be included in the authorization headers of your API requests.
+### 1. **OAuth2 Setup for Google Photos API**
+   - **Delegated user type**: The plugin acts on behalf of the authenticated user, allowing it to access their Google Photos library.
+   - **Required Scopes**:
+     - `https://www.googleapis.com/auth/photoslibrary.readonly`: Read-only access to view media items and albums.
+     - `https://www.googleapis.com/auth/photoslibrary.appendonly`: Allows appending new media items.
+     - `https://www.googleapis.com/auth/photoslibrary`: Full access to create and modify albums and media.
+   - The OAuth2 consent flow must be followed to obtain the **access token**, which is then used in the Authorization header for API requests.
 
-### 2. **JSON Configuration Example**
+### 2. **Steps to Configure OAuth2**
+   - Create a Google Cloud project and enable the **Google Photos API**.
+   - Configure OAuth2 credentials in the Google Cloud Console.
+   - Generate an **access token** for the authenticated user by completing the OAuth2 consent flow with the required scopes.
+   - Use the **Bearer access token** in API requests for authentication.
+
+### 3. **JSON Configuration Example**
 
 ```json
 {
-  "PERSONAL_ACCESS_TOKEN": "your_typeform_access_token"
+  "access_token": "your_google_oauth_access_token"
 }
 ```
 
-This configuration ensures secure access to Typeform's API for managing workspaces, forms, and themes.
+This configuration allows secure access to the Google Photos API for retrieving and managing albums and media items.
 
 ## 4. Links to Documentation
 
-- [Typeform API Documentation](https://developer.typeform.com/)
-- [Typeform API Access Setup](https://www.typeform.com/help/a/where-can-i-find-my-api-key-360029581691/)
+- [Google Photos API Documentation](https://developers.google.com/photos/library/reference/rest)
+- [Google OAuth2 Setup](https://developers.google.com/identity/protocols/oauth2)
 
-This documentation provides a detailed guide to interacting with the Typeform API, enabling seamless management of workspaces, forms, and themes using secure Bearer Token authentication.
+This documentation provides a detailed guide to interacting with the Google Photos API, ensuring secure and efficient management of photos, albums, and media items with proper OAuth2 authentication.
