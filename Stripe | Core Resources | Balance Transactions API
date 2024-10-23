@@ -1,0 +1,62 @@
+# Stripe Core Resources | Balance Transactions API Plugin Documentation
+
+## 1. Overview
+
+The **Stripe Core Resources | Balance Transactions API Plugin** allows integration with Stripe’s Balance Transactions API, enabling users to retrieve and list balance transactions in their Stripe account. Authentication is managed through **Basic Authentication** using `api_key` (your Stripe API key), ensuring secure access to Stripe resources.
+
+## 2. Available Methods
+
+### 1. **Retrieve a Balance Transaction**
+   - **Endpoint**: `GET https://api.stripe.com/v1/balance_transactions/{{transactionId}}`
+   - **What it does**: Retrieves detailed information about a specific balance transaction by its `transactionId`.
+   - **Configuration**:
+     - Requires `transactionId`, the unique identifier of the balance transaction.
+     - Requires **Basic Authentication** using `api_key` as the username.
+   - **Use case**: Use this method to get details about a particular transaction, such as charges, transfers, fees, or refunds.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/balance_transactions/{{transactionId}}
+Authorization: Basic {{base64_encoded(api_key:)}}
+```
+
+### 2. **List All Balance Transactions**
+   - **Endpoint**: `GET https://api.stripe.com/v1/balance_transactions`
+   - **What it does**: Retrieves a list of all balance transactions in your Stripe account. Transactions can be filtered by date, type, or other parameters.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `api_key` as the username.
+     - Optional query parameters can be used to filter transactions (e.g., by `created`, `type`, etc.).
+   - **Use case**: Use this method to list and review all balance transactions associated with your Stripe account, including charges, refunds, and fees.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/balance_transactions
+Authorization: Basic {{base64_encoded(api_key:)}}
+```
+
+## 3. Configuration
+
+To use the Stripe Balance Transactions API, you must authenticate using **Basic Authentication** with your `api_key`. The API key is passed as the username in the Basic Authentication scheme.
+
+### 1. **Basic Authentication Setup**
+   - Use your Stripe API key as the `username` for Basic Authentication.
+   - No password is required, but the `:` character is still used in the `base64` encoding.
+   - The Authorization header will look like this:
+     - `Authorization: Basic base64(api_key:)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "api_key": "your_stripe_api_key"
+}
+```
+
+This configuration allows secure access to Stripe's balance transactions for retrieving and listing transaction details.
+
+## 4. Links to Documentation
+
+- [Stripe Balance Transactions API Documentation](https://stripe.com/docs/api/balance_transactions)
+- [Stripe API Access Setup](https://stripe.com/docs/keys)
+
+This documentation provides a guide to interacting with the Stripe Balance Transactions API, allowing secure access to transaction data using Basic Authentication with your Stripe API key.
