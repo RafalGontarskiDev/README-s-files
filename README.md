@@ -1,62 +1,89 @@
-# Monday API Plugin Documentation
+# Atlassian Trello API Plugin Documentation
 
 ## 1. Overview
 
-The **Monday API Plugin** allows you to interact with Monday.com to retrieve user data and create notifications. This plugin facilitates seamless integration with Monday’s platform, enabling users to fetch information and automate notifications using a **Bearer API Token** for authentication.
+The **Atlassian Trello API Plugin** allows seamless integration with Trello to manage boards and lists. You can create boards, add lists to boards, retrieve board information, and delete boards using the Trello API. Authentication is handled via a **Bearer OAuth Access Token** for secure access to Trello resources.
 
 ## 2. Available Methods
 
-### 1. **Get User Data**
-   - **Endpoint**: `POST https://api.monday.com/v2`
-   - **What it does**: Retrieves user data from Monday.com.
+### 1. **Create a Board**
+   - **Endpoint**: `POST https://api.trello.com/1/boards/?name={{name}}`
+   - **What it does**: Creates a new board in Trello with a specified name.
    - **Configuration**:
-     - Requires a Bearer Token (`Api_token`) for authentication.
-     - The request must contain a GraphQL query to retrieve user-specific details such as name, email, and workspace information.
-   - **Use case**: Use this method to get information about the authenticated user or other users in your Monday workspace for management or reporting purposes.
+     - Requires `name`, the desired name for the new board.
+     - Requires Bearer OAuth access token for authentication.
+   - **Use case**: Use this method to create a new Trello board to organize tasks, projects, or collaborative workspaces.
 
-#### Example Request Body:
-```json
-{
-  "query": "query { users { id name email } }"
-}
+#### Example Request:
+```http
+POST https://api.trello.com/1/boards/?name=New%20Project%20Board
+Authorization: Bearer {{oauth_access_token}}
 ```
 
-### 2. **Create a Notification**
-   - **Endpoint**: `POST https://api.monday.com/v2`
-   - **What it does**: Creates a new notification on Monday.com for a user or board.
+### 2. **Create a List on a Board**
+   - **Endpoint**: `POST https://api.trello.com/1/boards/{{id}}/lists?name={{name}}`
+   - **What it does**: Adds a new list to a specified Trello board.
    - **Configuration**:
-     - Requires a Bearer Token (`Api_token`) for authentication.
-     - The request must contain a GraphQL mutation to specify the recipient, message, and context of the notification.
-   - **Use case**: Use this method to send notifications to users about project updates, task deadlines, or important events within a Monday.com board or workspace.
+     - Requires `id`, the unique identifier of the board.
+     - Requires `name`, the desired name of the new list.
+     - Requires Bearer OAuth access token for authentication.
+   - **Use case**: Use this method to create lists within a Trello board to categorize tasks or workflows.
 
-#### Example Request Body:
-```json
-{
-  "query": "mutation { create_notification (user_id: 123456, text: \"Your task is due tomorrow!\", target_id: 654321, target_type: Project) { id } }"
-}
+#### Example Request:
+```http
+POST https://api.trello.com/1/boards/{{board_id}}/lists?name=To%20Do
+Authorization: Bearer {{oauth_access_token}}
+```
+
+### 3. **Get Board by ID**
+   - **Endpoint**: `GET https://api.trello.com/1/boards/{{id}}`
+   - **What it does**: Retrieves details of a specific Trello board by its ID.
+   - **Configuration**:
+     - Requires `id`, the unique identifier of the board.
+     - Requires Bearer OAuth access token for authentication.
+   - **Use case**: Use this method to fetch detailed information about a specific Trello board, such as its lists, members, and settings.
+
+#### Example Request:
+```http
+GET https://api.trello.com/1/boards/{{board_id}}
+Authorization: Bearer {{oauth_access_token}}
+```
+
+### 4. **Delete a Board**
+   - **Endpoint**: `DELETE https://api.trello.com/1/boards/{{id}}`
+   - **What it does**: Deletes a specified Trello board by its ID.
+   - **Configuration**:
+     - Requires `id`, the unique identifier of the board.
+     - Requires Bearer OAuth access token for authentication.
+   - **Use case**: Use this method to remove an unwanted or completed Trello board from your workspace.
+
+#### Example Request:
+```http
+DELETE https://api.trello.com/1/boards/{{board_id}}
+Authorization: Bearer {{oauth_access_token}}
 ```
 
 ## 3. Configuration
 
-To use this plugin, you will need to authenticate using a **Bearer API Token**. This token must have the appropriate permissions to interact with the Monday.com API based on the actions you intend to perform (fetching user data or creating notifications).
+To use this plugin, you need to authenticate using a **Bearer OAuth Access Token**. This token must have the appropriate permissions for accessing Trello’s API resources based on the actions you intend to perform.
 
-### 1. **Bearer Token Setup**
-   - In Monday.com, you can generate an API token by navigating to your profile settings.
-   - This API token should be included in the headers of all requests to the Monday.com API.
+### 1. **OAuth Access Token Setup**
+   - You can generate an OAuth access token through Trello's developer portal.
+   - The token should be included in the headers of all API requests to authenticate and authorize actions on the Trello boards.
 
 ### 2. **JSON Configuration Example**
 
 ```json
 {
-  "Api_token": "your_monday_api_token"
+  "oauth_access_token": "your_trello_oauth_access_token"
 }
 ```
 
-This configuration ensures secure access to Monday.com’s API for retrieving user data and sending notifications.
+This configuration ensures secure access to the Trello API and allows the plugin to interact with boards and lists.
 
 ## 4. Links to Documentation
 
-- [Monday API Documentation](https://api.developer.monday.com/docs)
-- [Monday API Access Setup](https://support.monday.com/hc/en-us/articles/360013483119-How-to-get-started-with-our-API)
+- [Trello API Documentation](https://developer.atlassian.com/cloud/trello/rest/api-group-boards/)
+- [Trello API Access Setup](https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/)
 
-This documentation provides a detailed guide to working with Monday.com's API, enabling interaction with user data and notifications using secure Bearer Token authentication.
+This documentation provides a guide for managing Trello boards and lists using the API with secure OAuth access token authentication.
