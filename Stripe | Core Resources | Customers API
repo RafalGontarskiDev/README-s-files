@@ -1,0 +1,137 @@
+# Stripe | Core Resources | Customers API Plugin Documentation
+
+## 1. Overview
+
+The **Stripe Core Resources | Customers API Plugin** allows integration with Stripe's customer management functionalities, enabling users to create, retrieve, update, delete, search, and list customers. Authentication is managed through **Basic Authentication** using `api_key` (your Stripe API key), ensuring secure access to Stripe resources.
+
+## 2. Available Methods
+
+### 1. **Retrieve a Customer**
+   - **Endpoint**: `GET https://api.stripe.com/v1/customers/{{customerId}}`
+   - **What it does**: Retrieves detailed information about a specific customer by their `customerId`.
+   - **Configuration**:
+     - Requires `customerId`, the unique identifier of the customer.
+     - Requires **Basic Authentication** using `api_key`.
+   - **Use case**: Use this method to fetch customer details, including email, payment methods, and subscriptions.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/customers/{{customerId}}
+Authorization: Basic {{base64_encoded(api_key:)}}
+```
+
+### 2. **Delete a Customer**
+   - **Endpoint**: `DELETE https://api.stripe.com/v1/customers/{{customerId}}`
+   - **What it does**: Deletes a specific customer by their `customerId`. This will cancel any active subscriptions and remove the customer’s payment methods.
+   - **Configuration**:
+     - Requires `customerId`, the unique identifier of the customer.
+     - Requires **Basic Authentication** using `api_key`.
+   - **Use case**: Use this method to permanently remove a customer from Stripe.
+
+#### Example Request:
+```http
+DELETE https://api.stripe.com/v1/customers/{{customerId}}
+Authorization: Basic {{base64_encoded(api_key:)}}
+```
+
+### 3. **Update a Customer**
+   - **Endpoint**: `POST https://api.stripe.com/v1/customers/{{customerId}}`
+   - **What it does**: Updates an existing customer’s information, such as their email, name, or payment details.
+   - **Configuration**:
+     - Requires `customerId`, the unique identifier of the customer.
+     - Requires **Basic Authentication** using `api_key`.
+     - The request body must contain the updated fields.
+   - **Use case**: Use this method to update a customer's details, such as email, address, or billing information.
+
+#### Example Request Body:
+```json
+{
+  "email": "newemail@example.com",
+  "name": "Updated Customer Name"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.stripe.com/v1/customers/{{customerId}}
+Authorization: Basic {{base64_encoded(api_key:)}}
+Content-Type: application/x-www-form-urlencoded
+```
+
+### 4. **Search Customers**
+   - **Endpoint**: `GET https://api.stripe.com/v1/customers/search?query={{searchQuery}}`
+   - **What it does**: Searches for customers using a query string. You can filter customers based on their email, name, or other properties.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `api_key`.
+     - Requires a valid query parameter (`searchQuery`) for filtering customers.
+   - **Use case**: Use this method to find specific customers based on their details, such as email or phone number.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/customers/search?query=email:"customer@example.com"
+Authorization: Basic {{base64_encoded(api_key:)}}
+```
+
+### 5. **Create a Customer**
+   - **Endpoint**: `POST https://api.stripe.com/v1/customers`
+   - **What it does**: Creates a new customer in Stripe. The customer can be associated with payment methods and subscriptions.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `api_key`.
+     - The request body must include the customer's details, such as email, description, or payment method.
+   - **Use case**: Use this method to add new customers to your Stripe account for billing, subscriptions, or payment processing.
+
+#### Example Request Body:
+```json
+{
+  "email": "customer@example.com",
+  "description": "New Customer"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.stripe.com/v1/customers
+Authorization: Basic {{base64_encoded(api_key:)}}
+Content-Type: application/x-www-form-urlencoded
+```
+
+### 6. **List All Customers**
+   - **Endpoint**: `GET https://api.stripe.com/v1/customers`
+   - **What it does**: Retrieves a list of all customers in your Stripe account.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `api_key`.
+     - Optional query parameters can be used to filter and paginate the results.
+   - **Use case**: Use this method to list all customers registered in your Stripe account for reporting or management purposes.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/customers
+Authorization: Basic {{base64_encoded(api_key:)}}
+```
+
+## 3. Configuration
+
+To use the Stripe Customers API, you must authenticate using **Basic Authentication** with your `api_key`. The API key is passed as the username in the Basic Authentication scheme.
+
+### 1. **Basic Authentication Setup**
+   - Use your Stripe API key as the `username` for Basic Authentication.
+   - No password is required, but the `:` character is still used in the `base64` encoding.
+   - The Authorization header will look like this:
+     - `Authorization: Basic base64(api_key:)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "api_key": "your_stripe_api_key"
+}
+```
+
+This configuration allows secure access to Stripe for creating, retrieving, updating, deleting, and listing customers.
+
+## 4. Links to Documentation
+
+- [Stripe Customers API Documentation](https://stripe.com/docs/api/customers)
+- [Stripe API Access Setup](https://stripe.com/docs/keys)
+
+This documentation provides a guide to interacting with the Stripe Customers API, enabling secure management of customers using Basic Authentication with your Stripe API key.
