@@ -1,0 +1,47 @@
+# Stripe Core Resources | Balance API Plugin Documentation
+
+## 1. Overview
+
+The **Stripe Core Resources | Balance API Plugin** enables integration with Stripe’s Balance API, allowing users to retrieve the available and pending balance in their Stripe account. Authentication is managed through **Basic Authentication** using `basic_auth_username_token`, ensuring secure access to Stripe resources.
+
+## 2. Available Methods
+
+### 1. **Retrieve Balance**
+   - **Endpoint**: `GET https://api.stripe.com/v1/balance`
+   - **What it does**: Retrieves the current balance in your Stripe account, including both available and pending amounts. The balance is provided in the currency associated with the Stripe account.
+   - **Configuration**:
+     - Requires **Basic Authentication** using the `basic_auth_username_token` (which is your Stripe API key) as the username.
+   - **Use case**: Use this method to check the current balance in your Stripe account, including available and pending funds.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/balance
+Authorization: Basic {{base64_encoded(basic_auth_username_token:)}}
+```
+
+## 3. Configuration
+
+To use the Stripe Balance API, you must authenticate using **Basic Authentication** with your `basic_auth_username_token` (which is your Stripe API key). The API key is passed as the username in the Basic Authentication scheme.
+
+### 1. **Basic Authentication Setup**
+   - Use your Stripe API key as the `username` for Basic Authentication.
+   - No password is required, but the `:` character is still used in the `base64` encoding.
+   - The Authorization header will look like this:
+     - `Authorization: Basic base64(basic_auth_username_token:)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "basic_auth_username_token": "your_stripe_api_key"
+}
+```
+
+This configuration allows secure access to Stripe's balance data for retrieving available and pending funds.
+
+## 4. Links to Documentation
+
+- [Stripe Balance API Documentation](https://stripe.com/docs/api/balance)
+- [Stripe API Access Setup](https://stripe.com/docs/keys)
+
+This documentation provides a guide to interacting with the Stripe Balance API, allowing secure retrieval of balance data using Basic Authentication with your Stripe API key.
