@@ -1,80 +1,84 @@
-# README-s-files for plugins in NoCode-x
-
-
-# GitHub API Plugin Documentation
+# Google Docs API Plugin Documentation
 
 ## 1. Overview
 
-The GitHub API plugin enables interaction with GitHub's user and repository data. This plugin allows you to retrieve user details, access repository content, and create new repositories using GitHub's API. Authentication is handled through personal access tokens, ensuring secure access to GitHub resources.
+The **Google Docs API Plugin** allows for seamless interaction with Google Docs. With this plugin, you can create new documents, retrieve documents by ID, and update documents using batch operations. Authentication is managed through OAuth2 with delegated access, ensuring secure user-specific document access.
 
 ## 2. Available Methods
 
-### 1. **Get User by ID**
-   - **Endpoint**: `GET https://api.github.com/user/{{id}}`
-   - **What it does**: Retrieves information about a specific GitHub user by their user ID.
-   - **Configuration**: 
-     - Requires `id`, which is the GitHub user's unique ID.
-     - Requires a GitHub API token with `user` scope.
-   - **Use case**: Use this method to fetch detailed information about a user, such as their profile, public repositories, and activity.
-
-### 2. **Get Repository Content List**
-   - **Endpoint**: `GET https://api.github.com/repos/{{owner}}/{{repo}}/contents`
-   - **What it does**: Fetches the content (files and directories) of a specified GitHub repository.
+### 1. **Create Document**
+   - **Endpoint**: `POST https://docs.googleapis.com/v1/documents`
+   - **What it does**: Creates a new Google Doc.
    - **Configuration**:
-     - Requires `owner` (the GitHub username or organization name) and `repo` (the repository name).
-     - Requires a GitHub API token with `repo` scope to access private repositories.
-   - **Use case**: Retrieve the structure of a repository to view and interact with its content.
-
-### 3. **Get Repository Content File by Path**
-   - **Endpoint**: `GET https://api.github.com/repos/{{owner}}/{{repo}}/contents/{{path}}`
-   - **What it does**: Retrieves the content of a specific file within a repository.
-   - **Configuration**:
-     - Requires `owner`, `repo`, and `path` (the exact file path in the repository).
-     - Requires a GitHub API token with `repo` scope for private repositories.
-   - **Use case**: Useful for accessing raw file data in a repository for local use or further analysis.
-
-### 4. **Create Repository**
-   - **Endpoint**: `POST https://api.github.com/user/repos`
-   - **What it does**: Creates a new repository under the authenticated user's GitHub account.
-   - **Configuration**:
-     - Requires a GitHub API token with `repo` and `public_repo` scopes.
-     - The request body must include parameters such as `name` (repository name), `description`, `private` (whether the repo is private), etc.
-   - **Use case**: Use this method to programmatically create a new repository for code management, collaboration, or version control.
+     - Requires OAuth2 authentication with proper scopes (`https://www.googleapis.com/auth/documents`).
+   - **Use case**: Automatically generate new Google Docs for various use cases such as reports, invoices, or document templates.
 
 #### Example Request Body:
 ```json
 {
-  "name": "new-repo",
-  "description": "This is your repository",
-  "private": false
+  "title": "New Document"
+}
+```
+
+### 2. **Get Document by ID**
+   - **Endpoint**: `GET https://docs.googleapis.com/v1/documents/{{documentId}}`
+   - **What it does**: Retrieves the content and metadata of a specific Google Doc by its document ID.
+   - **Configuration**:
+     - Requires `documentId`, the unique ID of the document.
+     - Requires OAuth2 authentication with proper scopes (`https://www.googleapis.com/auth/documents.readonly` or `https://www.googleapis.com/auth/documents`).
+   - **Use case**: Retrieve the document's content for viewing, exporting, or analyzing its contents.
+
+### 3. **BatchUpdate Document**
+   - **Endpoint**: `POST https://docs.googleapis.com/v1/documents/{{documentId}}:batchUpdate`
+   - **What it does**: Applies a set of updates to a Google Doc, such as text insertions, deletions, or styling changes.
+   - **Configuration**:
+     - Requires `documentId`, the unique ID of the document.
+     - Requires OAuth2 authentication with proper scopes (`https://www.googleapis.com/auth/documents`).
+     - The request body must contain the specific updates to be made.
+   - **Use case**: Use this method for programmatic document editing, such as formatting or inserting data into a template document.
+
+#### Example Request Body:
+```json
+{
+  "requests": [
+    {
+      "insertText": {
+        "location": {
+          "index": 1
+        },
+        "text": "Hello, World!"
+      }
+    }
+  ]
 }
 ```
 
 ## 3. Configuration
 
-To use this plugin, you will need to provide a GitHub **personal access token**. The token must have the appropriate scopes (permissions) based on the methods you intend to use.
+To use this plugin, you need to authenticate using OAuth2 and provide the appropriate scopes for the actions you intend to perform. This can be set up with **delegated access** for users, allowing the plugin to act on behalf of the user within their Google Docs environment.
 
-### 1. **GitHub Personal Access Token**
-   - Personal access tokens are required for authenticating requests to GitHub's API.
-   - Steps to generate a token:
-     - Log in to GitHub.
-     - Go to **Settings** > **Developer Settings** > **Personal Access Tokens**.
-     - Create a new token and select the required scopes (e.g., `user`, `repo`, `public_repo`).
-     - Securely store the token, as it will be used for all API requests.
+### 1. **OAuth2 Setup**
+   - **Delegated access** means that the plugin acts on behalf of the authenticated user.
+   - Ensure you have set up OAuth2 with the following scopes:
+     - `https://www.googleapis.com/auth/documents` for full access to create and edit documents.
+     - `https://www.googleapis.com/auth/documents.readonly` for read-only access to documents.
 
-### 2. **JSON Configuration Example**
+### 2. **Steps to Configure OAuth2**
+   - In Google Cloud Console, create an OAuth2 client for your application.
+   - Add the relevant scopes depending on the API actions you want to perform.
+   - Obtain the OAuth2 access token for each user by directing them through Google's OAuth2 consent flow.
+
+### 3. **JSON Configuration Example**
 
 ```json
 {
-  "GitHub_token": "your_github_personal_access_token"
+  "access_token": "your_oauth2_access_token"
 }
 ```
 
-This configuration allows the plugin to authenticate with GitHub and perform the described actions.
-
 ## 4. Links to Documentation
 
-- [GitHub REST API Documentation](https://docs.github.com/en/rest)
-- [GitHub Personal Access Token Guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+- [Google Docs API Documentation](https://developers.google.com/docs/api/reference/rest)
+- [Google OAuth2 Access Setup](https://developers.google.com/identity/protocols/oauth2)
 
-This documentation provides everything you need to interact with GitHub’s user and repository management system via its API.
+This documentation provides a clear guide to utilizing the Google Docs API for creating, fetching, and updating Google Docs, ensuring secure and delegated user access.
