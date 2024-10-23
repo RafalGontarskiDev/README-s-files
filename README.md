@@ -1,112 +1,37 @@
-# Pipedrive API Plugin Documentation
+# Stripe Checkout Flow Integration
 
-## 1. Overview
+This **Stripe Checkout Flow** integrates the **Stripe Checkout API** and **Stripe Webhook API** to handle payments securely and efficiently. It provides an example template for embedding a checkout button, the process of creating a Stripe Checkout session, and handling the success page. Additionally, webhook integration is included for real-time event handling.
 
-The **Pipedrive API Plugin** provides integration with the Pipedrive CRM platform, allowing users to manage activities such as getting details, adding, updating, and retrieving activities assigned to specific users. Authentication is managed through a **Bearer Access Token** using `personal_API_token`, ensuring secure access to Pipedrive resources.
+## 1. Overview of Stripe Checkout Flow
 
-## 2. Available Methods
+The flow consists of three main steps:
+1. **Checkout Button and Stripe Checkout Process**: A customer clicks the checkout button, which creates a Stripe Checkout session and redirects them to Stripe's hosted checkout page.
+2. **Success Page**: After a successful payment, the customer is redirected to a success page.
+3. **Webhook Handling**: Stripe sends events (e.g., payment success) to your webhook endpoint for backend processing.
 
-### 1. **Get Details of an Activity**
-   - **Endpoint**: `GET https://api.pipedrive.com/v1/activities/{{activityId}}`
-   - **What it does**: Retrieves detailed information about a specific activity by its `activityId`.
-   - **Configuration**:
-     - Requires `activityId`, the unique identifier of the activity.
-     - Requires **Bearer Token** authentication using `personal_API_token`.
-   - **Use case**: Use this method to retrieve specific details of an activity, such as its subject, type, due date, and associated users.
+## 2. Required APIs
 
-#### Example Request:
-```http
-GET https://api.pipedrive.com/v1/activities/{{activityId}}
-Authorization: Bearer {{personal_API_token}}
-```
+### **1. Stripe Checkout API**
 
-### 2. **Get All Activities Assigned to a Particular User**
-   - **Endpoint**: `GET https://api.pipedrive.com/v1/activities`
-   - **What it does**: Retrieves a list of all activities assigned to the authenticated user or a particular user based on query parameters.
-   - **Configuration**:
-     - Requires **Bearer Token** authentication using `personal_API_token`.
-     - Optional query parameters can be used to filter activities, such as by user ID or activity type.
-   - **Use case**: Use this method to list all activities assigned to the authenticated user or another specific user in Pipedrive.
+- **Create a Checkout Session**: This API is used to create a session for payment and redirect the customer to Stripe's hosted checkout.
+    - **Endpoint**: `POST https://api.stripe.com/v1/checkout/sessions`
+    - **Authentication**: Basic (`username: api_key`)
 
-#### Example Request:
-```http
-GET https://api.pipedrive.com/v1/activities
-Authorization: Bearer {{personal_API_token}}
-```
+### **2. Stripe Webhooks API**
 
-### 3. **Add an Activity**
-   - **Endpoint**: `POST https://api.pipedrive.com/v1/activities`
-   - **What it does**: Creates a new activity and assigns it to a user or team.
-   - **Configuration**:
-     - Requires **Bearer Token** authentication using `personal_API_token`.
-     - The request body must contain details of the activity, such as subject, type, due date, and assigned user.
-   - **Use case**: Use this method to add new activities to Pipedrive for tracking tasks, meetings, calls, or other engagements.
+- **Create a Webhook Endpoint**: Webhooks are used to listen for Stripe events and handle them accordingly (e.g., payment success).
+    - **Endpoint**: `POST https://api.stripe.com/v1/webhook_endpoints`
+    - **Authentication**: Basic (`username: secret_key`)
 
-#### Example Request Body:
-```json
-{
-  "subject": "Follow-up Meeting",
-  "type": "meeting",
-  "due_date": "2024-10-25",
-  "assigned_to_user_id": "123456"
-}
-```
+## 3. Create a Checkout Session (Server-Side)
 
-#### Example Request:
-```http
-POST https://api.pipedrive.com/v1/activities
-Authorization: Bearer {{personal_API_token}}
-Content-Type: application/json
-```
-
-### 4. **Update an Activity**
-   - **Endpoint**: `PUT https://api.pipedrive.com/v1/activities/{{activityId}}`
-   - **What it does**: Updates the details of an existing activity by its `activityId`.
-   - **Configuration**:
-     - Requires `activityId`, the unique identifier of the activity.
-     - Requires **Bearer Token** authentication using `personal_API_token`.
-     - The request body must include the updated details, such as subject, due date, or status.
-   - **Use case**: Use this method to modify details of an existing activity, such as rescheduling a meeting or updating the assigned user.
-
-#### Example Request Body:
-```json
-{
-  "subject": "Rescheduled Meeting",
-  "due_date": "2024-10-26"
-}
-```
-
-#### Example Request:
-```http
-PUT https://api.pipedrive.com/v1/activities/{{activityId}}
-Authorization: Bearer {{personal_API_token}}
-Content-Type: application/json
-```
-
-## 3. Configuration
-
-To use the Pipedrive API, you must authenticate using a **Bearer Personal Access Token**. This token provides access to the user's activities for managing tasks, events, and engagements.
-
-### 1. **Bearer Token Setup**
-   - Pipedrive requires an API token, which can be found in the user settings under **Personal Preferences**.
-   - The token must be included in the Authorization header for each API request.
-
-### 2. **Required Scopes**
-   The API token should have the necessary scopes or permissions to access and manage activities in Pipedrive.
-
-### 3. **JSON Configuration Example**
-
-```json
-{
-  "personal_API_token": "your_pipedrive_api_token"
-}
-```
-
-This configuration allows secure access to Pipedrive activities for retrieving, creating, and updating user activities.
+![Stripe Checkout](https://github.com/RafalGontarskiDev/README-s-files/blob/main/Stripe%20Checkout.png)
 
 ## 4. Links to Documentation
 
-- [Pipedrive API Documentation](https://pipedrive.readme.io/docs/activities)
-- [Pipedrive API Access Setup](https://pipedrive.readme.io/docs/how-to-find-the-api-token)
+- [Stripe Checkout API Documentation](https://stripe.com/docs/api/checkout/sessions)
+- [Stripe Webhooks API Documentation](https://stripe.com/docs/api/webhook_endpoints)
+- [Stripe Checkout Quickstart](https://stripe.com/docs/checkout/quickstart)
+- [Stripe Webhook Setup](https://stripe.com/docs/webhooks/setup)
 
-This documentation provides a guide to interacting with the Pipedrive API, allowing secure access to manage activities using Bearer Personal Access Token authentication.
+This integration allows you to securely accept payments using Stripe Checkout while handling post-payment events via webhooks.
