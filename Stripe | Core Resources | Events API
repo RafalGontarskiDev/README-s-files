@@ -1,0 +1,62 @@
+# Stripe | Core Resources | Events API Plugin Documentation
+
+## 1. Overview
+
+The **Stripe Core Resources | Events API Plugin** allows integration with Stripe's Events API, enabling users to list and retrieve events that happen within their Stripe account, such as successful payments, refunds, and disputes. Authentication is managed through **Basic Authentication** using `secret_key`, ensuring secure access to Stripe resources.
+
+## 2. Available Methods
+
+### 1. **List All Events**
+   - **Endpoint**: `GET https://api.stripe.com/v1/events`
+   - **What it does**: Retrieves a list of all events that have occurred in your Stripe account. Events include actions such as successful payments, customer updates, or subscription renewals.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `secret_key`.
+     - Optional query parameters can be used to filter and paginate the results (e.g., by event type or date range).
+   - **Use case**: Use this method to retrieve all events for monitoring or logging purposes.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/events
+Authorization: Basic {{base64_encoded(secret_key:)}}
+```
+
+### 2. **Retrieve an Event**
+   - **Endpoint**: `GET https://api.stripe.com/v1/events/{{eventId}}`
+   - **What it does**: Retrieves detailed information about a specific event by its `eventId`.
+   - **Configuration**:
+     - Requires `eventId`, the unique identifier of the event.
+     - Requires **Basic Authentication** using `secret_key`.
+   - **Use case**: Use this method to get detailed information about a particular event, such as a payment success or a customer update.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/events/{{eventId}}
+Authorization: Basic {{base64_encoded(secret_key:)}}
+```
+
+## 3. Configuration
+
+To use the Stripe Events API, you must authenticate using **Basic Authentication** with your `secret_key`. The API key is passed as the username in the Basic Authentication scheme.
+
+### 1. **Basic Authentication Setup**
+   - Use your Stripe secret key as the `username` for Basic Authentication.
+   - No password is required, but the `:` character is still used in the `base64` encoding.
+   - The Authorization header will look like this:
+     - `Authorization: Basic base64(secret_key:)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "secret_key": "your_stripe_secret_key"
+}
+```
+
+This configuration allows secure access to Stripe's Events API for retrieving and listing events.
+
+## 4. Links to Documentation
+
+- [Stripe Events API Documentation](https://stripe.com/docs/api/events)
+- [Stripe API Access Setup](https://stripe.com/docs/keys)
+
+This documentation provides a guide to interacting with the Stripe Events API, enabling secure access to event data using Basic Authentication with your Stripe secret key.
