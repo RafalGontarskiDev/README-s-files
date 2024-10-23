@@ -106,7 +106,7 @@ This configuration allows secure access to Pipedrive activities for retrieving, 
 
 ## 4. Links to Documentation
 
-- [Pipedrive API Documentation](https://pipedrive.readme.io/docs/activities)
+- [Pipedrive API Documentation](https://developers.pipedrive.com/docs/api/v1)
 - [Pipedrive API Access Setup](https://pipedrive.readme.io/docs/how-to-find-the-api-token)
 
 This documentation provides a guide to interacting with the Pipedrive API, allowing secure access to manage activities using Bearer Personal Access Token authentication.
