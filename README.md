@@ -1,79 +1,72 @@
-# Google Drive API Plugin Documentation
+# Jotform API Plugin Documentation
 
 ## 1. Overview
 
-The **Google Drive API Plugin** provides integration with Google Drive, enabling you to retrieve file lists, export files in different formats, and manage sharing permissions. This plugin allows you to programmatically access and manage your files in Google Drive. The plugin uses OAuth2 for authentication with delegated access, allowing secure user-specific actions.
+The **Jotform API Plugin** provides integration with Jotform, allowing users to retrieve forms, create new forms, and access form submissions. The plugin utilizes API key authentication to securely interact with Jotform data. It simplifies form management and submissions retrieval for a variety of use cases, including automation, reporting, and data analysis.
 
 ## 2. Available Methods
 
-### 1. **Get Files List**
-   - **Endpoint**: `GET https://www.googleapis.com/drive/v3/files`
-   - **What it does**: Retrieves a list of files from the user's Google Drive.
+### 1. **Get Form by ID**
+   - **Endpoint**: `GET https://eu-api.jotform.com/form/{{formID}}`
+   - **What it does**: Retrieves a specific form by its unique form ID.
    - **Configuration**:
-     - Requires OAuth2 authentication with the scope `https://www.googleapis.com/auth/drive.readonly` for read-only access, or `https://www.googleapis.com/auth/drive` for full access.
-   - **Use case**: Use this method to fetch a list of files in the user's Google Drive, such as when building a file explorer or searching for documents.
+     - Requires `formID`, the unique identifier of the form in Jotform.
+     - Requires an API key with read access to the form.
+   - **Use case**: Use this method to retrieve the structure, settings, and details of a specific form for display or analysis.
 
-### 2. **Export File**
-   - **Endpoint**: `GET https://www.googleapis.com/drive/v3/files/{{fileId}}/export`
-   - **What it does**: Exports a Google Docs file into a specified format (e.g., PDF, DOCX).
+### 2. **Create Form**
+   - **Endpoint**: `POST https://eu-api.jotform.com/form`
+   - **What it does**: Creates a new form in Jotform.
    - **Configuration**:
-     - Requires `fileId`, the unique identifier of the file in Google Drive.
-     - Requires OAuth2 authentication with the `https://www.googleapis.com/auth/drive.readonly` or `https://www.googleapis.com/auth/drive.file` scope.
-     - The request must include the `mimeType` of the desired export format (e.g., `application/pdf` for PDF).
-   - **Use case**: Convert Google Docs, Sheets, or Slides files into different formats for download, sharing, or offline usage.
-
-#### Example Request Parameters:
-```http
-GET https://www.googleapis.com/drive/v3/files/{{fileId}}/export?mimeType=application/pdf
-```
-
-### 3. **Share File (Manage Permissions)**
-   - **Endpoint**: `POST https://www.googleapis.com/drive/v3/files/{{fileId}}/permissions`
-   - **What it does**: Shares a file by updating its permissions, allowing it to be viewed or edited by other users.
-   - **Configuration**:
-     - Requires `fileId`, the unique identifier of the file in Google Drive.
-     - Requires OAuth2 authentication with the `https://www.googleapis.com/auth/drive` scope for full file access and permission management.
-     - The request body must include the permission type (`role`) and the user or group being granted access (`emailAddress` for individuals, `domain` for groups).
-   - **Use case**: Use this method to share a file with specific users or make it public, enabling collaboration on Google Drive documents.
+     - Requires an API key with full access to create forms.
+     - The request body should contain the necessary form details, such as the form title, questions, and other settings.
+   - **Use case**: Automatically generate new forms for various use cases like surveys, feedback collection, or registration forms.
 
 #### Example Request Body:
 ```json
 {
-  "role": "reader",
-  "type": "user",
-  "emailAddress": "user@example.com"
+  "title": "New Form",
+  "questions": [
+    {
+      "type": "control_textbox",
+      "text": "Your Name",
+      "name": "q1"
+    }
+  ]
 }
 ```
+
+### 3. **Get Form Submissions**
+   - **Endpoint**: `GET https://eu-api.jotform.com/form/{{formId}}/submissions`
+   - **What it does**: Retrieves the submissions of a specified form by its unique form ID.
+   - **Configuration**:
+     - Requires `formId`, the unique identifier of the form.
+     - Requires an API key with read access to the form and its submissions.
+   - **Use case**: Use this method to gather form responses for analysis, reporting, or exporting submission data to other systems.
 
 ## 3. Configuration
 
-To use this plugin, you will need to authenticate using OAuth2 and provide the appropriate scopes based on the actions you intend to perform. This can be set up with **delegated access** for users, allowing the plugin to act on behalf of the user within their Google Drive environment.
+To use this plugin, you will need to authenticate using a **Jotform API key**. The API key must have the appropriate permissions based on the actions you intend to perform (read access for retrieving forms or submissions, full access for creating forms).
 
-### 1. **OAuth2 Setup for Google Drive**
-   - **Delegated access** means that the plugin acts on behalf of the authenticated user.
-   - The following OAuth2 scopes are required based on the methods used:
-     - `https://www.googleapis.com/auth/drive.readonly`: Read-only access to Google Drive files.
-     - `https://www.googleapis.com/auth/drive.file`: Access to the user's files, including the ability to export and modify them.
-     - `https://www.googleapis.com/auth/drive`: Full access to Google Drive, including managing file sharing permissions.
+### 1. **Jotform API Key**
+   - You can generate an API key by logging into your Jotform account:
+     - Navigate to **My Account** > **API**.
+     - Generate a new API key with the necessary permissions (e.g., read, create).
+     - Store this key securely, as it will be required for all API requests.
 
-### 2. **Steps to Configure OAuth2**
-   - In Google Cloud Console, create an OAuth2 client for your application.
-   - Add the relevant scopes depending on the API actions you want to perform.
-   - Obtain the OAuth2 access token for each user by directing them through Google's OAuth2 consent flow.
-
-### 3. **JSON Configuration Example**
+### 2. **JSON Configuration Example**
 
 ```json
 {
-  "access_token": "your_google_oauth_access_token"
+  "API_Key": "your_jotform_api_key"
 }
 ```
 
-This configuration allows the plugin to authenticate with Google Drive and perform the described actions, such as retrieving files, exporting them, and managing permissions.
+This configuration allows you to authenticate with Jotform and use the described methods to interact with forms and submissions.
 
 ## 4. Links to Documentation
 
-- [Google Drive API Documentation](https://developers.google.com/drive/api/v3/reference)
-- [Google OAuth2 Access Setup](https://developers.google.com/identity/protocols/oauth2)
+- [Jotform API Documentation](https://api.jotform.com/docs/)
+- [Jotform API Key Setup](https://www.jotform.com/help/253-how-to-create-a-jotform-api-key)
 
-This documentation provides an easy guide to integrating with the Google Drive API, ensuring secure access and management of files, exports, and sharing permissions.
+This documentation provides a detailed guide to working with the Jotform API, ensuring smooth interaction with forms and submissions while maintaining secure API key access.
