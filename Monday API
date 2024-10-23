@@ -56,7 +56,7 @@ This configuration ensures secure access to Monday.com’s API for retrieving us
 
 ## 4. Links to Documentation
 
-- [Monday API Documentation](https://api.developer.monday.com/docs)
+- [Monday API Documentation](https://developer.monday.com/api-reference/reference/about-the-api-reference)
 - [Monday API Access Setup](https://support.monday.com/hc/en-us/articles/360013483119-How-to-get-started-with-our-API)
 
 This documentation provides a detailed guide to working with Monday.com's API, enabling interaction with user data and notifications using secure Bearer Token authentication.
