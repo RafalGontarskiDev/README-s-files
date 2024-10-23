@@ -1,89 +1,163 @@
-# Atlassian Trello API Plugin Documentation
+# Typeform API Plugin Documentation
 
 ## 1. Overview
 
-The **Atlassian Trello API Plugin** allows seamless integration with Trello to manage boards and lists. You can create boards, add lists to boards, retrieve board information, and delete boards using the Trello API. Authentication is handled via a **Bearer OAuth Access Token** for secure access to Trello resources.
+The **Typeform API Plugin** allows integration with Typeform, enabling users to manage workspaces, forms, and themes. This plugin supports retrieving, creating, and updating workspaces, forms, and themes using **Bearer Personal Access Token** authentication. The API provides robust methods to manage your Typeform data and streamline form workflows.
 
 ## 2. Available Methods
 
-### 1. **Create a Board**
-   - **Endpoint**: `POST https://api.trello.com/1/boards/?name={{name}}`
-   - **What it does**: Creates a new board in Trello with a specified name.
+### 1. **Retrieve Workspaces**
+   - **Endpoint**: `GET https://api.typeform.com/workspaces`
+   - **What it does**: Fetches a list of all workspaces in the account.
    - **Configuration**:
-     - Requires `name`, the desired name for the new board.
-     - Requires Bearer OAuth access token for authentication.
-   - **Use case**: Use this method to create a new Trello board to organize tasks, projects, or collaborative workspaces.
+     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
+   - **Use case**: Use this method to retrieve a list of workspaces that are available in your Typeform account for organization or management purposes.
 
 #### Example Request:
 ```http
-POST https://api.trello.com/1/boards/?name=New%20Project%20Board
-Authorization: Bearer {{oauth_access_token}}
+GET https://api.typeform.com/workspaces
+Authorization: Bearer {{PERSONAL_ACCESS_TOKEN}}
 ```
 
-### 2. **Create a List on a Board**
-   - **Endpoint**: `POST https://api.trello.com/1/boards/{{id}}/lists?name={{name}}`
-   - **What it does**: Adds a new list to a specified Trello board.
+### 2. **Retrieve Workspace**
+   - **Endpoint**: `GET https://api.typeform.com/workspaces/{{workspaceId}}`
+   - **What it does**: Retrieves information about a specific workspace by its `workspaceId`.
    - **Configuration**:
-     - Requires `id`, the unique identifier of the board.
-     - Requires `name`, the desired name of the new list.
-     - Requires Bearer OAuth access token for authentication.
-   - **Use case**: Use this method to create lists within a Trello board to categorize tasks or workflows.
+     - Requires `workspaceId`, the unique identifier of the workspace.
+     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
+   - **Use case**: Fetch detailed information about a specific workspace to view its settings, forms, and members.
 
 #### Example Request:
 ```http
-POST https://api.trello.com/1/boards/{{board_id}}/lists?name=To%20Do
-Authorization: Bearer {{oauth_access_token}}
+GET https://api.typeform.com/workspaces/{{workspaceId}}
+Authorization: Bearer {{PERSONAL_ACCESS_TOKEN}}
 ```
 
-### 3. **Get Board by ID**
-   - **Endpoint**: `GET https://api.trello.com/1/boards/{{id}}`
-   - **What it does**: Retrieves details of a specific Trello board by its ID.
+### 3. **Retrieve Account Workspaces**
+   - **Endpoint**: `GET https://api.typeform.com/accounts/{{accountId}}/workspaces`
+   - **What it does**: Retrieves all workspaces associated with a specific account.
    - **Configuration**:
-     - Requires `id`, the unique identifier of the board.
-     - Requires Bearer OAuth access token for authentication.
-   - **Use case**: Use this method to fetch detailed information about a specific Trello board, such as its lists, members, and settings.
+     - Requires `accountId`, the unique identifier of the account.
+     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
+   - **Use case**: Use this method to fetch all workspaces tied to a specific Typeform account for organization or auditing purposes.
 
 #### Example Request:
 ```http
-GET https://api.trello.com/1/boards/{{board_id}}
-Authorization: Bearer {{oauth_access_token}}
+GET https://api.typeform.com/accounts/{{accountId}}/workspaces
+Authorization: Bearer {{PERSONAL_ACCESS_TOKEN}}
 ```
 
-### 4. **Delete a Board**
-   - **Endpoint**: `DELETE https://api.trello.com/1/boards/{{id}}`
-   - **What it does**: Deletes a specified Trello board by its ID.
+### 4. **Create Account Workspace**
+   - **Endpoint**: `POST https://api.typeform.com/accounts/{{account_id}}/workspaces`
+   - **What it does**: Creates a new workspace under a specified account.
    - **Configuration**:
-     - Requires `id`, the unique identifier of the board.
-     - Requires Bearer OAuth access token for authentication.
-   - **Use case**: Use this method to remove an unwanted or completed Trello board from your workspace.
+     - Requires `account_id`, the unique identifier of the account.
+     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
+     - The request body must contain details like the workspace name.
+   - **Use case**: Use this method to create a new workspace under a specific account for organizing forms and other resources.
 
-#### Example Request:
-```http
-DELETE https://api.trello.com/1/boards/{{board_id}}
-Authorization: Bearer {{oauth_access_token}}
+#### Example Request Body:
+```json
+{
+  "name": "New Workspace"
+}
+```
+
+### 5. **Create Workspace**
+   - **Endpoint**: `POST https://api.typeform.com/workspaces`
+   - **What it does**: Creates a new workspace for organizing forms and resources.
+   - **Configuration**:
+     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
+     - The request body must contain details like the workspace name.
+   - **Use case**: Use this method to create a new workspace for better resource management within Typeform.
+
+#### Example Request Body:
+```json
+{
+  "name": "Marketing Workspace"
+}
+```
+
+### 6. **Create Theme**
+   - **Endpoint**: `POST https://api.typeform.com/themes`
+   - **What it does**: Creates a new theme that can be applied to forms.
+   - **Configuration**:
+     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
+     - The request body must include details like the theme name and styles (e.g., colors, fonts).
+   - **Use case**: Use this method to define custom themes for Typeform forms, aligning them with branding or visual preferences.
+
+#### Example Request Body:
+```json
+{
+  "name": "Corporate Theme",
+  "colors": {
+    "question": "#000000",
+    "answer": "#ffffff"
+  }
+}
+```
+
+### 7. **Create Form**
+   - **Endpoint**: `POST https://api.typeform.com/forms`
+   - **What it does**: Creates a new form in Typeform.
+   - **Configuration**:
+     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
+     - The request body should include form fields, logic, and layout.
+   - **Use case**: Use this method to programmatically create new forms for surveys, data collection, or feedback.
+
+#### Example Request Body:
+```json
+{
+  "title": "Customer Feedback",
+  "fields": [
+    {
+      "title": "How satisfied are you with our service?",
+      "type": "rating",
+      "properties": {
+        "steps": 5
+      }
+    }
+  ]
+}
+```
+
+### 8. **Update Workspace**
+   - **Endpoint**: `PATCH https://api.typeform.com/workspaces/{{workspaceId}}`
+   - **What it does**: Updates details of a specific workspace, such as its name or members.
+   - **Configuration**:
+     - Requires `workspaceId`, the unique identifier of the workspace.
+     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
+     - The request body must include the fields to update, such as the new name or updated members.
+   - **Use case**: Use this method to modify existing workspaces, update their configurations, or rename them for better organization.
+
+#### Example Request Body:
+```json
+{
+  "name": "Updated Workspace Name"
+}
 ```
 
 ## 3. Configuration
 
-To use this plugin, you need to authenticate using a **Bearer OAuth Access Token**. This token must have the appropriate permissions for accessing Trello’s API resources based on the actions you intend to perform.
+To use this plugin, you need to authenticate using a **Bearer Personal Access Token**. This token should be securely stored and passed in the headers of all requests to the Typeform API.
 
-### 1. **OAuth Access Token Setup**
-   - You can generate an OAuth access token through Trello's developer portal.
-   - The token should be included in the headers of all API requests to authenticate and authorize actions on the Trello boards.
+### 1. **Bearer Token Setup**
+   - You can generate a Personal Access Token from your Typeform account settings.
+   - This token should be included in the authorization headers of your API requests.
 
 ### 2. **JSON Configuration Example**
 
 ```json
 {
-  "oauth_access_token": "your_trello_oauth_access_token"
+  "PERSONAL_ACCESS_TOKEN": "your_typeform_access_token"
 }
 ```
 
-This configuration ensures secure access to the Trello API and allows the plugin to interact with boards and lists.
+This configuration ensures secure access to Typeform's API for managing workspaces, forms, and themes.
 
 ## 4. Links to Documentation
 
-- [Trello API Documentation](https://developer.atlassian.com/cloud/trello/rest/api-group-boards/)
-- [Trello API Access Setup](https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/)
+- [Typeform API Documentation](https://developer.typeform.com/)
+- [Typeform API Access Setup](https://www.typeform.com/help/a/where-can-i-find-my-api-key-360029581691/)
 
-This documentation provides a guide for managing Trello boards and lists using the API with secure OAuth access token authentication.
+This documentation provides a detailed guide to interacting with the Typeform API, enabling seamless management of workspaces, forms, and themes using secure Bearer Token authentication.
