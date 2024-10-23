@@ -1,0 +1,109 @@
+# Stripe Products API Plugin Documentation
+
+## 1. Overview
+
+The **Stripe Products API Plugin** allows integration with Stripe’s product management features, enabling users to create, retrieve, update, and list products. Authentication is managed through **Basic Authentication** using `secret_key`, ensuring secure access to Stripe resources.
+
+## 2. Available Methods
+
+### 1. **Create a Product**
+   - **Endpoint**: `POST https://api.stripe.com/v1/products`
+   - **What it does**: Creates a new product in Stripe’s product catalog. Products represent what you sell, and can be used to manage pricing and billing.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `secret_key`.
+     - The request body must include product details such as `name`, `description`, and optionally, metadata like pricing or SKU information.
+   - **Use case**: Use this method to add new products to your Stripe catalog for selling goods or services.
+
+#### Example Request Body:
+```json
+{
+  "name": "New Product",
+  "description": "This is a sample product"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.stripe.com/v1/products
+Authorization: Basic {{base64_encoded(secret_key:)}}
+Content-Type: application/x-www-form-urlencoded
+```
+
+### 2. **Retrieve a Product**
+   - **Endpoint**: `GET https://api.stripe.com/v1/products/{{productId}}`
+   - **What it does**: Retrieves detailed information about a specific product by its `productId`.
+   - **Configuration**:
+     - Requires `productId`, the unique identifier of the product.
+     - Requires **Basic Authentication** using `secret_key`.
+   - **Use case**: Use this method to fetch product details such as its name, description, and metadata.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/products/{{productId}}
+Authorization: Basic {{base64_encoded(secret_key:)}}
+```
+
+### 3. **Update a Product**
+   - **Endpoint**: `POST https://api.stripe.com/v1/products/{{productId}}`
+   - **What it does**: Updates an existing product’s information, such as its name, description, or metadata.
+   - **Configuration**:
+     - Requires `productId`, the unique identifier of the product.
+     - Requires **Basic Authentication** using `secret_key`.
+     - The request body must include the fields to be updated.
+   - **Use case**: Use this method to modify product details such as pricing, name, or description.
+
+#### Example Request Body:
+```json
+{
+  "name": "Updated Product Name",
+  "description": "Updated description"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.stripe.com/v1/products/{{productId}}
+Authorization: Basic {{base64_encoded(secret_key:)}}
+Content-Type: application/x-www-form-urlencoded
+```
+
+### 4. **List All Products**
+   - **Endpoint**: `GET https://api.stripe.com/v1/products`
+   - **What it does**: Retrieves a list of all products in your Stripe account. This list can be filtered by product type, active status, or metadata.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `secret_key`.
+     - Optional query parameters can be used to filter and paginate the results.
+   - **Use case**: Use this method to get an overview of all products in your Stripe account for reporting or management purposes.
+
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/products
+Authorization: Basic {{base64_encoded(secret_key:)}}
+```
+
+## 3. Configuration
+
+To use the Stripe Products API, you must authenticate using **Basic Authentication** with your `secret_key`. The API key is passed as the username in the Basic Authentication scheme.
+
+### 1. **Basic Authentication Setup**
+   - Use your Stripe secret key as the `username` for Basic Authentication.
+   - No password is required, but the `:` character is still used in the `base64` encoding.
+   - The Authorization header will look like this:
+     - `Authorization: Basic base64(secret_key:)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "secret_key": "your_stripe_secret_key"
+}
+```
+
+This configuration allows secure access to Stripe for creating, retrieving, updating, and listing products.
+
+## 4. Links to Documentation
+
+- [Stripe Products API Documentation](https://stripe.com/docs/api/products)
+- [Stripe API Access Setup](https://stripe.com/docs/keys)
+
+This documentation provides a guide to interacting with the Stripe Products API, enabling secure product management using Basic Authentication with your Stripe secret key.
