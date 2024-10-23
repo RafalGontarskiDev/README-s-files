@@ -1,0 +1,64 @@
+# Crunchbase API Plugin Documentation
+
+## 1. Overview
+
+The **Crunchbase API Plugin** allows integration with Crunchbase, enabling users to retrieve organization details and perform autocomplete searches. Authentication is managed through **Basic Authentication** using `username` and `password`, along with a **query parameter** for the `user_key` (API key) to access the Crunchbase API.
+
+## 2. Available Methods
+
+### 1. **Get Organization Entity by ID**
+   - **Endpoint**: `GET https://api.crunchbase.com/api/v4/entities/organizations/{{entityId}}?user_key={{Basic_API_key}}`
+   - **What it does**: Retrieves detailed information about an organization based on its `entityId`.
+   - **Configuration**:
+     - Requires `entityId`, the unique identifier of the organization.
+     - Requires **Basic Authentication** using `username`, `password`, and **API key** in the query parameter (`user_key`).
+   - **Use case**: Use this method to get comprehensive data about a specific organization, including its funding rounds, key people, and other business details.
+
+#### Example Request:
+```http
+GET https://api.crunchbase.com/api/v4/entities/organizations/{{entityId}}?user_key={{Basic_API_key}}
+Authorization: Basic {{base64_encoded(username:password)}}
+```
+
+### 2. **Autocomplete Search**
+   - **Endpoint**: `GET https://api.crunchbase.com/api/v4/autocompletes?query={{query}}&user_key={{Basic_API_key}}`
+   - **What it does**: Provides autocomplete suggestions based on the search query, useful for finding entities such as organizations, people, or funding rounds.
+   - **Configuration**:
+     - Requires `query`, the search string to find relevant autocomplete results.
+     - Requires **Basic Authentication** using `username`, `password`, and **API key** in the query parameter (`user_key`).
+   - **Use case**: Use this method to quickly search for organizations, people, or funding rounds by typing a query and getting instant autocomplete suggestions.
+
+#### Example Request:
+```http
+GET https://api.crunchbase.com/api/v4/autocompletes?query={{query}}&user_key={{Basic_API_key}}
+Authorization: Basic {{base64_encoded(username:password)}}
+```
+
+## 3. Configuration
+
+To use the Crunchbase API, you must authenticate using **Basic Authentication** with your `username`, `password`, and `user_key` (API key). The API key is passed as a query parameter, and the username and password are base64 encoded for authentication in the request headers.
+
+### 1. **Basic Authentication Setup**
+   - The Crunchbase API requires **Basic Authentication** where the `username` and `password` are combined and base64 encoded.
+   - Include the `user_key` (API key) as a query parameter in each request.
+   - Example of the Authorization header:
+     - `Authorization: Basic base64(username:password)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "username": "your_crunchbase_username",
+  "password": "your_crunchbase_password",
+  "Basic_API_key": "your_crunchbase_api_key"
+}
+```
+
+This configuration ensures secure access to Crunchbase for retrieving organization data and performing autocomplete searches using both Basic Authentication and API key.
+
+## 4. Links to Documentation
+
+- [Crunchbase API Documentation](https://data.crunchbase.com/reference/get_data-autocompletes)
+- [Crunchbase API Access Setup](https://data.crunchbase.com/docs/authentication)
+
+This documentation provides a guide to interacting with the Crunchbase API, enabling secure access to organization data and autocomplete features using Basic Authentication and API key (user_key).
