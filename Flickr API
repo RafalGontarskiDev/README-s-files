@@ -1,0 +1,46 @@
+# Flickr API Plugin Documentation
+
+## 1. Overview
+
+The **Flickr API Plugin** enables integration with Flickr’s photo-sharing platform, allowing users to check the validity of their API key and interact with Flickr’s services. Authentication is managed through **Query Parameter Authentication** using `api_key`, ensuring secure access to Flickr's resources.
+
+## 2. Available Methods
+
+### 1. **Check API Key**
+   - **Endpoint**: `GET https://www.flickr.com/services/rest/`
+   - **What it does**: Checks the validity of the provided API key by using a test method from Flickr's REST API.
+   - **Configuration**:
+     - Requires **Query Parameter Authentication** using `api_key`.
+     - The request must include the query parameter `method=flickr.test.echo` to test the API key.
+   - **Use case**: Use this method to verify whether your API key is valid and properly set up before making additional requests.
+
+#### Example Request:
+```http
+GET https://www.flickr.com/services/rest/?method=flickr.test.echo&api_key={{key}}
+```
+
+## 3. Configuration
+
+To use the Flickr API, you must authenticate using **Query Parameter Authentication** with your `api_key`. The API key is passed as a query parameter for all API requests.
+
+### 1. **Query Parameter Setup**
+   - Include your Flickr API key as a query parameter (`api_key`) in the request URL.
+   - The URL will look like this:
+     - `https://www.flickr.com/services/rest/?method=flickr.test.echo&api_key=your_api_key`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "api_key": "your_flickr_api_key"
+}
+```
+
+This configuration ensures secure access to Flickr’s services using your API key.
+
+## 4. Links to Documentation
+
+- [Flickr API Documentation](https://www.flickr.com/services/api/)
+- [Flickr API Key Setup](https://www.flickr.com/services/api/misc.api_keys.html)
+
+This documentation provides a guide to interacting with the Flickr API, enabling secure requests using Query Parameter Authentication with your Flickr API key.
