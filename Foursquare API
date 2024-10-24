@@ -1,0 +1,52 @@
+# Foursquare API Plugin Documentation
+
+## 1. Overview
+
+The **Foursquare API Plugin** allows integration with Foursquare’s place search functionality, enabling users to search for places by criteria such as location, category, and radius. Authentication is managed through **Header Authentication** using `Authorization: API_Key`, ensuring secure access to Foursquare's resources.
+
+## 2. Available Methods
+
+### 1. **Place Search**
+   - **Endpoint**: `GET https://api.foursquare.com/v3/places/search`
+   - **What it does**: Searches for places using various filters, such as location coordinates, categories, and radius. The API returns a list of places that match the search criteria.
+   - **Configuration**:
+     - Requires **Header Authentication** using `Authorization: API_Key`.
+     - Optional query parameters include `ll` (latitude, longitude), `query` (search term), `radius`, and `categories`.
+   - **Use case**: Use this method to search for places based on geographic location, business category, or specific search terms.
+
+#### Example Request (Search by Location and Category):
+```http
+GET https://api.foursquare.com/v3/places/search?ll=40.730610,-73.935242&radius=1000&categories=13065
+Authorization: {{API_Key}}
+```
+
+### Query Parameters
+- `ll`: Latitude and Longitude (required for location-based search)
+- `radius`: Search radius in meters (optional)
+- `categories`: Category IDs to filter results (optional)
+- `query`: Search term to find specific places (optional)
+
+## 3. Configuration
+
+To use the Foursquare API, you must authenticate using **Header Authentication** with your `API_Key`. The API key is passed in the `Authorization` header for all API requests.
+
+### 1. **Header Authentication Setup**
+   - Include your Foursquare API key in the `Authorization` header.
+   - The Authorization header will look like this:
+     - `Authorization: your_API_Key`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "API_Key": "your_foursquare_api_key"
+}
+```
+
+This configuration ensures secure access to Foursquare’s place search functionality.
+
+## 4. Links to Documentation
+
+- [Foursquare API Documentation](hhttps://docs.foursquare.com/developer/reference/foursquare-apis-overview)
+
+This documentation provides a guide to interacting with the Foursquare API, enabling secure place search requests using Header Authentication with your Foursquare API key.
