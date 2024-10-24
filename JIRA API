@@ -1,0 +1,114 @@
+# JIRA API Plugin Documentation
+
+## 1. Overview
+
+The **JIRA API Plugin** allows integration with JIRA’s project management platform, enabling users to add comments to issues, create new issues, and edit existing issues. Authentication is managed through **Basic Authentication** using `username` and `API_Token`, ensuring secure access to JIRA resources.
+
+## 2. Available Methods
+
+### 1. **Add Comment to an Issue**
+   - **Endpoint**: `POST https://rafalgontarskidev.atlassian.net/rest/api/3/issue/{{issueId}}/comment`
+   - **What it does**: Adds a comment to the specified issue in JIRA.
+   - **Configuration**:
+     - Requires `issueId`, the unique identifier of the issue.
+     - Requires **Basic Authentication** using `username` and `API_Token`.
+     - The request body must include the comment text.
+   - **Use case**: Use this method to add comments to an issue in JIRA for tracking progress, sharing updates, or providing feedback.
+
+#### Example Request Body:
+```json
+{
+  "body": "This is a comment added via the JIRA API."
+}
+```
+
+#### Example Request:
+```http
+POST https://rafalgontarskidev.atlassian.net/rest/api/3/issue/{{issueId}}/comment
+Authorization: Basic {{base64_encoded(username:API_Token)}}
+Content-Type: application/json
+```
+
+### 2. **Create an Issue**
+   - **Endpoint**: `POST https://rafalgontarskidev.atlassian.net/rest/api/3/issue`
+   - **What it does**: Creates a new issue in JIRA. This can be a task, bug, or any other issue type configured in your JIRA project.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `username` and `API_Token`.
+     - The request body must include issue details such as the `projectId`, `summary`, `issuetype`, and other relevant information.
+   - **Use case**: Use this method to create new issues in JIRA for tracking tasks, bugs, or enhancements.
+
+#### Example Request Body:
+```json
+{
+  "fields": {
+    "project": {
+      "key": "PROJECT_KEY"
+    },
+    "summary": "New issue created via API",
+    "issuetype": {
+      "name": "Task"
+    }
+  }
+}
+```
+
+#### Example Request:
+```http
+POST https://rafalgontarskidev.atlassian.net/rest/api/3/issue
+Authorization: Basic {{base64_encoded(username:API_Token)}}
+Content-Type: application/json
+```
+
+### 3. **Edit an Issue**
+   - **Endpoint**: `PUT https://rafalgontarskidev.atlassian.net/rest/api/3/issue/{{issueId}}`
+   - **What it does**: Updates the details of an existing issue in JIRA by its `issueId`.
+   - **Configuration**:
+     - Requires `issueId`, the unique identifier of the issue.
+     - Requires **Basic Authentication** using `username` and `API_Token`.
+     - The request body must include the fields that need to be updated, such as `summary`, `description`, `priority`, etc.
+   - **Use case**: Use this method to modify or update existing issues in JIRA, such as updating descriptions, changing priorities, or assigning the issue to a different user.
+
+#### Example Request Body:
+```json
+{
+  "fields": {
+    "summary": "Updated issue summary",
+    "description": "Updated description of the issue."
+  }
+}
+```
+
+#### Example Request:
+```http
+PUT https://rafalgontarskidev.atlassian.net/rest/api/3/issue/{{issueId}}
+Authorization: Basic {{base64_encoded(username:API_Token)}}
+Content-Type: application/json
+```
+
+## 3. Configuration
+
+To use the JIRA API, you must authenticate using **Basic Authentication** with your `username` and `API_Token`. The credentials are passed in the Authorization header for all API requests.
+
+### 1. **Basic Authentication Setup**
+   - Use your JIRA `username` and `API_Token` for Basic Authentication.
+   - The credentials must be base64 encoded and included in the Authorization header.
+   - The Authorization header will look like this:
+     - `Authorization: Basic base64(username:API_Token)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "username": "your_username",
+  "API_Token": "your_api_token"
+}
+```
+
+This configuration ensures secure access to JIRA for creating, commenting on, and updating issues.
+
+## 4. Links to Documentation
+
+- [JIRA API Documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/)
+- [JIRA API Access Setup](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/)
+
+This documentation provides a guide to interacting with the JIRA API, enabling secure management of issues using Basic Authentication with your JIRA username and API Token.
