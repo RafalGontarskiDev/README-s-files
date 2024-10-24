@@ -1,0 +1,60 @@
+# Mistral AI API Plugin Documentation
+
+## 1. Overview
+
+The **Mistral AI API Plugin** enables integration with Mistral AI’s platform, allowing users to generate chat completions. Authentication is managed through **Bearer Authentication** using `API_Key`, ensuring secure access to Mistral AI's resources.
+
+## 2. Available Methods
+
+### 1. **Chat Completion**
+   - **Endpoint**: `POST https://api.mistral.ai/v1/chat/completions`
+   - **What it does**: Generates a response based on a chat input or prompt using Mistral AI’s language model.
+   - **Configuration**:
+     - Requires **Bearer Authentication** using `API_Key`.
+     - The request body must include a `model`, `messages` (the conversation history or user input), and other optional parameters like `temperature` for response variability.
+   - **Use case**: Use this method to integrate AI-generated chat responses in your applications, enabling interactive conversations or providing information based on user input.
+
+#### Example Request Body:
+```json
+{
+  "model": "mistral-1",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is the capital of France?"
+    }
+  ]
+}
+```
+
+#### Example Request:
+```http
+POST https://api.mistral.ai/v1/chat/completions
+Authorization: Bearer {{API_Key}}
+Content-Type: application/json
+```
+
+## 3. Configuration
+
+To use the Mistral AI API, you must authenticate using **Bearer Authentication** with your `API_Key`. The API key is passed in the Authorization header for all API requests.
+
+### 1. **Bearer Token Setup**
+   - Include your Mistral AI API key as a Bearer token in the Authorization header.
+   - The Authorization header will look like this:
+     - `Authorization: Bearer your_API_Key`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "API_Key": "your_mistral_ai_api_key"
+}
+```
+
+This configuration ensures secure access to Mistral AI’s chat completion service.
+
+## 4. Links to Documentation
+
+- [Mistral AI API Documentation](https://docs.mistral.ai/api/)
+
+This documentation provides a guide to interacting with the Mistral AI API, enabling secure chat completion requests using Bearer Authentication with your Mistral AI API key.
