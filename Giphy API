@@ -1,0 +1,52 @@
+# Giphy API Plugin Documentation
+
+## 1. Overview
+
+The **Giphy API Plugin** allows integration with Giphy’s platform, enabling users to search for GIFs. Authentication is managed through **Query Parameter Authentication** using `api_key`, ensuring secure access to Giphy's resources.
+
+## 2. Available Methods
+
+### 1. **Search GIFs**
+   - **Endpoint**: `GET https://api.giphy.com/v1/gifs/search`
+   - **What it does**: Searches for GIFs based on a query. The API returns a list of GIFs that match the search criteria.
+   - **Configuration**:
+     - Requires **Query Parameter Authentication** using `api_key`.
+     - Optional query parameters include `q` (search term), `limit` (number of results), `offset` (starting point for results), and `rating` (to filter results by rating).
+   - **Use case**: Use this method to search for specific GIFs based on a keyword, filter results by rating, or paginate through results.
+
+#### Example Request:
+```http
+GET https://api.giphy.com/v1/gifs/search?api_key={{API_Key}}&q=funny&limit=10
+```
+
+### Query Parameters:
+- `q`: The search term (required)
+- `limit`: Number of GIFs to return (optional, default: 25)
+- `offset`: Starting position of results (optional, default: 0)
+- `rating`: Filters results by content rating (optional, e.g., "g", "pg")
+
+## 3. Configuration
+
+To use the Giphy API, you must authenticate using **Query Parameter Authentication** with your `api_key`. The API key is passed as a query parameter for all API requests.
+
+### 1. **Query Parameter Setup**
+   - Include your Giphy API key as a query parameter (`api_key`) in the request URL.
+   - The URL will look like this:
+     - `https://api.giphy.com/v1/gifs/search?api_key=your_api_key&q=your_search_term`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "api_key": "your_giphy_api_key"
+}
+```
+
+This configuration ensures secure access to Giphy’s GIF search functionality.
+
+## 4. Links to Documentation
+
+- [Giphy API Documentation](https://developers.giphy.com/docs/)
+- [Giphy API Access Setup](https://developers.giphy.com/docs/api/#quick-start-guide)
+
+This documentation provides a guide to interacting with the Giphy API, enabling secure GIF search requests using Query Parameter Authentication with your Giphy API key.
