@@ -1,0 +1,97 @@
+# SurveyMonkey API Plugin Documentation
+
+## 1. Overview
+
+The **SurveyMonkey API Plugin** enables interaction with SurveyMonkey, allowing users to list surveys, create new surveys, and retrieve specific survey details. Authentication is managed through **Bearer Authentication** using `access_token`, ensuring secure access to SurveyMonkey's resources.
+
+## 2. Available Methods
+
+### 1. **List Surveys**
+   - **Endpoint**: `GET https://api.surveymonkey.com/v3/surveys`
+   - **What it does**: Retrieves a list of surveys available in your SurveyMonkey account.
+   - **Configuration**:
+     - Requires **Bearer Authentication** using `access_token`.
+   - **Use case**: Use this method to fetch all surveys within your account for management or reporting.
+
+#### Example Request:
+```http
+GET https://api.surveymonkey.com/v3/surveys
+Authorization: Bearer {{access_token}}
+```
+
+### 2. **Create Survey**
+   - **Endpoint**: `POST https://api.surveymonkey.com/v3/surveys`
+   - **What it does**: Creates a new survey in your SurveyMonkey account.
+   - **Configuration**:
+     - Requires **Bearer Authentication** using `access_token`.
+     - The request body must include survey details such as the title and survey questions.
+   - **Use case**: Use this method to create new surveys programmatically.
+
+#### Example Request Body:
+```json
+{
+  "title": "Customer Feedback Survey",
+  "pages": [
+    {
+      "title": "Page 1",
+      "questions": [
+        {
+          "headings": [
+            {
+              "heading": "How satisfied are you with our service?"
+            }
+          ],
+          "type": "rating"
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### Example Request:
+```http
+POST https://api.surveymonkey.com/v3/surveys
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+```
+
+### 3. **Get Survey**
+   - **Endpoint**: `GET https://api.surveymonkey.com/v3/surveys/{{surveyId}}`
+   - **What it does**: Retrieves detailed information about a specific survey by its `surveyId`.
+   - **Configuration**:
+     - Requires `surveyId`, the unique identifier of the survey.
+     - Requires **Bearer Authentication** using `access_token`.
+   - **Use case**: Use this method to retrieve detailed information about a specific survey, including its questions and structure.
+
+#### Example Request:
+```http
+GET https://api.surveymonkey.com/v3/surveys/{{surveyId}}
+Authorization: Bearer {{access_token}}
+```
+
+## 3. Configuration
+
+To use the SurveyMonkey API, you must authenticate using **Bearer Authentication** with your `access_token`. The API key is passed as a Bearer token in the Authorization header for all API requests.
+
+### 1. **Bearer Token Setup**
+   - Include your SurveyMonkey API key as a Bearer token in the Authorization header.
+   - The Authorization header will look like this:
+     - `Authorization: Bearer your_access_token`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "access_token": "your_surveymonkey_access_token"
+}
+```
+
+This configuration allows secure access to SurveyMonkey for managing surveys, creating new surveys, and retrieving survey details.
+
+## 4. Links to Documentation
+
+- [SurveyMonkey API Documentation](https://developer.surveymonkey.com/api/v3/)
+- [SurveyMonkey API Access Setup](https://developer.surveymonkey.com/api/v3/#authentication)
+
+This documentation provides a guide to interacting with the SurveyMonkey API, enabling secure access to survey management using Bearer Authentication with your SurveyMonkey access token.
