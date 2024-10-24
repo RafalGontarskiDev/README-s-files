@@ -1,0 +1,46 @@
+# APITemplate API Plugin Documentation
+
+## 1. Overview
+
+The **APITemplate API Plugin** enables integration with APITemplate’s platform, allowing users to retrieve a list of available templates. Authentication is managed through **Header Authentication** using `X-API-KEY: API_Key`, ensuring secure access to APITemplate's resources.
+
+## 2. Available Methods
+
+### 1. **List Templates**
+   - **Endpoint**: `GET https://api.apitemplate.io/v1/list-templates`
+   - **What it does**: Retrieves a list of all templates available in your APITemplate account.
+   - **Configuration**:
+     - Requires **Header Authentication** using `X-API-KEY: API_Key`.
+   - **Use case**: Use this method to list all templates available in your account for generating documents or reports based on predefined templates.
+
+#### Example Request:
+```http
+GET https://api.apitemplate.io/v1/list-templates
+Authorization: X-API-KEY {{API_Key}}
+```
+
+## 3. Configuration
+
+To use the APITemplate API, you must authenticate using **Header Authentication** with your `API_Key`. The API key is passed in the `X-API-KEY` header for all API requests.
+
+### 1. **Header Authentication Setup**
+   - Include your APITemplate API key in the `X-API-KEY` header.
+   - The Authorization header will look like this:
+     - `X-API-KEY: your_API_Key`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "API_Key": "your_apitemplate_api_key"
+}
+```
+
+This configuration ensures secure access to APITemplate’s resources.
+
+## 4. Links to Documentation
+
+- [APITemplate API Documentation](https://docs.apitemplate.io/reference/api-reference.html?_gl=1*dcvxog*_gcl_au*MjA0MzU4MDI0NC4xNzI4NDY4Mzg4LjIwMzM1Mzc4Mi4xNzI4NDY4NDEwLjE3Mjg0Njg0MDk.*_ga*MTkzNzYwODM1Mi4xNzI4NDY4MzU0*_ga_541L3CP2MC*MTcyOTc2MzA3OS4zLjEuMTcyOTc2MzA4NS41NC4wLjA.#introduction)
+- [APITemplate API Access Setup](https://docs.apitemplate.io/reference/api-reference.html?_gl=1*dcvxog*_gcl_au*MjA0MzU4MDI0NC4xNzI4NDY4Mzg4LjIwMzM1Mzc4Mi4xNzI4NDY4NDEwLjE3Mjg0Njg0MDk.*_ga*MTkzNzYwODM1Mi4xNzI4NDY4MzU0*_ga_541L3CP2MC*MTcyOTc2MzA3OS4zLjEuMTcyOTc2MzA4NS41NC4wLjA.#authentication)
+
+This documentation provides a guide to interacting with the APITemplate API, enabling secure template management using Header Authentication with your APITemplate API key.
