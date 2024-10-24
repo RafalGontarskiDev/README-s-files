@@ -1,0 +1,56 @@
+# DeepL API Plugin Documentation
+
+## 1. Overview
+
+The **DeepL API Plugin** allows integration with DeepL's translation services, enabling users to translate text between various languages. Authentication is managed through **Header Authentication** using `Authorization: DeepL_API_Key`, ensuring secure access to DeepL's resources.
+
+## 2. Available Methods
+
+### 1. **Translate**
+   - **Endpoint**: `POST https://api-free.deepl.com/v2/translate`
+   - **What it does**: Translates text from one language to another using DeepL’s advanced translation engine.
+   - **Configuration**:
+     - Requires **Header Authentication** using `Authorization: DeepL_API_Key`.
+     - The request body must include the `text` to translate, `source_lang` (optional), and `target_lang` (required).
+   - **Use case**: Use this method to translate text programmatically between supported languages for multilingual applications or content.
+
+#### Example Request Body:
+```json
+{
+  "text": "Hello, world!",
+  "target_lang": "FR"
+}
+```
+
+#### Example Request:
+```http
+POST https://api-free.deepl.com/v2/translate
+Authorization: DeepL-Auth-Key {{DeepL_API_Key}}
+Content-Type: application/x-www-form-urlencoded
+```
+
+## 3. Configuration
+
+To use the DeepL API, you must authenticate using **Header Authentication** with your `DeepL_API_Key`. The API key is passed in the `Authorization` header for all API requests.
+
+### 1. **Header Authentication Setup**
+   - Include your DeepL API key in the `Authorization` header.
+   - The Authorization header will look like this:
+     - `Authorization: DeepL-Auth-Key your_DeepL_API_Key`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "DeepL_API_Key": "your_deepl_api_key"
+}
+```
+
+This configuration ensures secure access to DeepL’s translation services.
+
+## 4. Links to Documentation
+
+- [DeepL API Documentation](https://www.deepl.com/docs-api)
+- [DeepL API Access Setup](https://developers.deepl.com/docs/getting-started/auth)
+
+This documentation provides a guide to interacting with the DeepL API, enabling secure translation requests using Header Authentication with your DeepL API key.
