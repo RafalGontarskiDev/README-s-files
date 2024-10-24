@@ -1,0 +1,98 @@
+# Baserow API Plugin Documentation
+
+## 1. Overview
+
+The **Baserow API Plugin** enables integration with Baserow’s database management features, allowing users to create fields, list fields and rows, and retrieve specific row details from a Baserow table. Authentication is managed through **API Token Authentication** using `database_token`, ensuring secure access to Baserow's resources.
+
+## 2. Available Methods
+
+### 1. **Create Field**
+   - **Endpoint**: `POST https://api.baserow.io/api/database/rows/table/{{tableId}}/`
+   - **What it does**: Creates a new field in the specified table in Baserow.
+   - **Configuration**:
+     - Requires `tableId`, the unique identifier of the table.
+     - Requires **API Token Authentication** using `database_token`.
+     - The request body must include the field details, such as field type, name, and other metadata.
+   - **Use case**: Use this method to add a new field to a specific table in your Baserow database.
+
+#### Example Request Body:
+```json
+{
+  "name": "New Field",
+  "type": "text"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.baserow.io/api/database/rows/table/{{tableId}}/
+Authorization: Token {{database_token}}
+Content-Type: application/json
+```
+
+### 2. **List Fields**
+   - **Endpoint**: `GET https://api.baserow.io/api/database/fields/table/{{tableId}}/`
+   - **What it does**: Retrieves a list of all fields from the specified table in Baserow.
+   - **Configuration**:
+     - Requires `tableId`, the unique identifier of the table.
+     - Requires **API Token Authentication** using `database_token`.
+   - **Use case**: Use this method to retrieve all fields in a specific table for management or reporting.
+
+#### Example Request:
+```http
+GET https://api.baserow.io/api/database/fields/table/{{tableId}}/
+Authorization: Token {{database_token}}
+```
+
+### 3. **List Rows**
+   - **Endpoint**: `GET https://api.baserow.io/api/database/rows/table/{{tableId}}/`
+   - **What it does**: Retrieves a list of all rows from the specified table in Baserow.
+   - **Configuration**:
+     - Requires `tableId`, the unique identifier of the table.
+     - Requires **API Token Authentication** using `database_token`.
+   - **Use case**: Use this method to fetch all rows from a table for data management or analysis.
+
+#### Example Request:
+```http
+GET https://api.baserow.io/api/database/rows/table/{{tableId}}/
+Authorization: Token {{database_token}}
+```
+
+### 4. **Get Row**
+   - **Endpoint**: `GET https://api.baserow.io/api/database/rows/table/{{tableId}}/{{rowId}}/`
+   - **What it does**: Retrieves detailed information about a specific row in a table by its `rowId`.
+   - **Configuration**:
+     - Requires `tableId` and `rowId`, the unique identifiers of the table and row.
+     - Requires **API Token Authentication** using `database_token`.
+   - **Use case**: Use this method to get detailed information about a specific row, such as its field values.
+
+#### Example Request:
+```http
+GET https://api.baserow.io/api/database/rows/table/{{tableId}}/{{rowId}}/
+Authorization: Token {{database_token}}
+```
+
+## 3. Configuration
+
+To use the Baserow API, you must authenticate using **API Token Authentication** with your `database_token`. The API token is passed in the Authorization header for all API requests.
+
+### 1. **API Token Setup**
+   - Include your Baserow API token as a Bearer token in the Authorization header.
+   - The Authorization header will look like this:
+     - `Authorization: Token your_database_token`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "database_token": "your_baserow_database_token"
+}
+```
+
+This configuration allows secure access to Baserow for managing fields and rows within your tables.
+
+## 4. Links to Documentation
+
+- [Baserow API Documentation](https://baserow.io/api-docs)
+
+This documentation provides a guide to interacting with the Baserow API, enabling secure management of database fields and rows using API Token Authentication with your Baserow database token.
