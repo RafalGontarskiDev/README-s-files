@@ -1,0 +1,74 @@
+# Vimeo API Plugin Documentation
+
+## 1. Overview
+
+The **Vimeo API Plugin** allows integration with Vimeo’s platform, enabling users to retrieve account details, get a list of user videos, and fetch information about a user by their `userId`. Authentication is managed through **Bearer Authentication** using `Personal_Access_Token`, ensuring secure access to Vimeo's resources.
+
+## 2. Available Methods
+
+### 1. **Get My Details**
+   - **Endpoint**: `GET https://api.vimeo.com/me`
+   - **What it does**: Retrieves the account details of the authenticated user. This method returns information such as your name, email, and account type.
+   - **Configuration**:
+     - Requires **Bearer Authentication** using `Personal_Access_Token`.
+   - **Use case**: Use this method to get details about your Vimeo account, including your account type, upload limits, and other personal information.
+
+#### Example Request:
+```http
+GET https://api.vimeo.com/me
+Authorization: Bearer {{Personal_Access_Token}}
+```
+
+### 2. **Get User Videos**
+   - **Endpoint**: `GET https://api.vimeo.com/users/{{userId}}/videos`
+   - **What it does**: Retrieves a list of videos associated with a specific user by their `userId`.
+   - **Configuration**:
+     - Requires `userId`, the unique identifier of the user.
+     - Requires **Bearer Authentication** using `Personal_Access_Token`.
+   - **Use case**: Use this method to get all videos uploaded by a specific user, useful for listing or displaying a user’s content.
+
+#### Example Request:
+```http
+GET https://api.vimeo.com/users/{{userId}}/videos
+Authorization: Bearer {{Personal_Access_Token}}
+```
+
+### 3. **Get User by ID**
+   - **Endpoint**: `GET https://api.vimeo.com/users/{{userId}}`
+   - **What it does**: Retrieves detailed information about a specific user by their `userId`, including their profile information, bio, and videos.
+   - **Configuration**:
+     - Requires `userId`, the unique identifier of the user.
+     - Requires **Bearer Authentication** using `Personal_Access_Token`.
+   - **Use case**: Use this method to fetch details about a specific Vimeo user, such as their public profile and video content.
+
+#### Example Request:
+```http
+GET https://api.vimeo.com/users/{{userId}}
+Authorization: Bearer {{Personal_Access_Token}}
+```
+
+## 3. Configuration
+
+To use the Vimeo API, you must authenticate using **Bearer Authentication** with your `Personal_Access_Token`. The API key is passed as a Bearer token in the Authorization header for all API requests.
+
+### 1. **Bearer Token Setup**
+   - Include your Vimeo API token as a Bearer token in the Authorization header.
+   - The Authorization header will look like this:
+     - `Authorization: Bearer your_Personal_Access_Token`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "Personal_Access_Token": "your_vimeo_access_token"
+}
+```
+
+This configuration allows secure access to Vimeo for retrieving user details and videos.
+
+## 4. Links to Documentation
+
+- [Vimeo API Documentation](https://developer.vimeo.com/api/reference)
+- [Vimeo API Access Setup](https://developer.vimeo.com/api/authentication)
+
+This documentation provides a guide to interacting with the Vimeo API, enabling secure retrieval of user details and videos using Bearer Authentication with your Vimeo access token.
