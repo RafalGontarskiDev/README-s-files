@@ -1,0 +1,92 @@
+# Softr API Plugin Documentation
+
+## 1. Overview
+
+The **Softr API Plugin** enables integration with Softr’s platform, allowing users to create, delete, and retrieve user information. Authentication is managed through **Bearer Authentication** using `API_key`, and an additional header `Softr-Api-Key` is required for all requests.
+
+## 2. Available Methods
+
+### 1. **Create User**
+   - **Endpoint**: `POST https://studio-api.softr.io/v1/api/users`
+   - **What it does**: Creates a new user in Softr with specified attributes such as email, name, and other custom fields.
+   - **Configuration**:
+     - Requires **Bearer Authentication** using `API_key`.
+     - The request must include a header `Softr-Api-Key: API_key`.
+     - The request body should include the user's details such as `email`, `name`, and any other required attributes.
+   - **Use case**: Use this method to programmatically create new users within your Softr application.
+
+#### Example Request Body:
+```json
+{
+  "email": "newuser@example.com",
+  "name": "John Doe",
+  "role": "user"
+}
+```
+
+#### Example Request:
+```http
+POST https://studio-api.softr.io/v1/api/users
+Authorization: Bearer {{API_key}}
+Softr-Api-Key: {{API_key}}
+Content-Type: application/json
+```
+
+### 2. **Delete User**
+   - **Endpoint**: `DELETE https://studio-api.softr.io/v1/api/users/{{userEmail}}`
+   - **What it does**: Deletes a user from the Softr platform by their email address.
+   - **Configuration**:
+     - Requires `userEmail`, the email of the user to be deleted.
+     - Requires **Bearer Authentication** using `API_key`.
+     - The request must include a header `Softr-Api-Key: API_key`.
+   - **Use case**: Use this method to remove users from your Softr application based on their email addresses.
+
+#### Example Request:
+```http
+DELETE https://studio-api.softr.io/v1/api/users/{{userEmail}}
+Authorization: Bearer {{API_key}}
+Softr-Api-Key: {{API_key}}
+```
+
+### 3. **Get Users List**
+   - **Endpoint**: `GET https://studio-api.softr.io/v1/api/users`
+   - **What it does**: Retrieves a list of all users in your Softr platform.
+   - **Configuration**:
+     - Requires **Bearer Authentication** using `API_key`.
+     - The request must include a header `Softr-Api-Key: API_key`.
+   - **Use case**: Use this method to list all the users within your Softr application for management or reporting purposes.
+
+#### Example Request:
+```http
+GET https://studio-api.softr.io/v1/api/users
+Authorization: Bearer {{API_key}}
+Softr-Api-Key: {{API_key}}
+```
+
+## 3. Configuration
+
+To use the Softr API, you must authenticate using **Bearer Authentication** with your `API_key`. Additionally, you must include the header `Softr-Api-Key` in every request.
+
+### 1. **Bearer Token Setup**
+   - Include your Softr API key as a Bearer token in the Authorization header.
+   - Additionally, include the header `Softr-Api-Key: API_key`.
+   - The Authorization and Softr-Api-Key headers will look like this:
+     - `Authorization: Bearer your_API_key`
+     - `Softr-Api-Key: your_API_key`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "API_key": "your_softr_api_key"
+}
+```
+
+This configuration allows secure access to Softr for managing users by creating, deleting, and retrieving user lists.
+
+## 4. Links to Documentation
+
+- [Softr API Documentation](https://docs.softr.io/)
+- [Softr API Access Setup](https://docs.softr.io/softr-api/tTFQ5vSAUozj5MsKixMH8C/api-setup-and-endpoints/j1PrTZxt7pv3iZCnZ5Fp19)
+
+This documentation provides a guide to interacting with the Softr API, enabling secure user management using Bearer Authentication and Softr-Api-Key with your Softr API key.
