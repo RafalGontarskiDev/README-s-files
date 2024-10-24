@@ -1,0 +1,113 @@
+# Amazon Alexa API Plugin Documentation
+
+## 1. Overview
+
+The **Amazon Alexa API Plugin** enables integration with Amazon Alexa’s development tools, allowing users to manage skills, retrieve vendors, and interact with the Alexa skill development platform. Authentication is managed through **Bearer Authentication** using `access_token`, ensuring secure access to Amazon Alexa's resources.
+
+## 2. Available Methods
+
+### 1. **List Vendors**
+   - **Endpoint**: `GET https://api.amazonalexa.com/v1/vendors`
+   - **What it does**: Retrieves a list of vendors associated with the authenticated Alexa account.
+   - **Configuration**:
+     - Requires **Bearer Authentication** using `access_token`.
+   - **Use case**: Use this method to fetch all vendor IDs associated with your Alexa developer account.
+
+#### Example Request:
+```http
+GET https://api.amazonalexa.com/v1/vendors
+Authorization: Bearer {{access_token}}
+```
+
+### 2. **Create Skill Manifest**
+   - **Endpoint**: `POST https://api.amazonalexa.com/v1/skills`
+   - **What it does**: Creates a new skill manifest, which defines the metadata for a skill including invocation name, language model, and endpoint.
+   - **Configuration**:
+     - Requires **Bearer Authentication** using `access_token`.
+     - The request body must include the skill manifest details such as `vendorId`, `manifest`, and `locale`.
+   - **Use case**: Use this method to create a new Alexa skill programmatically.
+
+#### Example Request Body:
+```json
+{
+  "vendorId": "your_vendor_id",
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "name": "My Sample Skill",
+          "summary": "A sample skill",
+          "description": "This is a detailed description of the skill."
+        }
+      }
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "https://example.com/skill-endpoint"
+        }
+      }
+    }
+  }
+}
+```
+
+#### Example Request:
+```http
+POST https://api.amazonalexa.com/v1/skills
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+```
+
+### 3. **List Skills**
+   - **Endpoint**: `GET https://api.amazonalexa.com/v1/skills`
+   - **What it does**: Retrieves a list of all skills associated with your developer account.
+   - **Configuration**:
+     - Requires **Bearer Authentication** using `access_token`.
+   - **Use case**: Use this method to list all Alexa skills you have created for management or reporting.
+
+#### Example Request:
+```http
+GET https://api.amazonalexa.com/v1/skills
+Authorization: Bearer {{access_token}}
+```
+
+### 4. **Get Skill by ID**
+   - **Endpoint**: `GET https://api.amazonalexa.com/v1/skills/{{skillId}}/status`
+   - **What it does**: Retrieves the status of a specific skill by its `skillId`, including build and certification status.
+   - **Configuration**:
+     - Requires `skillId`, the unique identifier of the skill.
+     - Requires **Bearer Authentication** using `access_token`.
+   - **Use case**: Use this method to check the status of a skill during development or certification.
+
+#### Example Request:
+```http
+GET https://api.amazonalexa.com/v1/skills/{{skillId}}/status
+Authorization: Bearer {{access_token}}
+```
+
+## 3. Configuration
+
+To use the Amazon Alexa API, you must authenticate using **Bearer Authentication** with your `access_token`. The API key is passed as a Bearer token in the Authorization header for all API requests.
+
+### 1. **Bearer Token Setup**
+   - Include your Amazon Alexa API key as a Bearer token in the Authorization header.
+   - The Authorization header will look like this:
+     - `Authorization: Bearer your_access_token`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "access_token": "your_amazon_alexa_access_token"
+}
+```
+
+This configuration ensures secure access to Amazon Alexa's skill management and vendor resources.
+
+## 4. Links to Documentation
+
+- [Amazon Alexa API Documentation](https://developer.amazon.com/en-US/docs/alexa/rest-apis/rest-apis.html)
+- [Amazon Alexa API Access Setup](https://developer.amazon.com/en-US/docs/alexa/smapi/access-token-api.html)
+
+This documentation provides a guide to interacting with the Amazon Alexa API, enabling secure management of skills and vendors using Bearer Authentication with your Amazon Alexa access token.
