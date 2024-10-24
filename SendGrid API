@@ -1,0 +1,140 @@
+# SendGrid API Plugin Documentation
+
+## 1. Overview
+
+The **SendGrid API Plugin** allows integration with SendGrid's email platform, enabling users to send emails, manage bounces, create event webhooks, and manage marketing contacts. Authentication is managed through **API Token Authentication** using `database_token`, ensuring secure access to SendGrid's resources.
+
+## 2. Available Methods
+
+### 1. **Send Single Email**
+   - **Endpoint**: `POST https://api.sendgrid.com/v3/mail/send`
+   - **What it does**: Sends a single email using SendGrid’s email delivery service. This method allows for the customization of recipients, subject, body content, and more.
+   - **Configuration**:
+     - Requires **API Token Authentication** using `database_token`.
+     - The request body must include email details such as `to`, `from`, `subject`, and `content`.
+   - **Use case**: Use this method to send transactional or marketing emails to individual recipients.
+
+#### Example Request Body:
+```json
+{
+  "personalizations": [
+    {
+      "to": [
+        { "email": "recipient@example.com" }
+      ],
+      "subject": "Hello, World!"
+    }
+  ],
+  "from": { "email": "sender@example.com" },
+  "content": [
+    {
+      "type": "text/plain",
+      "value": "Hello, this is a test email from SendGrid."
+    }
+  ]
+}
+```
+
+#### Example Request:
+```http
+POST https://api.sendgrid.com/v3/mail/send
+Authorization: Bearer {{database_token}}
+Content-Type: application/json
+```
+
+### 2. **Retrieve All Bounces**
+   - **Endpoint**: `GET https://api.sendgrid.com/v3/suppression/bounces`
+   - **What it does**: Retrieves a list of all email addresses that have bounced, helping you manage your email deliverability by handling bounces properly.
+   - **Configuration**:
+     - Requires **API Token Authentication** using `database_token`.
+   - **Use case**: Use this method to monitor and manage email addresses that have resulted in bounces to maintain a clean email list.
+
+#### Example Request:
+```http
+GET https://api.sendgrid.com/v3/suppression/bounces
+Authorization: Bearer {{database_token}}
+```
+
+### 3. **Create an Event Webhook**
+   - **Endpoint**: `PATCH https://api.sendgrid.com/v3/user/webhooks/event/settings`
+   - **What it does**: Sets up or updates an Event Webhook to notify your application about email events such as delivered, opened, clicked, and bounced.
+   - **Configuration**:
+     - Requires **API Token Authentication** using `database_token`.
+     - The request body must include the webhook `url` and the list of events to monitor.
+   - **Use case**: Use this method to receive real-time event notifications about email deliveries, opens, clicks, and other email-related activities.
+
+#### Example Request Body:
+```json
+{
+  "url": "https://your-domain.com/event-webhook",
+  "enabled": true,
+  "group_resubscribe": true,
+  "delivered": true,
+  "spam_report": true,
+  "unsubscribe": true,
+  "bounce": true,
+  "click": true,
+  "open": true
+}
+```
+
+#### Example Request:
+```http
+PATCH https://api.sendgrid.com/v3/user/webhooks/event/settings
+Authorization: Bearer {{database_token}}
+Content-Type: application/json
+```
+
+### 4. **Add or Update a Contact**
+   - **Endpoint**: `PUT https://api.sendgrid.com/v3/marketing/contacts`
+   - **What it does**: Adds or updates a contact in your SendGrid marketing list. If the contact already exists, it updates the contact details; otherwise, it adds a new contact.
+   - **Configuration**:
+     - Requires **API Token Authentication** using `database_token`.
+     - The request body must include the contact details, such as `email`, `first_name`, and `last_name`.
+   - **Use case**: Use this method to manage your email marketing contacts programmatically by adding or updating contact information.
+
+#### Example Request Body:
+```json
+{
+  "contacts": [
+    {
+      "email": "newcontact@example.com",
+      "first_name": "John",
+      "last_name": "Doe"
+    }
+  ]
+}
+```
+
+#### Example Request:
+```http
+PUT https://api.sendgrid.com/v3/marketing/contacts
+Authorization: Bearer {{database_token}}
+Content-Type: application/json
+```
+
+## 3. Configuration
+
+To use the SendGrid API, you must authenticate using **API Token Authentication** with your `database_token`. The API key is passed in the Authorization header for all API requests.
+
+### 1. **API Token Setup**
+   - Include your SendGrid API key as a Bearer token in the Authorization header.
+   - The Authorization header will look like this:
+     - `Authorization: Bearer your_database_token`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "database_token": "your_sendgrid_api_token"
+}
+```
+
+This configuration allows secure access to SendGrid for sending emails, managing bounces, creating event webhooks, and managing contacts.
+
+## 4. Links to Documentation
+
+- [SendGrid API Documentation](https://docs.sendgrid.com/api-reference)
+- [SendGrid API Access Setup](https://docs.sendgrid.com/for-developers/sending-email/api-getting-started)
+
+This documentation provides a guide to interacting with the SendGrid API, enabling secure email management, event tracking, and contact updates using API Token Authentication with your SendGrid API token.
