@@ -1,0 +1,56 @@
+# HTML CSS to IMG API Plugin Documentation
+
+## 1. Overview
+
+The **HTML CSS to IMG API Plugin** allows integration with the HTML CSS to IMG service, enabling users to convert HTML and CSS code into an image. Authentication is managed through **Header Authentication** using `CLIENT-API-KEY: API_Key`, ensuring secure access to the service.
+
+## 2. Available Methods
+
+### 1. **Convert HTML & CSS Code to an Image**
+   - **Endpoint**: `POST https://api.htmlcsstoimg.com/api/v1/generateImage`
+   - **What it does**: Converts a provided HTML and CSS code block into an image and returns the generated image.
+   - **Configuration**:
+     - Requires **Header Authentication** using `CLIENT-API-KEY: API_Key`.
+     - The request body must include the HTML and CSS code that you want to convert into an image.
+   - **Use case**: Use this method to programmatically generate images from HTML and CSS code, such as screenshots of web components or styled text blocks.
+
+#### Example Request Body:
+```json
+{
+  "html": "<div><h1>Hello, World!</h1></div>",
+  "css": "div { background-color: #f0f0f0; } h1 { color: blue; }"
+}
+```
+
+#### Example Request:
+```http
+POST https://api.htmlcsstoimg.com/api/v1/generateImage
+Authorization: CLIENT-API-KEY {{API_Key}}
+Content-Type: application/json
+```
+
+## 3. Configuration
+
+To use the HTML CSS to IMG API, you must authenticate using **Header Authentication** with your `API_Key`. The API key is passed in the `CLIENT-API-KEY` header for all API requests.
+
+### 1. **Header Authentication Setup**
+   - Include your HTML CSS to IMG API key in the `CLIENT-API-KEY` header.
+   - The Authorization header will look like this:
+     - `CLIENT-API-KEY: your_API_Key`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "API_Key": "your_htmlcsstoimg_api_key"
+}
+```
+
+This configuration ensures secure access to the HTML CSS to IMG service for converting code to images.
+
+## 4. Links to Documentation
+
+- [HTML CSS to IMG API Documentation](https://htmlcsstoimg.com/docs)
+- [HTML CSS to IMG API Access Setup](https://docs.htmlcsstoimg.com/html-to-image-api/authorization)
+
+This documentation provides a guide to interacting with the HTML CSS to IMG API, enabling secure conversion of HTML and CSS to images using Header Authentication with your API key.
