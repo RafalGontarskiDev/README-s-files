@@ -1,37 +1,62 @@
-# Stripe Checkout Flow Integration
+# Stripe Events API Plugin Documentation
 
-This **Stripe Checkout Flow** integrates the **Stripe Checkout API** and **Stripe Webhook API** to handle payments securely and efficiently. It provides an example template for embedding a checkout button, the process of creating a Stripe Checkout session, and handling the success page. Additionally, webhook integration is included for real-time event handling.
+## 1. Overview
 
-## 1. Overview of Stripe Checkout Flow
+The **Stripe Events API Plugin** allows integration with Stripe’s event tracking, enabling users to list all events or retrieve details about a specific event. Authentication is managed through **Basic Authentication** using `Secret_key`, ensuring secure access to Stripe's resources.
 
-The flow consists of three main steps:
-1. **Checkout Button and Stripe Checkout Process**: A customer clicks the checkout button, which creates a Stripe Checkout session and redirects them to Stripe's hosted checkout page.
-2. **Success Page**: After a successful payment, the customer is redirected to a success page.
-3. **Webhook Handling**: Stripe sends events (e.g., payment success) to your webhook endpoint for backend processing.
+## 2. Available Methods
 
-## 2. Required APIs
+### 1. **List All Events**
+   - **Endpoint**: `GET https://api.stripe.com/v1/events`
+   - **What it does**: Retrieves a list of all events that have occurred in your Stripe account, such as payments, refunds, or subscription updates.
+   - **Configuration**:
+     - Requires **Basic Authentication** using `Secret_key`.
+     - Optional query parameters can be used to filter results by event type or date range.
+   - **Use case**: Use this method to monitor and track various events within your Stripe account for auditing or troubleshooting purposes.
 
-### **1. Stripe Checkout API**
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/events
+Authorization: Basic {{base64_encoded(Secret_key:)}}
+```
 
-- **Create a Checkout Session**: This API is used to create a session for payment and redirect the customer to Stripe's hosted checkout.
-    - **Endpoint**: `POST https://api.stripe.com/v1/checkout/sessions`
-    - **Authentication**: Basic (`username: api_key`)
+### 2. **Retrieve an Event**
+   - **Endpoint**: `GET https://api.stripe.com/v1/events/{{eventId}}`
+   - **What it does**: Retrieves detailed information about a specific event using its `eventId`.
+   - **Configuration**:
+     - Requires `eventId`, the unique identifier of the event.
+     - Requires **Basic Authentication** using `Secret_key`.
+   - **Use case**: Use this method to get detailed information on a particular event for verification, debugging, or analysis.
 
-### **2. Stripe Webhooks API**
+#### Example Request:
+```http
+GET https://api.stripe.com/v1/events/{{eventId}}
+Authorization: Basic {{base64_encoded(Secret_key:)}}
+```
 
-- **Create a Webhook Endpoint**: Webhooks are used to listen for Stripe events and handle them accordingly (e.g., payment success).
-    - **Endpoint**: `POST https://api.stripe.com/v1/webhook_endpoints`
-    - **Authentication**: Basic (`username: secret_key`)
+## 3. Configuration
 
-## 3. Create a Checkout Session (Server-Side)
+To use the Stripe Events API, you must authenticate using **Basic Authentication** with your `Secret_key`. The API key is passed as the username in the Basic Authentication scheme, with no password required.
 
-![Stripe Checkout](https://github.com/RafalGontarskiDev/README-s-files/blob/main/Stripe%20Checkout.png)
+### 1. **Basic Authentication Setup**
+   - Use your Stripe `Secret_key` as the username for Basic Authentication.
+   - The credentials must be base64 encoded.
+   - The Authorization header will look like this:
+     - `Authorization: Basic base64(Secret_key:)`
+
+### 2. **JSON Configuration Example**
+
+```json
+{
+  "Secret_key": "your_stripe_secret_key"
+}
+```
+
+This configuration ensures secure access to Stripe’s event tracking resources.
 
 ## 4. Links to Documentation
 
-- [Stripe Checkout API Documentation](https://stripe.com/docs/api/checkout/sessions)
-- [Stripe Webhooks API Documentation](https://stripe.com/docs/api/webhook_endpoints)
-- [Stripe Checkout Quickstart](https://stripe.com/docs/checkout/quickstart)
-- [Stripe Webhook Setup](https://stripe.com/docs/webhooks/setup)
+- [Stripe Events API Documentation](https://stripe.com/docs/api/events)
+- [Stripe API Access Setup](https://stripe.com/docs/keys)
 
-This integration allows you to securely accept payments using Stripe Checkout while handling post-payment events via webhooks.
+This documentation provides a guide to interacting with the Stripe Events API, enabling secure access to event listings and details using Basic Authentication with your Stripe Secret key.
