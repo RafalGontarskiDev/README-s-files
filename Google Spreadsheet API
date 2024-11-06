@@ -1,0 +1,173 @@
+# Google Spreadsheet API Documentation
+
+## 1. Overview
+
+The **Google Spreadsheet API** allows for seamless interaction with Google Sheets. With this API, you can create new spreadsheets, read and write data to specific ranges, and manage spreadsheet metadata. Authentication is managed through OAuth2 with delegated access, ensuring secure user-specific access to spreadsheets.
+
+## 2. Available Methods
+
+### 1. **Create Spreadsheet**
+   - **Endpoint**: `POST https://sheets.googleapis.com/v4/spreadsheets`
+   - **What it does**: Creates a new Google Spreadsheet.
+   - **Configuration**:
+     - Requires OAuth2 authentication with proper scopes (`https://www.googleapis.com/auth/spreadsheets`).
+   - **Use case**: Automatically generate new spreadsheets for various use cases such as data analysis, reports, or templates.
+
+#### Example Request Body:
+```json
+{
+  "properties": {
+    "title": "New Spreadsheet"
+  }
+}
+```
+
+### 2. **Reading Multiple Ranges**
+   - **Endpoint**: `GET https://sheets.googleapis.com/v4/spreadsheets/{{spreadsheetId}}/values:batchGet`
+   - **What it does**: Retrieves values from multiple ranges in a specific spreadsheet.
+   - **Configuration**:
+     - Requires `spreadsheetId`, the unique ID of the spreadsheet.
+     - Requires OAuth2 authentication with proper scopes (`https://www.googleapis.com/auth/spreadsheets.readonly`).
+   - **Use case**: Use this method to retrieve data from various ranges in a spreadsheet for analysis or display.
+
+#### Example Request Body:
+```json
+{
+  "ranges": ["Sheet1!A1:B2", "Sheet1!C1:D2"],
+  "majorDimension": "ROWS"
+}
+```
+
+### 3. **Writing Single Range**
+   - **Endpoint**: `PUT https://sheets.googleapis.com/v4/spreadsheets/{{spreadsheetId}}/values/{{range}}?valueInputOption=RAW`
+   - **What it does**: Writes data to a single range in a specified spreadsheet.
+   - **Configuration**:
+     - Requires `spreadsheetId` and `range`, which specify where to write the data.
+     - Requires OAuth2 authentication with proper scopes (`https://www.googleapis.com/auth/spreadsheets`).
+   - **Use case**: Use this method to update specific cells in a spreadsheet with new data.
+
+#### Example Request Body:
+```json
+{
+  "values": [
+    ["New Value 1", "New Value 2"]
+  ]
+}
+```
+
+### 4. **Reading Single Range**
+   - **Endpoint**: `GET https://sheets.googleapis.com/v4/spreadsheets/{{spreadsheetId}}/values/{{range}}`
+   - **What it does**: Retrieves values from a single range in a specified spreadsheet.
+   - **Configuration**:
+     - Requires `spreadsheetId` and `range`.
+     - Requires OAuth2 authentication with proper scopes (`https://www.googleapis.com/auth/spreadsheets.readonly`).
+   - **Use case**: Use this method to get data from a specific range for reporting or analysis.
+
+### 5. **Get by Data Filter**
+   - **Endpoint**: `POST https://sheets.googleapis.com/v4/spreadsheets/{{spreadsheetId}}:getByDataFilter`
+   - **What it does**: Retrieves values from a spreadsheet based on a specified data filter.
+   - **Configuration**:
+     - Requires `spreadsheetId`.
+     - Requires OAuth2 authentication with proper scopes.
+   - **Use case**: Use this method to fetch data using complex filters.
+
+#### Example Request Body:
+```json
+{
+  "dataFilters": [
+    {
+      "gridRange": {
+        "sheetId": {{sheetId}},
+        "startRowIndex": 0,
+        "endRowIndex": 10
+      }
+    }
+  ]
+}
+```
+
+### 6. **Get Spreadsheet by Metadata**
+   - **Endpoint**: `GET https://sheets.googleapis.com/v4/spreadsheets/{{spreadsheetId}}/developerMetadata/{{metadataId}}`
+   - **What it does**: Retrieves specific metadata associated with a spreadsheet.
+   - **Configuration**:
+     - Requires `spreadsheetId` and `metadataId`.
+     - Requires OAuth2 authentication with proper scopes.
+   - **Use case**: Use this method to access metadata related to specific elements in a spreadsheet.
+
+### 7. **Get Metadata**
+   - **Endpoint**: `GET https://sheets.googleapis.com/v4/spreadsheets/{{spreadsheetId}}/developerMetadata`
+   - **What it does**: Retrieves all metadata associated with a spreadsheet.
+   - **Configuration**:
+     - Requires `spreadsheetId`.
+     - Requires OAuth2 authentication with proper scopes.
+   - **Use case**: Use this method to list all metadata tags associated with a spreadsheet.
+
+### 8. **Spreadsheet Sheet CopyTo**
+   - **Endpoint**: `POST https://sheets.googleapis.com/v4/spreadsheets/{{spreadsheetId}}/sheets/{{sheetId}}:copyTo`
+   - **What it does**: Copies a sheet to another spreadsheet.
+   - **Configuration**:
+     - Requires `spreadsheetId` and `sheetId`.
+     - Requires OAuth2 authentication with proper scopes.
+   - **Use case**: Use this method to duplicate a sheet in a different spreadsheet.
+
+### 9. **Writing Multiple Ranges**
+   - **Endpoint**: `POST https://sheets.googleapis.com/v4/spreadsheets/{{spreadsheetId}}/values:batchUpdate`
+   - **What it does**: Writes data to multiple ranges in a specified spreadsheet.
+   - **Configuration**:
+     - Requires `spreadsheetId`.
+     - Requires OAuth2 authentication with proper scopes.
+   - **Use case**: Use this method for bulk updates to a spreadsheet.
+
+#### Example Request Body:
+```json
+{
+  "valueInputOption": "RAW",
+  "data": [
+    {
+      "range": "Sheet1!A1:B2",
+      "values": [
+        ["Value 1", "Value 2"],
+        ["Value 3", "Value 4"]
+      ]
+    }
+  ]
+}
+```
+
+### 10. **Get Spreadsheet**
+   - **Endpoint**: `GET https://sheets.googleapis.com/v4/spreadsheets/{{spreadsheetId}}`
+   - **What it does**: Retrieves the entire spreadsheet including its properties, sheets, and values.
+   - **Configuration**:
+     - Requires `spreadsheetId`.
+     - Requires OAuth2 authentication with proper scopes.
+   - **Use case**: Use this method to get a full overview of the spreadsheet.
+
+## 3. Configuration
+
+To use the Google Spreadsheet API, you need to authenticate using OAuth2 and provide the appropriate scopes for the actions you intend to perform. This setup allows secure access to Google Sheets on behalf of the user.
+
+### 1. **OAuth2 Setup**
+   - **Delegated access** allows the plugin to act on behalf of the authenticated user.
+   - Ensure you have set up OAuth2 with the following scopes:
+     - `https://www.googleapis.com/auth/spreadsheets` for full access to create and edit spreadsheets.
+     - `https://www.googleapis.com/auth/spreadsheets.readonly` for read-only access to spreadsheets.
+
+### 2. **Steps to Configure OAuth2**
+   - In Google Cloud Console, create an OAuth2 client for your application.
+   - Add the relevant scopes depending on the API actions you want to perform.
+   - Obtain the OAuth2 access token for each user by directing them through Google's OAuth2 consent flow.
+
+### 3. **JSON Configuration Example**
+
+```json
+{
+  "access_token": "your_oauth2_access_token"
+}
+```
+
+## 4. Links to Documentation
+
+- [Google Spreadsheet API Documentation](https://developers.google.com/sheets/api/reference/rest)
+- [Google OAuth2 Access Setup](https://developers.google.com/identity/protocols/oauth2)
+
+This documentation provides a clear guide to utilizing the Google Spreadsheet API for creating, fetching, and updating spreadsheets, ensuring secure and delegated user access.
