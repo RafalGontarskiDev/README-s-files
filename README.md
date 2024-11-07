@@ -1,7 +1,3 @@
-Certainly, here is the updated documentation with links to the API documentation for each method:
-
----
-
 # Mandrill API Plugin Documentation
 
 ## Introduction
