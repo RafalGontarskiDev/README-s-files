@@ -1,62 +1,136 @@
-# Stripe Events API Plugin Documentation
+Certainly, here is the updated documentation with links to the API documentation for each method:
 
-## 1. Overview
+---
 
-The **Stripe Events API Plugin** allows integration with Stripe’s event tracking, enabling users to list all events or retrieve details about a specific event. Authentication is managed through **Basic Authentication** using `Secret_key`, ensuring secure access to Stripe's resources.
+# Mandrill API Plugin Documentation
 
-## 2. Available Methods
+## Introduction
 
-### 1. **List All Events**
-   - **Endpoint**: `GET https://api.stripe.com/v1/events`
-   - **What it does**: Retrieves a list of all events that have occurred in your Stripe account, such as payments, refunds, or subscription updates.
-   - **Configuration**:
-     - Requires **Basic Authentication** using `Secret_key`.
-     - Optional query parameters can be used to filter results by event type or date range.
-   - **Use case**: Use this method to monitor and track various events within your Stripe account for auditing or troubleshooting purposes.
+This plugin allows you to interact with the Mandrill API to manage your email templates and retrieve account information. You can perform actions such as retrieving user information, getting template details, and adding new templates.
 
-#### Example Request:
-```http
-GET https://api.stripe.com/v1/events
-Authorization: Basic {{base64_encoded(Secret_key:)}}
-```
+## Configuration
 
-### 2. **Retrieve an Event**
-   - **Endpoint**: `GET https://api.stripe.com/v1/events/{{eventId}}`
-   - **What it does**: Retrieves detailed information about a specific event using its `eventId`.
-   - **Configuration**:
-     - Requires `eventId`, the unique identifier of the event.
-     - Requires **Basic Authentication** using `Secret_key`.
-   - **Use case**: Use this method to get detailed information on a particular event for verification, debugging, or analysis.
+To use the plugin, you need to create a configuration data object that includes your Mandrill API key. This API key authenticates your requests to the Mandrill API.
 
-#### Example Request:
-```http
-GET https://api.stripe.com/v1/events/{{eventId}}
-Authorization: Basic {{base64_encoded(Secret_key:)}}
-```
+### Creating Configuration Data
 
-## 3. Configuration
+Your configuration data should be a JSON object that includes the following field:
 
-To use the Stripe Events API, you must authenticate using **Basic Authentication** with your `Secret_key`. The API key is passed as the username in the Basic Authentication scheme, with no password required.
+- **`key`**: Your Mandrill API key.
 
-### 1. **Basic Authentication Setup**
-   - Use your Stripe `Secret_key` as the username for Basic Authentication.
-   - The credentials must be base64 encoded.
-   - The Authorization header will look like this:
-     - `Authorization: Basic base64(Secret_key:)`
-
-### 2. **JSON Configuration Example**
+**Example Configuration:**
 
 ```json
 {
-  "Secret_key": "your_stripe_secret_key"
+  "key": "your_api_key"
 }
 ```
 
-This configuration ensures secure access to Stripe’s event tracking resources.
+## Available Methods
 
-## 4. Links to Documentation
+### 1. [Get User Info](https://mailchimp.com/developer/transactional/api/users/get-user-info/)
 
-- [Stripe Events API Documentation](https://stripe.com/docs/api/events)
-- [Stripe API Access Setup](https://stripe.com/docs/keys)
+- **Endpoint:** `POST https://mandrillapp.com/api/1.0/users/info`
+- **Description:** Retrieves information about the authenticated user, including account details, reputation, and sending limits.
 
+#### How to Use
+
+1. **Prepare the Request Body:** Include your API key in the request body.
+
+   **Example:**
+
+   ```json
+   {
+     "key": "your_api_key"
+   }
+   ```
+
+2. **Make the Request:** Send a POST request to the endpoint with the request body.
+
+   **Example Request:**
+
+   ```
+   POST https://mandrillapp.com/api/1.0/users/info
+   Content-Type: application/json
+   ```
+
+#### Expected Response
+
+- Returns user account details such as username, reputation score, and email statistics.
+
+### 2. [Get Template Info](https://mailchimp.com/developer/transactional/api/templates/get-template-info/)
+
+- **Endpoint:** `POST https://mandrillapp.com/api/1.0/templates/info`
+- **Description:** Retrieves detailed information about a specific email template.
+
+#### How to Use
+
+1. **Prepare the Request Body:** Include your API key and the name of the template you want to retrieve.
+
+   **Example:**
+
+   ```json
+   {
+     "key": "your_api_key",
+     "name": "template_name"
+   }
+   ```
+
+2. **Make the Request:** Send a POST request to the endpoint with the request body.
+
+   **Example Request:**
+
+   ```
+   POST https://mandrillapp.com/api/1.0/templates/info
+   Content-Type: application/json
+   ```
+
+#### Expected Response
+
+- Returns detailed information about the specified template, including its HTML code, metadata, and last update timestamp.
+
+### 3. [Add Template](https://mailchimp.com/developer/transactional/api/templates/add-template/)
+
+- **Endpoint:** `POST https://mandrillapp.com/api/1.0/templates/add`
+- **Description:** Creates a new email template in Mandrill for sending transactional emails.
+
+#### How to Use
+
+1. **Prepare the Request Body:** Include your API key and the template details such as name, HTML code, and optional settings.
+
+   **Example:**
+
+   ```json
+   {
+     "key": "your_api_key",
+     "name": "new_template",
+     "code": "<html><body><h1>Hello World!</h1></body></html>",
+     "publish": true
+   }
+   ```
+
+   - **Fields:**
+     - `key`: Your Mandrill API key.
+     - `name`: The name for the new template.
+     - `code`: The HTML content of the template.
+     - `publish`: (Optional) Set to `true` to publish the template immediately.
+
+2. **Make the Request:** Send a POST request to the endpoint with the request body.
+
+   **Example Request:**
+
+   ```
+   POST https://mandrillapp.com/api/1.0/templates/add
+   Content-Type: application/json
+   ```
+
+#### Expected Response
+
+- Returns details of the newly created template, including its unique ID and creation timestamp.
+
+---
+
+**Note:** Ensure that all requests include the `Content-Type: application/json` header and that your API key is kept secure.
+
+For more information on each endpoint and additional parameters, refer to the [Mandrill API Documentation](https://mandrillapp.com/api/docs/).
 This documentation provides a guide to interacting with the Stripe Events API, enabling secure access to event listings and details using Basic Authentication with your Stripe Secret key.
