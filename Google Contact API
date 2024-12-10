@@ -1,0 +1,72 @@
+# Documentation
+
+## 1. Overview
+
+The **Google Contact API Plugin** allows seamless integration with Google Contacts, enabling users to manage their contacts and contact groups programmatically. This API provides methods to retrieve detailed information about contact groups, fetch lists of contacts, and more. Authentication is managed through OAuth2 with the required scopes, ensuring secure and delegated access to Google Contacts.
+
+## 2. # Documentation
+
+## 1. Overview
+
+The **Google Contact API Plugin** allows seamless integration with Google Contacts, enabling users to manage their contact groups and connections programmatically. This API provides methods to retrieve information about contact groups and their members. Authentication is managed through OAuth2 with the required scopes, ensuring secure and delegated access to Google Contacts.
+
+## 2. Available Methods
+
+### 1. **Google Contact: contactGroups.batchGet**
+
+- **Description:** This action calls the API [contactGroups.batchGet](https://developers.google.com/people/api/rest/v1/contactGroups/batchGet) to retrieve detailed information about multiple contact groups by their IDs.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the `resourceNames` of the contact groups you wish to retrieve.
+
+   Example Request Body:
+   ```json
+   {
+     "resourceNames": [
+       "contactGroups/myContacts",
+       "contactGroups/starred"
+     ]
+   }
+   ```
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include details of the requested contact groups, such as their names, member counts, and metadata.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 2. **Google Contact: contactGroups.list**
+
+- **Description:** This action calls the API [contactGroups.list](https://developers.google.com/people/api/rest/v1/contactGroups/list) to retrieve a list of all contact groups for a user.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide optional query parameters such as `pageSize` to control the number of contact groups returned in the response.
+
+   Example Request:
+   ```http
+   GET https://people.googleapis.com/v1/contactGroups?pageSize=10
+   Authorization: Bearer {{access_token}}
+   ```
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include a list of contact groups, with details such as group names, metadata, and member counts.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+## 3. Links to Documentation
+
+- [Google Contact API Documentation](https://developers.google.com/people)
+- [Google OAuth2 Setup for Contacts API](https://developers.google.com/identity/protocols/oauth2)
