@@ -1,0 +1,103 @@
+# Documentation
+
+## 1. Overview
+
+The **Google Forms API Plugin** enables seamless interaction with Google Forms, allowing users to create forms, retrieve form details, and apply batch updates for programmatic form management. This API is designed to streamline workflows involving surveys, quizzes, and feedback forms. Authentication is managed via OAuth2, ensuring secure and authorized access to Google Forms resources.
+
+## 2. Available Methods
+
+### 1. **Google Forms: Create Form**
+
+- **Description:** This action calls the API [Create Form](https://developers.google.com/forms/api/reference/rest/v1/forms/create) to create a new Google Form.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Include the title of the form and optionally, its description in the request body.
+
+   Example Request Body:
+   ```json
+   {
+     "info": {
+       "title": "New Form",
+       "description": "This is a sample Google Form"
+     }
+   }
+   ```
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will contain the details of the newly created form, including its `formId` and metadata.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 2. **Google Forms: Batch Update**
+
+- **Description:** This action calls the API [Batch Update](https://developers.google.com/forms/api/reference/rest/v1/forms.batchUpdate) to apply multiple updates to a Google Form in a single request.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the `formId` and a list of update requests in the request body.
+
+   Example Request Body:
+   ```json
+   {
+     "requests": [
+       {
+         "createItem": {
+           "item": {
+             "title": "Question 1",
+             "questionItem": {
+               "question": {
+                 "required": true,
+                 "textQuestion": {}
+               }
+             }
+           },
+           "location": {
+             "index": 0
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm the updates and provide details of the modified form structure.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 3. **Google Forms: Get Form**
+
+- **Description:** This action calls the API [Get Form](https://developers.google.com/forms/api/reference/rest/v1/forms/get) to retrieve the content and structure of a specific Google Form.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the `formId` of the form you want to retrieve.
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include the form's metadata, questions, and structure.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+## 3. Links to Documentation
+
+- [Google Forms API Reference](https://developers.google.com/forms/api/reference/rest)
+- [Google Forms API Quickstart Guide](https://developers.google.com/forms/api/quickstart)  
