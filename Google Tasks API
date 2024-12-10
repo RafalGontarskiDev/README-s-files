@@ -1,0 +1,99 @@
+# Documentation
+
+## 1. Overview
+
+The **Google Tasks API Plugin** enables integration with Google Tasks, allowing developers to manage task lists and tasks programmatically. With this API, you can create, update, retrieve, and manage task lists and individual tasks for improved productivity and organization. Authentication is managed via OAuth2, ensuring secure and delegated access to user tasks.
+
+## 2. Configuration
+
+To use the Google Tasks API, ensure your configuration includes the appropriate OAuth2 credentials with the required scopes for managing tasks:
+
+- `https://www.googleapis.com/auth/tasks`: Full access to manage Google Tasks.
+- `https://www.googleapis.com/auth/tasks.readonly`: Read-only access to Google Tasks.
+
+---
+
+## 3. Available Methods
+
+### 1. **Google Tasks: Insert Task List**
+
+- **Description:** This action calls the API [Insert Task List](https://developers.google.com/tasks/reference/rest/v1/tasklists/insert) to create a new task list.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Include the required task list details in the request body.
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will contain the newly created task list details, including its ID and title.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 2. **Google Tasks: Update Task Lists**
+
+- **Description:** This action calls the API [Update Task Lists](https://developers.google.com/tasks/reference/rest/v1/tasklists/update) to update an existing task list by its ID.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the `tasklist` ID and the updated title in the request body.
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will contain the updated task list details, including the new title and metadata.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 3. **Google Tasks: Get Task List by ID**
+
+- **Description:** This action calls the API [Get Task List by ID](https://developers.google.com/tasks/reference/rest/v1/tasklists/get) to retrieve details of a specific task list by its `tasklist` ID.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the `tasklist` ID in the request URL.
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include details of the task list, such as its title, ID, and updated date.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 4. **Google Tasks: Get Tasks List**
+
+- **Description:** This action calls the API [Get Tasks List](https://developers.google.com/tasks/reference/rest/v1/tasks/list) to retrieve a list of tasks within a specified task list.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the `tasklist` ID and optional query parameters like `dueMin`, `dueMax`, or `completedMin` to filter tasks.
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include a list of tasks with their IDs, titles, due dates, and status.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+## 4. Links to Documentation
+
+- [Google Tasks API Reference](https://developers.google.com/tasks/reference/rest)
+- [Google Tasks API Quickstart](https://developers.google.com/tasks/quickstart)  
+
+This documentation provides essential methods for interacting with Google Tasks, enabling secure management of task lists and tasks via OAuth2 authentication.
