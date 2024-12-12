@@ -1,0 +1,212 @@
+# Documentation
+
+## 1. Overview
+
+The **Google Calendar API Plugin** enables integration with Google Calendar, providing methods to manage calendars and events programmatically. With this API, users can create, retrieve, update, and list calendars and events. Authentication is managed through OAuth2 with the required scopes, ensuring secure and delegated access to Google Calendar resources.
+
+## 2. Available Methods
+
+### 1. **Google Calendar Event: Create**
+
+- **Description:** This action calls the API [Events: insert](https://developers.google.com/calendar/api/v3/reference/events/insert) to create a new event in a specified calendar.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the `calendarId` and event details in the request body.
+
+   Example Request Body:
+   ```json
+   {
+     "summary": "Team Meeting",
+     "location": "Conference Room",
+     "description": "Discussing project updates.",
+     "start": {
+       "dateTime": "2024-12-15T10:00:00-07:00"
+     },
+     "end": {
+       "dateTime": "2024-12-15T11:00:00-07:00"
+     },
+     "attendees": [
+       {"email": "example1@example.com"},
+       {"email": "example2@example.com"}
+     ]
+   }
+   ```
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will contain the details of the newly created event, including its `eventId`.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 2. **Google Calendar: Get Calendar's List**
+
+- **Description:** This action calls the API [CalendarList: list](https://developers.google.com/calendar/api/v3/reference/calendarList/list) to retrieve a list of all calendars accessible to the authenticated user.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide optional query parameters like `minAccessRole` to filter results.
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include a list of calendars and their metadata, such as names, time zones, and access roles.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 3. **Google Calendar Event: List**
+
+- **Description:** This action calls the API [Events: list](https://developers.google.com/calendar/api/v3/reference/events/list) to retrieve events from a specified calendar.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the `calendarId` and optional query parameters such as `timeMin` and `timeMax`.
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include a list of events within the specified time range.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 4. **Google Calendar Event: Update**
+
+- **Description:** This action calls the API [Events: update](https://developers.google.com/calendar/api/v3/reference/events/update) to update an existing event in a calendar.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the `calendarId`, `eventId`, and the updated event details.
+
+   Example Request Body:
+   ```json
+   {
+     "summary": "Updated Team Meeting",
+     "location": "Updated Conference Room",
+     "description": "Updated discussion points.",
+     "start": {
+       "dateTime": "2024-12-15T14:00:00-07:00"
+     },
+     "end": {
+       "dateTime": "2024-12-15T15:00:00-07:00"
+     }
+   }
+   ```
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include the updated event details.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 5. **Google Calendar: Update**
+
+- **Description:** This action calls the API [Calendars: update](https://developers.google.com/calendar/api/v3/reference/calendars/update) to update an existing calendar.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the `calendarId` and updated calendar details.
+
+   Example Request Body:
+   ```json
+   {
+     "summary": "Updated Calendar Name"
+   }
+   ```
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include the updated calendar details.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 6. **Google Calendar: Create Calendar**
+
+- **Description:** This action calls the API [Calendars: insert](https://developers.google.com/calendar/api/v3/reference/calendars/insert) to create a new calendar.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the new calendar's details in the request body.
+
+   Example Request Body:
+   ```json
+   {
+     "summary": "New Calendar"
+   }
+   ```
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include the newly created calendar's details.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 7. **Google Calendar: Get Calendar by Id**
+
+- **Description:** This action calls the API [Calendars: get](https://developers.google.com/calendar/api/v3/reference/calendars/get) to retrieve details of a specific calendar.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the `calendarId`.
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include details about the specified calendar.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+### 8. **Google Calendar Event: Get by ID**
+
+- **Description:** This action calls the API [Events: get](https://developers.google.com/calendar/api/v3/reference/events/get) to retrieve a specific event by its ID.
+
+#### How to Use
+1. **Prepare action in Your logic:**  
+   Provide the `calendarId` and `eventId`.
+
+   ![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include details about the specified event.
+
+#### Expected Response
+
+![RESPONSE]()
+
+---
+
+## 3. Links to Documentation
+
+- [Google Calendar API Documentation](https://developers.google.com/calendar/api)
+- [Google OAuth2 Setup for Calendar API](https://developers.google.com/identity/protocols/oauth2)
