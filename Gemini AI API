@@ -26,18 +26,26 @@ Now Your access to use Gemini AI Plugin is finished. Have fun!
 
 ## 3. Available Methods
 
-### 1. **API Test (Generate Content)**
-   - **Endpoint**: `POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent`
-   - **What it does**: Tests the Gemini AI API by generating content based on input provided in the request body.
-   - **Configuration**:
-     - Requires **Query Parameter Authentication** using `key:API_Key`.
-     - The request body must include the input data for generating content.
-   - **Use case**: Use this method to test content generation using the Gemini AI model.
+### 1. **Gemini AI: Generate Content**
 
+- **Description:** This action calls the API [Generate Content](https://developers.generativelanguage.com/docs/api/generate-content) to generate AI-powered content using the Gemini AI model. The method processes user-provided input to produce tailored responses or creative outputs.
+
+#### How to Use
+
+1. **Prepare action in Your logic:**  
+   Design the logic to include the input data for generating content. Ensure the appropriate query parameter authentication with your API key is included.
+
+**Logic Example:**  
 ![LOGIC]()
 
-#### Response:
+2. **Result:**  
+   The **RESPONSE** will contain the generated content based on the input provided.
 
+#### Expected Response
+
+- Returns AI-generated content, such as text or creative outputs, as per the input specifications.
+
+**Response Example:**  
 ![RESPONSE]()
 
 ## 4. Links to Documentation
