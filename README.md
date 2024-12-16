@@ -1,132 +1,132 @@
-# Mandrill API Plugin Documentation
+## 3. Available Methods
 
-## Introduction
+### 1. **Stripe Checkout: List All Checkout Sessions**
 
-This plugin allows you to interact with the Mandrill API to manage your email templates and retrieve account information. You can perform actions such as retrieving user information, getting template details, and adding new templates.
-
-## Configuration
-
-To use the plugin, you need to create a configuration data object that includes your Mandrill API key. This API key authenticates your requests to the Mandrill API.
-
-### Creating Configuration Data
-
-Your configuration data should be a JSON object that includes the following field:
-
-- **`key`**: Your Mandrill API key.
-
-**Example Configuration:**
-
-```json
-{
-  "key": "your_api_key"
-}
-```
-
-## Available Methods
-
-### 1. [Get User Info](https://mailchimp.com/developer/transactional/api/users/get-user-info/)
-
-- **Endpoint:** `POST https://mandrillapp.com/api/1.0/users/info`
-- **Description:** Retrieves information about the authenticated user, including account details, reputation, and sending limits.
+- **Description:** This action calls the API [List All Checkout Sessions](https://stripe.com/docs/api/checkout/sessions/list) to retrieve a list of all Checkout sessions associated with your Stripe account.
 
 #### How to Use
 
-1. **Prepare the Request Body:** Include your API key in the request body.
+1. **Prepare action in Your logic:**  
+   Design the logic to include optional filters like date, status, or other parameters for narrowing the results.
 
-   **Example:**
+**Logic Example:**  
+![LOGIC]()
 
-   ```json
-   {
-     "key": "your_api_key"
-   }
-   ```
-
-2. **Make the Request:** Send a POST request to the endpoint with the request body.
-
-   **Example Request:**
-
-   ```
-   POST https://mandrillapp.com/api/1.0/users/info
-   Content-Type: application/json
-   ```
+2. **Result:**  
+   The **RESPONSE** will contain a list of Checkout sessions with their details.
 
 #### Expected Response
 
-- Returns user account details such as username, reputation score, and email statistics.
+- Returns a list of Checkout sessions, including their IDs, payment status, and session modes.
 
-### 2. [Get Template Info](https://mailchimp.com/developer/transactional/api/templates/get-template-info/)
-
-- **Endpoint:** `POST https://mandrillapp.com/api/1.0/templates/info`
-- **Description:** Retrieves detailed information about a specific email template.
-
-#### How to Use
-
-1. **Prepare the Request Body:** Include your API key and the name of the template you want to retrieve.
-
-   **Example:**
-
-   ```json
-   {
-     "key": "your_api_key",
-     "name": "template_name"
-   }
-   ```
-
-2. **Make the Request:** Send a POST request to the endpoint with the request body.
-
-   **Example Request:**
-
-   ```
-   POST https://mandrillapp.com/api/1.0/templates/info
-   Content-Type: application/json
-   ```
-
-#### Expected Response
-
-- Returns detailed information about the specified template, including its HTML code, metadata, and last update timestamp.
-
-### 3. [Add Template](https://mailchimp.com/developer/transactional/api/templates/add-template/)
-
-- **Endpoint:** `POST https://mandrillapp.com/api/1.0/templates/add`
-- **Description:** Creates a new email template in Mandrill for sending transactional emails.
-
-#### How to Use
-
-1. **Prepare the Request Body:** Include your API key and the template details such as name, HTML code, and optional settings.
-
-   **Example:**
-
-   ```json
-   {
-     "key": "your_api_key",
-     "name": "new_template",
-     "code": "<html><body><h1>Hello World!</h1></body></html>",
-     "publish": true
-   }
-   ```
-
-   - **Fields:**
-     - `key`: Your Mandrill API key.
-     - `name`: The name for the new template.
-     - `code`: The HTML content of the template.
-     - `publish`: (Optional) Set to `true` to publish the template immediately.
-
-2. **Make the Request:** Send a POST request to the endpoint with the request body.
-
-   **Example Request:**
-
-   ```
-   POST https://mandrillapp.com/api/1.0/templates/add
-   Content-Type: application/json
-   ```
-
-#### Expected Response
-
-- Returns details of the newly created template, including its unique ID and creation timestamp.
+**Response Example:**  
+![RESPONSE]()
 
 ---
 
-**Note:** Ensure that all requests include the `Content-Type: application/json` header and that your API key is kept secure.
+### 2. **Stripe Checkout: Create a Session**
 
-For more information on each endpoint and additional parameters, refer to the [Mandrill API Documentation](https://mandrillapp.com/api/docs/).
-This documentation provides a guide to interacting with the Stripe Events API, enabling secure access to event listings and details using Basic Authentication with your Stripe Secret key.
+- **Description:** This action calls the API [Create a Session](https://stripe.com/docs/api/checkout/sessions/create) to generate a new Stripe Checkout session for handling payments or subscriptions.
+
+#### How to Use
+
+1. **Prepare action in Your logic:**  
+   Design the logic to include necessary details like `line_items`, `success_url`, `cancel_url`, and payment method preferences.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will contain the session details, including its unique ID and status.
+
+#### Expected Response
+
+- Returns details of the created Checkout session, such as its ID, URL, and payment status.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 3. **Stripe Checkout: Retrieve a Checkout Session's Line Items**
+
+- **Description:** This action calls the API [Retrieve Line Items](https://stripe.com/docs/api/checkout/sessions/line_items) to fetch the line items (products or services) associated with a specific Checkout session.
+
+#### How to Use
+
+1. **Prepare action in Your logic:**  
+   Design the logic to include the `sessionId` of the Checkout session.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will include the details of the products or services purchased in the specified session.
+
+#### Expected Response
+
+- Returns the line items associated with the specified Checkout session.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 4. **Stripe Checkout: Retrieve a Session**
+
+- **Description:** This action calls the API [Retrieve a Session](https://stripe.com/docs/api/checkout/sessions/retrieve) to get full details about a specific Checkout session.
+
+#### How to Use
+
+1. **Prepare action in Your logic:**  
+   Design the logic to include the `sessionId` of the Checkout session.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will contain details about the session, such as payment status, customer data, and session mode.
+
+#### Expected Response
+
+- Returns full details of the Checkout session, including customer information and payment status.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 5. **Stripe Checkout: Expire a Session**
+
+- **Description:** This action calls the API [Expire a Session](https://stripe.com/docs/api/checkout/sessions/expire) to manually expire an active Checkout session.
+
+#### How to Use
+
+1. **Prepare action in Your logic:**  
+   Design the logic to include the `sessionId` of the session you want to expire.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm the expiration of the session.
+
+#### Expected Response
+
+- Confirms that the session has been successfully expired.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### Status Codes Overview
+
+For each method in this documentation, the **RESPONSE** will include a **STATUS** field. The possible status codes are:
+
+- **`"OK"`**: The request was successful.
+- **`"BAD_REQUEST"`**: The request was malformed or contained invalid data.
+- **`"UNAUTHORIZED"`**: The provided API key does not have sufficient permissions.
+- **`"NOT_FOUND"`**: The specified resource could not be found.
+
+These status codes will appear consistently in the **Result** section of each method and will indicate the outcome of the API request.
