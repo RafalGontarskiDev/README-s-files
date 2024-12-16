@@ -1,10 +1,30 @@
-# Gemini AI API Plugin Documentation
-
 ## 1. Overview
 
 The **Gemini AI API Plugin** allows integration with Google's Gemini AI, enabling users to generate content using AI models. Authentication is managed through **Query Parameter Authentication** using `key:API_Key`, ensuring secure access to the Gemini AI services.
 
-## 2. Available Methods
+## 2. Configuration
+
+Sign in [Gemini Developer](https://ai.google.dev/).
+
+Go to [API Documentation](https://ai.google.dev/gemini-api/docs?hl=en) and choose get a Gemini API key.
+
+![Get Gemini API key]()
+
+Here You can create Your Gemini API Key.
+
+![Create API KEY]()
+
+Install Gemini AI Plugin in NoCode-X Hub and create data:
+
+![creating data with api key]()
+
+Then Your data should look like:
+
+![gemini configuration data]()
+
+Now Your access to use Gemini AI Plugin is finished. Have fun!
+
+## 3. Available Methods
 
 ### 1. **API Test (Generate Content)**
    - **Endpoint**: `POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent`
@@ -14,43 +34,13 @@ The **Gemini AI API Plugin** allows integration with Google's Gemini AI, enablin
      - The request body must include the input data for generating content.
    - **Use case**: Use this method to test content generation using the Gemini AI model.
 
-#### Example Request Body:
-```json
-{
-  "prompt": {
-    "text": "Write a short story about a robot learning to play music."
-  }
-}
-```
+![LOGIC]()
 
-#### Example Request:
-```http
-POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={{API_Key}}
-Content-Type: application/json
-```
+#### Response:
 
-## 3. Configuration
-
-To use the Gemini AI API, you must authenticate using **Query Parameter Authentication** with your `API_Key`. The API key is passed as a query parameter for all API requests.
-
-### 1. **Query Parameter Setup**
-   - Include your Gemini AI API key as a query parameter (`key`) in the request URL.
-   - The URL will look like this:
-     - `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=your_API_key`
-
-### 2. **JSON Configuration Example**
-
-```json
-{
-  "API_Key": "your_gemini_ai_api_key"
-}
-```
-
-This configuration ensures secure access to the Gemini AI services for generating content.
+![RESPONSE]()
 
 ## 4. Links to Documentation
 
 - [Gemini AI API Documentation](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models)
 - [Gemini AI API Access Setup](https://cloud.google.com/docs/authentication/api-keys)
-
-This documentation provides a guide to interacting with the Gemini AI API, enabling secure content generation using Query Parameter Authentication with your API key.
