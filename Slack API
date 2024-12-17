@@ -1,0 +1,269 @@
+## 1. Overview
+
+The **Slack API Plugin** enables integration with Slack, allowing users to manage conversations, messages, and channel memberships. With this API, you can perform actions like joining or leaving channels, posting messages, and retrieving channel histories. Authentication is managed through **OAuth 2.0** using `userOAuthToken`, ensuring secure access to Slack resources.
+
+## 2. Configuration
+
+Sign in [Slack Developer](https://slack.dev/)
+
+![Sign in]()
+
+Go to [Your Apps](https://api.slack.com/developer-program/join)
+
+![Apps]()
+
+If You don't have workspace just easly create new one. Then create Your Slack App.
+
+![Creating app]()
+
+In next step You can see information about Your application. Now You need scroll down to App-Level Tokens and choose generate token and scopes.
+
+![generating token]()
+
+Here You can see Your Slack token.
+
+![token]()
+
+Create data based on Slack configuration data-format:
+
+![creating data]()
+
+Your data should look like:
+
+![data]()
+
+### 1. **Slack: conversations.leave**
+
+- **Description:** This action calls the API [conversations.leave](https://slack.com/api/conversations.leave) to leave a Slack channel.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   Include `channel`, the unique identifier of the channel you want to leave.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm that the user has successfully left the channel.
+
+#### Expected Response  
+- Returns a confirmation that the user has left the specified channel.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 2. **Slack: conversations.list**
+
+- **Description:** This action calls the API [conversations.list](https://slack.com/api/conversations.list) to retrieve all conversations (public, private channels, and DMs) the user has access to.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   No additional parameters are required for this action.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will return a list of all conversations the user has access to.
+
+#### Expected Response  
+- Returns a list of conversations, including their IDs, names, and types.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 3. **Slack: conversations.history**
+
+- **Description:** This action calls the API [conversations.history](https://slack.com/api/conversations.history) to retrieve the message history of a specific Slack channel.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   Include `channel`, the identifier of the channel to retrieve messages from.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will contain the message history of the specified channel.
+
+#### Expected Response  
+- Returns messages from the channel, including timestamps, user details, and content.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 4. **Slack: chat.meMessage**
+
+- **Description:** This action calls the API [chat.meMessage](https://slack.com/api/chat.meMessage) to send a message as the authenticated user.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   Include `channel` and `text` for the message to send.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm that the message was posted successfully.
+
+#### Expected Response  
+- Returns confirmation that the message has been posted to the specified channel.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 5. **Slack: conversations.invite**
+
+- **Description:** This action calls the API [conversations.invite](https://slack.com/api/conversations.invite) to invite users to a specific Slack channel.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   Include `channel` and a comma-separated list of `users` to invite.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm that the users were successfully invited.
+
+#### Expected Response  
+- Returns details of the updated channel after the invitation.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 6. **Slack: conversations.join**
+
+- **Description:** This action calls the API [conversations.join](https://slack.com/api/conversations.join) to join a Slack channel.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   Include `channel`, the unique identifier of the channel.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm that the user has successfully joined the channel.
+
+#### Expected Response  
+- Returns the channel details after joining.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 7. **Slack: chat.postMessage**
+
+- **Description:** This action calls the API [chat.postMessage](https://slack.com/api/chat.postMessage) to send a message to a Slack channel.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   Include `channel` and `text`, the content of the message.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm that the message has been sent.
+
+#### Expected Response  
+- Returns message details, including the timestamp and channel ID.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 8. **Slack: auth.test**
+
+- **Description:** This action calls the API [auth.test](https://slack.com/api/auth.test) to verify the validity of the authentication credentials.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   No additional parameters are required.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will contain details about the authenticated user and workspace.
+
+#### Expected Response  
+- Returns user and workspace information.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 9. **Slack: conversations.kick**
+
+- **Description:** This action calls the API [conversations.kick](https://slack.com/api/conversations.kick) to remove a user from a Slack channel.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   Include `channel` and `user` to remove.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm that the user was successfully removed.
+
+#### Expected Response  
+- Returns confirmation that the user has been removed.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 10. **Slack: conversations.create**
+
+- **Description:** This action calls the API [conversations.create](https://slack.com/api/conversations.create) to create a new Slack channel.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   Include `name`, the desired name of the new channel.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will contain details of the newly created channel.
+
+#### Expected Response  
+- Returns the details of the newly created Slack channel.
+
+**Response Example:**  
+![RESPONSE]()
+
+### Status Codes Overview
+
+For each method in this documentation, the **RESPONSE** will include a **STATUS** field. The possible status codes are:
+
+- **`"OK"`**: The request was successful.
+- **`"BAD_REQUEST"`**: The request was malformed or contained invalid data.
+- **`"UNAUTHORIZED"`**: The provided OAuth token does not have sufficient permissions.
+- **`"NOTFOUND"`**: The endpoint could not be found or the resource does not exist.
+
+These status codes will appear consistently in the **Result** section of each method and will indicate the outcome of the API request.
+
+---
+
+## 4. Links to Documentation
+
+- [Slack API Documentation](https://api.slack.com/)
+- [Slack OAuth2 Access Setup](https://api.slack.com/docs/oauth)
