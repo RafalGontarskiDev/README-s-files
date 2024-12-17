@@ -1,163 +1,228 @@
-# Typeform API Plugin Documentation
-
 ## 1. Overview
 
 The **Typeform API Plugin** allows integration with Typeform, enabling users to manage workspaces, forms, and themes. This plugin supports retrieving, creating, and updating workspaces, forms, and themes using **Bearer Personal Access Token** authentication. The API provides robust methods to manage your Typeform data and streamline form workflows.
 
-## 2. Available Methods
+## 2. Configuration
 
-### 1. **Retrieve Workspaces**
-   - **Endpoint**: `GET https://api.typeform.com/workspaces`
-   - **What it does**: Fetches a list of all workspaces in the account.
-   - **Configuration**:
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-   - **Use case**: Use this method to retrieve a list of workspaces that are available in your Typeform account for organization or management purposes.
+Sign in [Typeform](https://www.typeform.com/developers/).
 
-#### Example Request:
-```http
-GET https://api.typeform.com/workspaces
-Authorization: Bearer {{PERSONAL_ACCESS_TOKEN}}
-```
+Go to setting.
 
-### 2. **Retrieve Workspace**
-   - **Endpoint**: `GET https://api.typeform.com/workspaces/{{workspaceId}}`
-   - **What it does**: Retrieves information about a specific workspace by its `workspaceId`.
-   - **Configuration**:
-     - Requires `workspaceId`, the unique identifier of the workspace.
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-   - **Use case**: Fetch detailed information about a specific workspace to view its settings, forms, and members.
+![Settings]()
 
-#### Example Request:
-```http
-GET https://api.typeform.com/workspaces/{{workspaceId}}
-Authorization: Bearer {{PERSONAL_ACCESS_TOKEN}}
-```
+On left side navigator choose Personal Tokens.
 
-### 3. **Retrieve Account Workspaces**
-   - **Endpoint**: `GET https://api.typeform.com/accounts/{{accountId}}/workspaces`
-   - **What it does**: Retrieves all workspaces associated with a specific account.
-   - **Configuration**:
-     - Requires `accountId`, the unique identifier of the account.
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-   - **Use case**: Use this method to fetch all workspaces tied to a specific Typeform account for organization or auditing purposes.
+![Tokens]()
 
-#### Example Request:
-```http
-GET https://api.typeform.com/accounts/{{accountId}}/workspaces
-Authorization: Bearer {{PERSONAL_ACCESS_TOKEN}}
-```
+Here You can generate Your Personal Access Token. Remember about copy that in save place.
 
-### 4. **Create Account Workspace**
-   - **Endpoint**: `POST https://api.typeform.com/accounts/{{account_id}}/workspaces`
-   - **What it does**: Creates a new workspace under a specified account.
-   - **Configuration**:
-     - Requires `account_id`, the unique identifier of the account.
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-     - The request body must contain details like the workspace name.
-   - **Use case**: Use this method to create a new workspace under a specific account for organizing forms and other resources.
+![generating token]()
 
-#### Example Request Body:
-```json
-{
-  "name": "New Workspace"
-}
-```
+Now You can install Typeform Plugin in NoCode-X hub and create data with token:
 
-### 5. **Create Workspace**
-   - **Endpoint**: `POST https://api.typeform.com/workspaces`
-   - **What it does**: Creates a new workspace for organizing forms and resources.
-   - **Configuration**:
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-     - The request body must contain details like the workspace name.
-   - **Use case**: Use this method to create a new workspace for better resource management within Typeform.
+![creating data]()
 
-#### Example Request Body:
-```json
-{
-  "name": "Marketing Workspace"
-}
-```
+Your data should look like:
 
-### 6. **Create Theme**
-   - **Endpoint**: `POST https://api.typeform.com/themes`
-   - **What it does**: Creates a new theme that can be applied to forms.
-   - **Configuration**:
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-     - The request body must include details like the theme name and styles (e.g., colors, fonts).
-   - **Use case**: Use this method to define custom themes for Typeform forms, aligning them with branding or visual preferences.
+![data]()
 
-#### Example Request Body:
-```json
-{
-  "name": "Corporate Theme",
-  "colors": {
-    "question": "#000000",
-    "answer": "#ffffff"
-  }
-}
-```
+Now You can use Typeform API in Your application logic. Have fun!
 
-### 7. **Create Form**
-   - **Endpoint**: `POST https://api.typeform.com/forms`
-   - **What it does**: Creates a new form in Typeform.
-   - **Configuration**:
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-     - The request body should include form fields, logic, and layout.
-   - **Use case**: Use this method to programmatically create new forms for surveys, data collection, or feedback.
+## 3. Available Mathod's
 
-#### Example Request Body:
-```json
-{
-  "title": "Customer Feedback",
-  "fields": [
-    {
-      "title": "How satisfied are you with our service?",
-      "type": "rating",
-      "properties": {
-        "steps": 5
-      }
-    }
-  ]
-}
-```
+### 1. **Typeform: Retrieve Workspaces**
 
-### 8. **Update Workspace**
-   - **Endpoint**: `PATCH https://api.typeform.com/workspaces/{{workspaceId}}`
-   - **What it does**: Updates details of a specific workspace, such as its name or members.
-   - **Configuration**:
-     - Requires `workspaceId`, the unique identifier of the workspace.
-     - Requires Bearer Token authentication with a `PERSONAL_ACCESS_TOKEN`.
-     - The request body must include the fields to update, such as the new name or updated members.
-   - **Use case**: Use this method to modify existing workspaces, update their configurations, or rename them for better organization.
+- **Description:** This action calls the API [Retrieve Workspaces](https://developer.typeform.com/) to fetch a list of all workspaces in your Typeform account.
 
-#### Example Request Body:
-```json
-{
-  "name": "Updated Workspace Name"
-}
-```
+#### How to Use
 
-## 3. Configuration
+1. **Prepare action in Your logic:**  
+   Design the logic to include Bearer Token authentication using your `PERSONAL_ACCESS_TOKEN`.
 
-To use this plugin, you need to authenticate using a **Bearer Personal Access Token**. This token should be securely stored and passed in the headers of all requests to the Typeform API.
+**Logic Example:**  
+![LOGIC]()
 
-### 1. **Bearer Token Setup**
-   - You can generate a Personal Access Token from your Typeform account settings.
-   - This token should be included in the authorization headers of your API requests.
+2. **Result:**  
+   The **RESPONSE** will contain a list of all available workspaces with their details.
 
-### 2. **JSON Configuration Example**
+#### Expected Response
 
-```json
-{
-  "PERSONAL_ACCESS_TOKEN": "your_typeform_access_token"
-}
-```
+- Returns a list of workspaces, including their names, IDs, and associated information.
 
-This configuration ensures secure access to Typeform's API for managing workspaces, forms, and themes.
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 2. **Typeform: Retrieve Workspace**
+
+- **Description:** This action calls the API [Retrieve Workspace](https://developer.typeform.com/) to fetch information about a specific workspace using its `workspaceId`.
+
+#### How to Use
+
+1. **Prepare action in Your logic:**  
+   Provide the `workspaceId` to identify the specific workspace.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will contain the details of the specified workspace, such as its name, members, and settings.
+
+#### Expected Response
+
+- Returns detailed information about the specified workspace.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 3. **Typeform: Retrieve Account Workspaces**
+
+- **Description:** This action calls the API [Retrieve Account Workspaces](https://developer.typeform.com/) to fetch all workspaces associated with a specific Typeform account.
+
+#### How to Use
+
+1. **Prepare action in Your logic:**  
+   Include the `accountId` to fetch all related workspaces.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will contain a list of workspaces tied to the account.
+
+#### Expected Response
+
+- Returns a list of workspaces associated with the specified account.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 4. **Typeform: Create Account Workspace**
+
+- **Description:** This action calls the API [Create Account Workspace](https://developer.typeform.com/) to create a new workspace under a specific Typeform account.
+
+#### How to Use
+
+1. **Prepare action in Your logic:**  
+   Include the `account_id` and workspace details in the request body.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm the creation of the workspace and return its details.
+
+#### Expected Response
+
+- Returns the details of the newly created workspace.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 5. **Typeform: Create Workspace**
+
+- **Description:** This action calls the API [Create Workspace](https://developer.typeform.com/) to create a new workspace for organizing forms and resources.
+
+#### How to Use
+
+1. **Prepare action in Your logic:**  
+   Include the workspace name in the request body.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm the creation of the workspace and return its details.
+
+#### Expected Response
+
+- Returns the details of the newly created workspace.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 6. **Typeform: Create Theme**
+
+- **Description:** This action calls the API [Create Theme](https://developer.typeform.com/) to define a custom theme for forms, including colors, fonts, and styles.
+
+#### How to Use
+
+1. **Prepare action in Your logic:**  
+   Include theme details like name, colors, and styles in the request body.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm the creation of the theme and return its details.
+
+#### Expected Response
+
+- Returns the details of the newly created theme.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 7. **Typeform: Create Form**
+
+- **Description:** This action calls the API [Create Form](https://developer.typeform.com/) to programmatically create new forms in Typeform.
+
+#### How to Use
+
+1. **Prepare action in Your logic:**  
+   Include the form title, fields, and layout in the request body.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm the creation of the form and return its ID and details.
+
+#### Expected Response
+
+- Returns the details of the newly created form.
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 8. **Typeform: Update Workspace**
+
+- **Description:** This action calls the API [Update Workspace](https://developer.typeform.com/) to modify the details of an existing workspace.
+
+#### How to Use
+
+1. **Prepare action in Your logic:**  
+   Provide the `workspaceId` and include the fields to update in the request body.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+   The **RESPONSE** will confirm the update and return the updated workspace details.
+
+#### Expected Response
+
+- Returns the updated workspace information.
+
+**Response Example:**  
+![RESPONSE]()
+
+
 
 ## 4. Links to Documentation
 
 - [Typeform API Documentation](https://developer.typeform.com/)
 - [Typeform API Access Setup](https://www.typeform.com/help/a/where-can-i-find-my-api-key-360029581691/)
-
-This documentation provides a detailed guide to interacting with the Typeform API, enabling seamless management of workspaces, forms, and themes using secure Bearer Token authentication.
