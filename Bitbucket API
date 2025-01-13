@@ -1,93 +1,124 @@
-# Bitbucket API Plugin Documentation
-
 ## 1. Overview
 
 This plugin integrates with the **Bitbucket API**, providing a range of methods for interacting with repositories, files, and workspaces. The plugin allows users to list repositories, retrieve file contents, and create commits by uploading files directly to a Bitbucket repository.
 
-## 2. Available Methods
+## 2. Configuration
 
-### 1. **Get File or Directory Contents**
-   - **What it does**: Retrieves the contents of a specific file or the listing of a directory from a Bitbucket repository.
-   - **Configuration**:
-     - Requires authentication via a Bitbucket API token with `repository:read` permissions.
-     - You need to provide the repository, branch, and the file or directory path.
-   - **Example Request**:
-     ```plaintext
-     GET https://api.bitbucket.org/2.0/repositories/{{workspaceSlug}}/{{repoSlug}}/src/{{commit}}/{{path}}?max_depth=3&pagelen=100
-     ```
-   - **What it returns**: Lists files or the content of a specific file in the repository, starting from the provided path.
+Log in on [BitBucket](https://bitbucket.org/product/).
 
-### 2. **Fetch File by Path**
-   - **What it does**: Fetches a specific file from a Bitbucket repository using its exact path.
-   - **Configuration**:
-     - Requires authentication via a Bitbucket API token with `repository:read` permissions.
-     - You need to provide the repository, branch, and the file path.
-   - **Example Request**:
-     ```plaintext
-     GET https://api.bitbucket.org/2.0/repositories/{{workspaceSlug}}/{{repoSlug}}/src/{{commit}}/{{path}}
-     ```
-   - **What it returns**: The content of the specified file.
+![log in]()
 
-### 3. **List Repositories in a Workspace**
-   - **What it does**: Lists all repositories within a specific workspace.
-   - **Configuration**:
-     - Requires authentication via a Bitbucket API token with `repository:read` or `account:read` permissions.
-     - You need to provide the workspace slug.
-   - **Example Request**:
-     ```plaintext
-     GET https://api.bitbucket.org/2.0/repositories/{{workspaceSlug}}
-     ```
-   - **What it returns**: A list of repositories within the specified workspace.
+Create new repository:
 
-### 4. **List Workspaces for User**
-   - **What it does**: Fetches a list of workspaces associated with the authenticated user in Bitbucket.
-   - **Configuration**:
-     - Requires authentication via a Bitbucket API token with `account:read` permissions.
-   - **Example Request**:
-     ```plaintext
-     GET https://api.bitbucket.org/2.0/workspaces
-     ```
-   - **What it returns**: A list of workspaces associated with the authenticated user.
+![creating repo]()
 
-### 5. **Create a Commit by Uploading a File**
-   - **What it does**: Creates a new commit in a Bitbucket repository by uploading a file.
-   - **Configuration**:
-     - Requires authentication via a Bitbucket API token with `repository:write` permissions.
-     - You need to provide the repository, branch, file path, commit message, and author information.
-   - **Example Request**:
-     ```json
-     {
-       "files": "file_path",
-       "branch": "main",
-       "message": "Commit message",
-       "author": "Author Name <email@example.com>"
-     }
-     ```
-   - **What it returns**: A response confirming the successful creation of the commit in the repository.
+In this step You need to go to Repository Settings:
 
-## 3. Configuration
+![repo settings]()
 
-To use this plugin, you need to authenticate with Bitbucket using an API token (app password). Here's how to set it up:
+Now choose Access Tokens:
 
-### **Bitbucket API Token (App Password)**
+![access tokens]()
 
-To generate a personal access token (app password) in Bitbucket:
+Create You Repository Access Token, copy and paste in save place in Your NoCodeX App. 
 
-1. **Log in** to your Bitbucket account.
-2. Navigate to **Personal Settings** > **App passwords**.
-3. Click **Create app password** and assign the necessary permissions for the methods you want to use:
-   - **repository:read** for fetching files or listing repositories.
-   - **repository:write** for creating commits.
-   - **account:read** for listing workspaces.
-4. Generate the token and store it securely, as you won't be able to view it again after creation.
+Create data based on configuration data-format:
 
-### Example JSON Configuration:
+![configuration data]()
 
-```json
-{
-  "Repository_Access_Token": "your_bitbucket_access_token"
-}
-```
+Your data should look like:
+
+![data]()
+
+## 3. Available Methods
+
+### 1. **Bitbucket: Get File or Directory Contents**
+
+- **Description:** This action calls the API to retrieve the contents of a specific file or list the contents of a directory in a Bitbucket repository.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   Provide the `workspaceSlug`, `repoSlug`, `commit`, and the file or directory `path`. Optionally, specify `max_depth` and pagination (`pagelen`) parameters.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 2. **Bitbucket: Fetch File by Path**
+
+- **Description:** This action calls the API to fetch the content of a specific file from a Bitbucket repository using its exact path.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   Provide the `workspaceSlug`, `repoSlug`, `commit`, and `path` to the specific file.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 3. **Bitbucket: List Repositories in a Workspace**
+
+- **Description:** This action calls the API to list all repositories within a specific Bitbucket workspace.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   Provide the `workspaceSlug` to fetch repositories under the workspace.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 4. **Bitbucket: List Workspaces for User**
+
+- **Description:** This action calls the API to retrieve a list of workspaces associated with the authenticated Bitbucket user.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   No additional parameters are required.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+
+**Response Example:**  
+![RESPONSE]()
+
+---
+
+### 5. **Bitbucket: Create a Commit by Uploading a File**
+
+- **Description:** This action calls the API to create a new commit by uploading a file to a Bitbucket repository.
+
+#### How to Use  
+1. **Prepare action in Your logic:**  
+   Include the repository details (`workspaceSlug`, `repoSlug`), branch, file path, commit message, and author information.
+
+**Logic Example:**  
+![LOGIC]()
+
+2. **Result:**  
+**Response Example:**  
+![RESPONSE]()
+
 
 ## 4. Links to Documentation
 
