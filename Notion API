@@ -8,121 +8,138 @@ The **Notion API Plugin** enables interaction with Notion databases, pages, bloc
 
 In progress
 
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Data Configuration
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![CREATE DATA](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![DATA FORMAT](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+---
+
+<iframe width="0" height="5" src=""></iframe>.  
+
 ## Available Methods
+
+<iframe width="0" height="5" src=""></iframe>. 
 
 ![Available methods]()
 
-## [**List All Users**]()
-   - **Endpoint**: `GET https://api.notion.com/v1/users`
-   - **What it does**: Retrieves a list of all users within a Notion workspace.
-   - **Configuration**:
-     - Requires Bearer Token authentication using `Secret_internal`.
-   - **Use case**: Use this method to fetch and display all users in a Notion workspace, such as for team management or user identification.
+<iframe width="0" height="5" src=""></iframe>. 
 
-### 2. **Retrieve a User**
-   - **Endpoint**: `GET https://api.notion.com/v1/users/{{user_id}}`
-   - **What it does**: Retrieves information about a specific user by their `user_id`.
-   - **Configuration**:
-     - Requires `user_id`, the unique identifier of the user.
-     - Requires Bearer Token authentication using `Secret_internal`.
-   - **Use case**: Fetch detailed information about a specific user, such as when managing user data or collaborating with individual users.
+## [**Notion: List All Users**](https://developers.notion.com/reference/get-users)
 
-### 3. **Retrieve a Page**
-   - **Endpoint**: `GET https://api.notion.com/v1/pages/{{pageId}}`
-   - **What it does**: Retrieves the content and properties of a specific page by its `pageId`.
-   - **Configuration**:
-     - Requires `pageId`, the unique identifier of the page.
-     - Requires Bearer Token authentication using `Secret_internal`.
-   - **Use case**: Use this method to access and display a Notion page’s content, such as for reading or analyzing the information stored on that page.
+<iframe width="0" height="5" src=""></iframe>. 
 
-### 4. **Retrieve a Block**
-   - **Endpoint**: `GET https://api.notion.com/v1/blocks/{{blockId}}`
-   - **What it does**: Retrieves a specific block from a page by its `blockId`.
-   - **Configuration**:
-     - Requires `blockId`, the unique identifier of the block.
-     - Requires Bearer Token authentication using `Secret_internal`.
-   - **Use case**: Access individual content blocks (e.g., text, images, media) from a Notion page, enabling detailed content manipulation or retrieval.
+![LOGIC](data:image/png;base64,)
 
-### 5. **Create Database**
-   - **Endpoint**: `POST https://api.notion.com/v1/databases`
-   - **What it does**: Creates a new database in Notion.
-   - **Configuration**:
-     - Requires Bearer Token authentication using `Secret_internal`.
-     - The request body must include database details such as the title and properties.
-   - **Use case**: Use this method to programmatically create a new Notion database to store and organize data.
+<iframe width="0" height="5" src=""></iframe>. 
 
-#### Example Request Body:
-```json
-{
-  "parent": {
-    "type": "page_id",
-    "page_id": "parent_page_id"
-  },
-  "title": [
-    {
-      "type": "text",
-      "text": {
-        "content": "New Database"
-      }
-    }
-  ],
-  "properties": {
-    "Name": {
-      "title": {}
-    },
-    "Description": {
-      "rich_text": {}
-    }
-  }
-}
-```
+![RESPONSE](data:image/png;base64,)
 
-### 6. **Create Page**
-   - **Endpoint**: `POST https://api.notion.com/v1/pages`
-   - **What it does**: Creates a new page in Notion.
-   - **Configuration**:
-     - Requires Bearer Token authentication using `Secret_internal`.
-     - The request body must contain the parent database or page, title, and content.
-   - **Use case**: Use this method to create new content pages in Notion for documentation, note-taking, or task management.
+<iframe width="0" height="5" src=""></iframe>.  
 
-#### Example Request Body:
-```json
-{
-  "parent": {
-    "database_id": "database_id"
-  },
-  "properties": {
-    "Title": {
-      "title": [
-        {
-          "text": {
-            "content": "New Page"
-          }
-        }
-      ]
-    }
-  }
-}
-```
+## [**Notion: Retrieve a User**](https://developers.notion.com/reference/get-user)
 
-### 7. **Search by Title**
-   - **Endpoint**: `POST https://api.notion.com/v1/search`
-   - **What it does**: Searches through all Notion pages and databases by title.
-   - **Configuration**:
-     - Requires Bearer Token authentication using `Secret_internal`.
-     - The request body must contain the search query.
-   - **Use case**: Use this method to search for specific pages or databases by title, allowing quick navigation or access to information.
+<iframe width="0" height="5" src=""></iframe>. 
 
-#### Example Request Body:
-```json
-{
-  "query": "Your Page Title"
-}
-```
+![LOGIC](data:image/png;base64,)
 
-## 4. Links to Documentation
+<iframe width="0" height="5" src=""></iframe>. 
 
-- [Notion API Documentation](https://developers.notion.com/reference/intro)
-- [Notion API Access Setup](https://developers.notion.com/docs/getting-started)
+![RESPONSE](data:image/png;base64,)
 
-This documentation provides all the necessary details to integrate with Notion's API, enabling seamless interaction with Notion workspaces, databases, pages, and users.
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**Notion: Retrieve a Page**](https://developers.notion.com/reference/retrieve-a-page)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**Notion: Retrieve a Block**](https://developers.notion.com/reference/retrieve-a-block)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Notion: Create Database**](https://developers.notion.com/reference/create-database)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Notion: Create Page**](https://developers.notion.com/reference/post-page)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Notion: Search by Title**](https://developers.notion.com/reference/post-search)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+---
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Status Codes Overview
+
+For each method in this documentation, the **RESPONSE** will include a **STATUS** field. The possible status codes are:
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+- **`"OK"`**: The request was successful.
+- **`"BAD_REQUEST"`**: The request was malformed or contained invalid data.
+- **`"UNAUTHORIZED"`**: The provided API key or user does not have sufficient permissions.
+- **`"NOTFOUND"`**: The endpoint could not be found or the resource does not exist.
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+These status codes will appear consistently in the **Result** section of each method and will indicate the outcome of the API request.
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Links to Documentation
+
+[Example API Documentation](https://developer.atlassian.com/cloud/trello/rest/api-group-boards/)
+[Example API Access Setup](https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/)
