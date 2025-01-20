@@ -1,108 +1,28 @@
-# Introduction
+## Overview
 
-This plugin allows you to interact with the Mandrill API to manage your email templates and retrieve account information.
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/MtX9828RZkE?si=L8u_zOkTWvtafw63"></iframe>. 
-
-# Configuration
-
-Create an account on [Mailchimp platform](https://login.mailchimp.com/). Go to [Mandrill platform](https://mandrillapp.com/login/?referrer=%2F) and log in using Mailchimp. In settings you can create an API key which will allow you to use the Mailchimp API.
+The **Notion API Plugin** enables interaction with Notion databases, pages, blocks, and users. This plugin provides methods to list and retrieve users, create databases and pages, search for content, and manage blocks within a Notion workspace. Authentication is managed through Bearer Token using a **Secret_internal** key, ensuring secure access to Notion resources.
 
 <iframe width="0" height="5" src=""></iframe>.  
 
-![mandrill_api_key](data:image/png;base64,)
+## Configuration
 
-<iframe width="0" height="5" src=""></iframe>.   
-
-# Create Configuration Data
-
-In left side navigation go to data panel and choose "create". Then on blank option name your data and find data-format:
+In progress
 
 <iframe width="0" height="5" src=""></iframe>.  
 
-![CREATE_DATA](data:image/png;base64,)
+---
 
 <iframe width="0" height="5" src=""></iframe>.  
 
-Your configuration data should be a JSON object that includes the following field:
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-![DATA](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>.
-
-# Available Methods
-
-In Action section You can find available method's:
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-![actions](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>.   
-
-## [**Mailchimp: Add Template**](https://mailchimp.com/developer/transactional/api/templates/add-template/)
-
-This will create a new email template in Mandrill for sending transactional emails.
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-#### Expected Response
-
-![RESPONSE](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-- Also in Your Mandrill account You can find in Outbound - Templates your new created template from nocode-x.
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-![MANDRILL_RESPONSE](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>.   
-
-## [**Mailchimp: Get User Info**](https://mailchimp.com/developer/transactional/api/users/get-user-info/)
-
-This will fetch the user information of the currently authenticated user.
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-#### Expected Response
-
-![RESPONSE](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>.   
-
-### [**Mailchimp: Get Template Info**](https://mailchimp.com/developer/transactional/api/templates/get-template-info/)
-
-This will retrieve detailed information about a specific email template.
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-#### Expected Response
-
-![RESPONSE](data:image/png;base64,)
+## Available Methods
 
 <iframe width="0" height="5" src=""></iframe>. 
 
-### [**Mailchimp: Send new message**](https://mailchimp.com/developer/transactional/api/messages/send-new-message/)
+![Available methods]()
 
-This will send new email message.
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Example Method**](link)
 
 <iframe width="0" height="5" src=""></iframe>. 
 
@@ -110,45 +30,7 @@ This will send new email message.
 
 <iframe width="0" height="5" src=""></iframe>. 
 
-#### Expected Response
-
 ![RESPONSE](data:image/png;base64,)
 
 <iframe width="0" height="5" src=""></iframe>. 
 
-### [**Mailchimp: Send Using Message Template**](https://mailchimp.com/developer/marketing/api/campaigns/send-a-campaign/)
-
-This action send an email campaign using a predefined message template.
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-#### Expected Response
-
-![RESPONSE](data:image/png;base64,)
-
-## Status Codes Overview
-
-For each method in this documentation, the **RESPONSE** will include a **STATUS** field. The possible status codes are:
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-- **`"OK"`**: The request was successful.
-- **`"BAD_REQUEST"`**: The request was malformed or contained invalid data.
-- **`"UNAUTHORIZED"`**: The provided API key or user does not have sufficient permissions.
-- **`"NOTFOUND"`**: The endpoint could not be found or the resource does not exist.
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-These status codes will appear consistently in the **Result** section of each method and will indicate the outcome of the API request.
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-## Documentation links
-
-For more information on each endpoint and additional parameters, refer to the [Mandrill API Documentation](https://mandrillapp.com/api/docs/).
-
-This documentation provides a guide to interacting with the Mandrill API, enabling secure access to your email templates and account information using your Mandrill API key.
