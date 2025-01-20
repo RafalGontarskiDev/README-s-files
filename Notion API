@@ -1,12 +1,18 @@
-# Notion API Plugin Documentation
-
-## 1. Overview
+## Overview
 
 The **Notion API Plugin** enables interaction with Notion databases, pages, blocks, and users. This plugin provides methods to list and retrieve users, create databases and pages, search for content, and manage blocks within a Notion workspace. Authentication is managed through Bearer Token using a **Secret_internal** key, ensuring secure access to Notion resources.
 
-## 2. Available Methods
+<iframe width="0" height="5" src=""></iframe>.  
 
-### 1. **List All Users**
+## Configuration
+
+In progress
+
+## Available Methods
+
+![Available methods]()
+
+## [**List All Users**]()
    - **Endpoint**: `GET https://api.notion.com/v1/users`
    - **What it does**: Retrieves a list of all users within a Notion workspace.
    - **Configuration**:
@@ -113,24 +119,6 @@ The **Notion API Plugin** enables interaction with Notion databases, pages, bloc
   "query": "Your Page Title"
 }
 ```
-
-## 3. Configuration
-
-To use this plugin, you will need to authenticate using a **Bearer Token**. This token (referred to as `Secret_internal`) must have the necessary permissions to interact with Notion’s API based on the actions you intend to perform.
-
-### 1. **Bearer Token Setup**
-   - You can generate a Notion integration token from your Notion account.
-   - The Bearer token should be passed as a Bearer token in the headers of all API requests.
-
-### 2. **JSON Configuration Example**
-
-```json
-{
-  "Secret_internal": "your_notion_integration_token"
-}
-```
-
-This configuration allows the plugin to authenticate with Notion and use the various methods to manage databases, pages, blocks, and users.
 
 ## 4. Links to Documentation
 
