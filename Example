@@ -1,12 +1,24 @@
 ## Overview
 
-Overview text.
+The **Notion API Plugin** enables interaction with Notion databases, pages, blocks, and users. This plugin provides methods to list and retrieve users, create databases and pages, search for content, and manage blocks within a Notion workspace. Authentication is managed through Bearer Token using a **Secret_internal** key, ensuring secure access to Notion resources.
 
 <iframe width="0" height="5" src=""></iframe>.  
 
 ## Configuration
 
 In progress
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Data Configuration
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![CREATE DATA](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![DATA FORMAT](data:image/png;base64,)
 
 <iframe width="0" height="5" src=""></iframe>.  
 
@@ -22,7 +34,79 @@ In progress
 
 <iframe width="0" height="5" src=""></iframe>. 
 
-## [**Example Method**](link)
+## [**Notion: List All Users**](https://developers.notion.com/reference/get-users)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**Notion: Retrieve a User**](https://developers.notion.com/reference/get-user)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**Notion: Retrieve a Page**](https://developers.notion.com/reference/retrieve-a-page)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**Notion: Retrieve a Block**](https://developers.notion.com/reference/retrieve-a-block)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Notion: Create Database**](https://developers.notion.com/reference/create-database)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Notion: Create Page**](https://developers.notion.com/reference/post-page)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Notion: Search by Title**](https://developers.notion.com/reference/post-search)
 
 <iframe width="0" height="5" src=""></iframe>. 
 
