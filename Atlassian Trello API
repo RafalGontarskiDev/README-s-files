@@ -127,16 +127,24 @@ Now go to this link -> [API KEY](https://trello.com/app-key)
 
 For each method in this documentation, the **RESPONSE** will include a **STATUS** field. The possible status codes are:
 
+<iframe width="0" height="5" src=""></iframe>. 
+
 - **`"OK"`**: The request was successful.
 - **`"BAD_REQUEST"`**: The request was malformed or contained invalid data.
 - **`"UNAUTHORIZED"`**: The provided API key or user does not have sufficient permissions.
 - **`"NOTFOUND"`**: The endpoint could not be found or the resource does not exist.
 
+<iframe width="0" height="5" src=""></iframe>. 
+
 These status codes will appear consistently in the **Result** section of each method and will indicate the outcome of the API request.
+
+<iframe width="0" height="5" src=""></iframe>. 
 
 ---
 
-## 4. Links to Documentation
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Links to Documentation
 
 - [Trello API Documentation](https://developer.atlassian.com/cloud/trello/rest/api-group-boards/)
 - [Trello API Access Setup](https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/)
