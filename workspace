@@ -1,0 +1,181 @@
+## Overview
+
+The **Edusign API Plugin** allows integration with Edusign’s platform for managing documents, templates, users, professors, and courses. It also enables sending signature requests via email. Authentication is managed through **Bearer Authentication** using `api_key`, ensuring secure access to Edusign's resources.
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## Configuration
+
+In progress
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Data Configuration
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![CREATE DATA](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![DATA FORMAT](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+---
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## Available Methods
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![Available methods]()
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Edusign: Get All Templates**](https://developers.edusign.com/reference/gettemplates)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**Edusign: Create a Document Using an Existing Template**](https://developers.edusign.com/reference/createdocumentbytemplateid)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**Edusign: Get All Users**](https://developers.edusign.com/reference/getv1users)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Edusign: Create a Course**](https://developers.edusign.com/reference/postv1course)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Edusign: Create a Professor**](https://developers.edusign.com/reference/postv1professor)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Edusign: Get All Professors**](https://developers.edusign.com/reference/getv1professor)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Edusign: Get All Documents**](https://developers.edusign.com/reference/getdocuments)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**Edusign: Create a document using base64**](https://developers.edusign.com/reference/createdocumentbybase64)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Edusign: Create a Student**](https://developers.edusign.com/reference/postv1student)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**Edusign: Send Signature Emails**](https://developers.edusign.com/reference/postv1documentcustomsendtemplateid)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+---
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Status Codes Overview
+
+For each method in this documentation, the **RESPONSE** will include a **STATUS** field. The possible status codes are:
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+- **`"OK"`**: The request was successful.
+- **`"BAD_REQUEST"`**: The request was malformed or contained invalid data.
+- **`"UNAUTHORIZED"`**: The provided API key or user does not have sufficient permissions.
+- **`"NOTFOUND"`**: The endpoint could not be found or the resource does not exist.
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+These status codes will appear consistently in the **Result** section of each method and will indicate the outcome of the API request.
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Links to Documentation
+
+[Edusign API Documentation](https://developers.edusign.com/reference/deleteabsencereasons)
+[Edusign API Access Setup](https://developers.edusign.com/docs/api-reference)
