@@ -1,56 +1,73 @@
-# DeepL API Plugin Documentation
-
-## 1. Overview
+## Overview
 
 The **DeepL API Plugin** allows integration with DeepL's translation services, enabling users to translate text between various languages. Authentication is managed through **Header Authentication** using `Authorization: DeepL_API_Key`, ensuring secure access to DeepL's resources.
 
-## 2. Available Methods
+<iframe width="0" height="5" src=""></iframe>.  
 
-### 1. **Translate**
-   - **Endpoint**: `POST https://api-free.deepl.com/v2/translate`
-   - **What it does**: Translates text from one language to another using DeepL’s advanced translation engine.
-   - **Configuration**:
-     - Requires **Header Authentication** using `Authorization: DeepL_API_Key`.
-     - The request body must include the `text` to translate, `source_lang` (optional), and `target_lang` (required).
-   - **Use case**: Use this method to translate text programmatically between supported languages for multilingual applications or content.
+## Configuration
 
-#### Example Request Body:
-```json
-{
-  "text": "Hello, world!",
-  "target_lang": "FR"
-}
-```
+In progress
 
-#### Example Request:
-```http
-POST https://api-free.deepl.com/v2/translate
-Authorization: DeepL-Auth-Key {{DeepL_API_Key}}
-Content-Type: application/x-www-form-urlencoded
-```
+<iframe width="0" height="5" src=""></iframe>. 
 
-## 3. Configuration
+## Data Configuration
 
-To use the DeepL API, you must authenticate using **Header Authentication** with your `DeepL_API_Key`. The API key is passed in the `Authorization` header for all API requests.
+<iframe width="0" height="5" src=""></iframe>. 
 
-### 1. **Header Authentication Setup**
-   - Include your DeepL API key in the `Authorization` header.
-   - The Authorization header will look like this:
-     - `Authorization: DeepL-Auth-Key your_DeepL_API_Key`
+![CREATE DATA](data:image/png;base64,)
 
-### 2. **JSON Configuration Example**
+<iframe width="0" height="5" src=""></iframe>. 
 
-```json
-{
-  "DeepL_API_Key": "your_deepl_api_key"
-}
-```
+![DATA FORMAT](data:image/png;base64,)
 
-This configuration ensures secure access to DeepL’s translation services.
+<iframe width="0" height="5" src=""></iframe>.  
 
-## 4. Links to Documentation
+---
 
-- [DeepL API Documentation](https://www.deepl.com/docs-api)
-- [DeepL API Access Setup](https://developers.deepl.com/docs/getting-started/auth)
+<iframe width="0" height="5" src=""></iframe>.  
 
-This documentation provides a guide to interacting with the DeepL API, enabling secure translation requests using Header Authentication with your DeepL API key.
+## Available Methods
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![Available methods]()
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**DeepL: Translate text**](https://developers.deepl.com/docs/api-reference/translate/openapi-spec-for-text-translation)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+---
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Status Codes Overview
+
+For each method in this documentation, the **RESPONSE** will include a **STATUS** field. The possible status codes are:
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+- **`"OK"`**: The request was successful.
+- **`"BAD_REQUEST"`**: The request was malformed or contained invalid data.
+- **`"UNAUTHORIZED"`**: The provided API key or user does not have sufficient permissions.
+- **`"NOTFOUND"`**: The endpoint could not be found or the resource does not exist.
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+These status codes will appear consistently in the **Result** section of each method and will indicate the outcome of the API request.
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Links to Documentation
+
+[DeepL API Documentation](https://developers.deepl.com/docs)
+[DeepL API Access Setup](https://developers.deepl.com/docs/getting-started/auth)
