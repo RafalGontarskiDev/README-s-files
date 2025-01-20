@@ -1,0 +1,87 @@
+## Overview
+
+The **LiveChat API Plugin** allows seamless integration with the LiveChat platform, enabling users to manage chats, initiate new conversations, and retrieve a list of ongoing or past chats. This plugin provides essential tools for real-time customer support and engagement. Authentication is handled using OAuth2 or API tokens to ensure secure access to LiveChat resources.
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## Configuration
+
+In progress
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Data Configuration
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![CREATE DATA](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![DATA FORMAT](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+---
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## Available Methods
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![Available methods]()
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**LiveChat: Start Chat**](https://developers.livechat.com/docs/api-reference/v3.5/agent#operation/start_chat)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**LiveChat: List Chats**](https://developers.livechat.com/docs/api-reference/v3.5/agent#operation/list_chats)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+---
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Status Codes Overview
+
+For each method in this documentation, the **RESPONSE** will include a **STATUS** field. The possible status codes are:
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+- **`"OK"`**: The request was successful.
+- **`"BAD_REQUEST"`**: The request was malformed or contained invalid data.
+- **`"UNAUTHORIZED"`**: The provided API key or user does not have sufficient permissions.
+- **`"NOTFOUND"`**: The endpoint could not be found or the resource does not exist.
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+These status codes will appear consistently in the **Result** section of each method and will indicate the outcome of the API request.
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Links to Documentation
+
+- [LiveChat API Documentation](https://developers.livechat.com/docs/api-reference/v3.5/agent)
+- [LiveChat API Authentication Guide](https://developers.livechat.com/docs/getting-started/authentication)
+
+This documentation provides a comprehensive guide to integrating with the LiveChat API, enabling real-time customer engagement and support with secure access.
