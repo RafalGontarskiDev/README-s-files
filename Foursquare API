@@ -1,52 +1,72 @@
-# Foursquare API Plugin Documentation
-
-## 1. Overview
+## Overview
 
 The **Foursquare API Plugin** allows integration with Foursquare’s place search functionality, enabling users to search for places by criteria such as location, category, and radius. Authentication is managed through **Header Authentication** using `Authorization: API_Key`, ensuring secure access to Foursquare's resources.
 
-## 2. Available Methods
+<iframe width="0" height="5" src=""></iframe>.  
 
-### 1. **Place Search**
-   - **Endpoint**: `GET https://api.foursquare.com/v3/places/search`
-   - **What it does**: Searches for places using various filters, such as location coordinates, categories, and radius. The API returns a list of places that match the search criteria.
-   - **Configuration**:
-     - Requires **Header Authentication** using `Authorization: API_Key`.
-     - Optional query parameters include `ll` (latitude, longitude), `query` (search term), `radius`, and `categories`.
-   - **Use case**: Use this method to search for places based on geographic location, business category, or specific search terms.
+## Configuration
 
-#### Example Request (Search by Location and Category):
-```http
-GET https://api.foursquare.com/v3/places/search?ll=40.730610,-73.935242&radius=1000&categories=13065
-Authorization: {{API_Key}}
-```
+In progress
 
-### Query Parameters
-- `ll`: Latitude and Longitude (required for location-based search)
-- `radius`: Search radius in meters (optional)
-- `categories`: Category IDs to filter results (optional)
-- `query`: Search term to find specific places (optional)
+<iframe width="0" height="5" src=""></iframe>. 
 
-## 3. Configuration
+## Data Configuration
 
-To use the Foursquare API, you must authenticate using **Header Authentication** with your `API_Key`. The API key is passed in the `Authorization` header for all API requests.
+<iframe width="0" height="5" src=""></iframe>. 
 
-### 1. **Header Authentication Setup**
-   - Include your Foursquare API key in the `Authorization` header.
-   - The Authorization header will look like this:
-     - `Authorization: your_API_Key`
+![CREATE DATA](data:image/png;base64,)
 
-### 2. **JSON Configuration Example**
+<iframe width="0" height="5" src=""></iframe>. 
 
-```json
-{
-  "API_Key": "your_foursquare_api_key"
-}
-```
+![DATA FORMAT](data:image/png;base64,)
 
-This configuration ensures secure access to Foursquare’s place search functionality.
+<iframe width="0" height="5" src=""></iframe>.  
 
-## 4. Links to Documentation
+---
 
-- [Foursquare API Documentation](hhttps://docs.foursquare.com/developer/reference/foursquare-apis-overview)
+<iframe width="0" height="5" src=""></iframe>.  
 
-This documentation provides a guide to interacting with the Foursquare API, enabling secure place search requests using Header Authentication with your Foursquare API key.
+## Available Methods
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![Available methods]()
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Foursquare: Place Search**](https://docs.foursquare.com/developer/reference/place-search)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+---
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Status Codes Overview
+
+For each method in this documentation, the **RESPONSE** will include a **STATUS** field. The possible status codes are:
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+- **`"OK"`**: The request was successful.
+- **`"BAD_REQUEST"`**: The request was malformed or contained invalid data.
+- **`"UNAUTHORIZED"`**: The provided API key or user does not have sufficient permissions.
+- **`"NOTFOUND"`**: The endpoint could not be found or the resource does not exist.
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+These status codes will appear consistently in the **Result** section of each method and will indicate the outcome of the API request.
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Links to Documentation
+
+- [Foursquare API Documentation](https://docs.foursquare.com/developer/reference/foursquare-apis-overview)
