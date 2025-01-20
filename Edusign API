@@ -1,159 +1,181 @@
-# Edusign API Plugin Documentation
-
-## 1. Overview
+## Overview
 
 The **Edusign API Plugin** allows integration with Edusign’s platform for managing documents, templates, users, professors, and courses. It also enables sending signature requests via email. Authentication is managed through **Bearer Authentication** using `api_key`, ensuring secure access to Edusign's resources.
 
-## 2. Available Methods
+<iframe width="0" height="5" src=""></iframe>.  
 
-### 1. **Create a Document Using an Existing Template**
-   - **Endpoint**: `POST https://ext.edusign.fr/v2/documents/{{templateId}}`
-   - **What it does**: Creates a new document using an existing template, identified by `templateId`.
-   - **Configuration**:
-     - Requires `templateId`, the unique identifier of the template.
-     - Requires **Bearer Authentication** using `api_key`.
-   - **Use case**: Use this method to generate documents from existing templates in your Edusign system.
+## Configuration
 
-#### Example Request:
-```http
-POST https://ext.edusign.fr/v2/documents/{{templateId}}
-Authorization: Bearer {{api_key}}
-```
+In progress
 
-### 2. **Get All Documents**
-   - **Endpoint**: `GET https://ext.edusign.fr/v2/documents`
-   - **What it does**: Retrieves a list of all documents available in the Edusign system.
-   - **Configuration**:
-     - Requires **Bearer Authentication** using `api_key`.
-   - **Use case**: Use this method to get a list of all documents for management or reporting purposes.
+<iframe width="0" height="5" src=""></iframe>. 
 
-#### Example Request:
-```http
-GET https://ext.edusign.fr/v2/documents
-Authorization: Bearer {{api_key}}
-```
+## Data Configuration
 
-### 3. **Get All Templates**
-   - **Endpoint**: `GET https://ext.edusign.fr/v2/documents/templates`
-   - **What it does**: Retrieves a list of all templates available in the Edusign system.
-   - **Configuration**:
-     - Requires **Bearer Authentication** using `api_key`.
-   - **Use case**: Use this method to get a list of available templates for generating documents.
+<iframe width="0" height="5" src=""></iframe>. 
 
-#### Example Request:
-```http
-GET https://ext.edusign.fr/v2/documents/templates
-Authorization: Bearer {{api_key}}
-```
+![CREATE DATA](data:image/png;base64,)
 
-### 4. **Get All Users**
-   - **Endpoint**: `GET https://ext.edusign.fr/v1/users`
-   - **What it does**: Retrieves a list of all users in the Edusign system.
-   - **Configuration**:
-     - Requires **Bearer Authentication** using `api_key`.
-   - **Use case**: Use this method to get a list of users for managing roles and access.
+<iframe width="0" height="5" src=""></iframe>. 
 
-#### Example Request:
-```http
-GET https://ext.edusign.fr/v1/users
-Authorization: Bearer {{api_key}}
-```
+![DATA FORMAT](data:image/png;base64,)
 
-### 5. **Get All Professors**
-   - **Endpoint**: `GET https://ext.edusign.fr/v1/professor`
-   - **What it does**: Retrieves a list of all professors in the Edusign system.
-   - **Configuration**:
-     - Requires **Bearer Authentication** using `api_key`.
-   - **Use case**: Use this method to get a list of all professors registered in Edusign.
+<iframe width="0" height="5" src=""></iframe>.  
 
-#### Example Request:
-```http
-GET https://ext.edusign.fr/v1/professor
-Authorization: Bearer {{api_key}}
-```
+---
 
-### 6. **Send Signature Emails**
-   - **Endpoint**: `POST https://ext.edusign.fr/v1/course/send-sign-emails`
-   - **What it does**: Sends signature request emails to the recipients of a course.
-   - **Configuration**:
-     - Requires **Bearer Authentication** using `api_key`.
-     - The request body should include the course details and recipient information.
-   - **Use case**: Use this method to send signature request emails to students or professors.
+<iframe width="0" height="5" src=""></iframe>.  
 
-#### Example Request:
-```http
-POST https://ext.edusign.fr/v1/course/send-sign-emails
-Authorization: Bearer {{api_key}}
-Content-Type: application/json
-```
+## Available Methods
 
-### 7. **Create a Professor**
-   - **Endpoint**: `POST https://ext.edusign.fr/v1/professor`
-   - **What it does**: Creates a new professor in the Edusign system.
-   - **Configuration**:
-     - Requires **Bearer Authentication** using `api_key`.
-     - The request body should include the professor’s details.
-   - **Use case**: Use this method to add a new professor to Edusign.
+<iframe width="0" height="5" src=""></iframe>. 
 
-#### Example Request:
-```http
-POST https://ext.edusign.fr/v1/professor
-Authorization: Bearer {{api_key}}
-Content-Type: application/json
-```
+![Available methods]()
 
-### 8. **Create a Student**
-   - **Endpoint**: `POST https://ext.edusign.fr/v1/student`
-   - **What it does**: Creates a new student in the Edusign system.
-   - **Configuration**:
-     - Requires **Bearer Authentication** using `api_key`.
-     - The request body should include the student’s details.
-   - **Use case**: Use this method to add a new student to Edusign.
+<iframe width="0" height="5" src=""></iframe>. 
 
-#### Example Request:
-```http
-POST https://ext.edusign.fr/v1/student
-Authorization: Bearer {{api_key}}
-Content-Type: application/json
-```
+## [**Edusign: Get All Templates**](https://developers.edusign.com/reference/gettemplates)
 
-### 9. **Create a Course**
-   - **Endpoint**: `POST https://ext.edusign.fr/v1/course`
-   - **What it does**: Creates a new course in the Edusign system.
-   - **Configuration**:
-     - Requires **Bearer Authentication** using `api_key`.
-     - The request body should include course details such as name, professor, and schedule.
-   - **Use case**: Use this method to add new courses to the Edusign system.
+<iframe width="0" height="5" src=""></iframe>. 
 
-#### Example Request:
-```http
-POST https://ext.edusign.fr/v1/course
-Authorization: Bearer {{api_key}}
-Content-Type: application/json
-```
+![LOGIC](data:image/png;base64,)
 
-## 3. Configuration
+<iframe width="0" height="5" src=""></iframe>. 
 
-To use the Edusign API, you must authenticate using **Bearer Authentication** with your `api_key`. The API key is passed in the Authorization header for all API requests.
+![RESPONSE](data:image/png;base64,)
 
-### 1. **Bearer Token Setup**
-   - Include your Edusign API key as a Bearer token in the Authorization header.
-   - The Authorization header will look like this:
-     - `Authorization: Bearer your_api_key`
+<iframe width="0" height="5" src=""></iframe>.  
 
-### 2. **JSON Configuration Example**
+## [**Edusign: Create a Document Using an Existing Template**](https://developers.edusign.com/reference/createdocumentbytemplateid)
 
-```json
-{
-  "api_key": "your_edusign_api_key"
-}
-```
+<iframe width="0" height="5" src=""></iframe>. 
 
-This configuration ensures secure access to Edusign for document, user, and course management.
+![LOGIC](data:image/png;base64,)
 
-## 4. Links to Documentation
+<iframe width="0" height="5" src=""></iframe>. 
 
-- [Edusign API Documentation](https://developers.edusign.com/docs/overview)
-- [Edusign API Access Setup](https://developers.edusign.com/docs/api-reference)
+![RESPONSE](data:image/png;base64,)
 
-This documentation provides a guide to interacting with the Edusign API, enabling secure management of documents, templates, users, and courses using Bearer Authentication with your Edusign API key.
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**Edusign: Get All Users**](https://developers.edusign.com/reference/getv1users)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Edusign: Create a Course**](https://developers.edusign.com/reference/postv1course)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Edusign: Create a Professor**](https://developers.edusign.com/reference/postv1professor)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Edusign: Get All Professors**](https://developers.edusign.com/reference/getv1professor)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Edusign: Get All Documents**](https://developers.edusign.com/reference/getdocuments)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**Edusign: Create a document using base64**](https://developers.edusign.com/reference/createdocumentbybase64)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## [**Edusign: Create a Student**](https://developers.edusign.com/reference/postv1student)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+## [**Edusign: Send Signature Emails**](https://developers.edusign.com/reference/postv1documentcustomsendtemplateid)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![LOGIC](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+![RESPONSE](data:image/png;base64,)
+
+<iframe width="0" height="5" src=""></iframe>.  
+
+---
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Status Codes Overview
+
+For each method in this documentation, the **RESPONSE** will include a **STATUS** field. The possible status codes are:
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+- **`"OK"`**: The request was successful.
+- **`"BAD_REQUEST"`**: The request was malformed or contained invalid data.
+- **`"UNAUTHORIZED"`**: The provided API key or user does not have sufficient permissions.
+- **`"NOTFOUND"`**: The endpoint could not be found or the resource does not exist.
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+These status codes will appear consistently in the **Result** section of each method and will indicate the outcome of the API request.
+
+<iframe width="0" height="5" src=""></iframe>. 
+
+## Links to Documentation
+
+[Edusign API Documentation](https://developers.edusign.com/reference/deleteabsencereasons)
+[Edusign API Access Setup](https://developers.edusign.com/docs/api-reference)
