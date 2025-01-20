@@ -1,6 +1,6 @@
 ## Overview
 
-The **Edusign API Plugin** allows integration with Edusign’s platform for managing documents, templates, users, professors, and courses. It also enables sending signature requests via email. Authentication is managed through **Bearer Authentication** using `api_key`, ensuring secure access to Edusign's resources.
+The **DeepL API Plugin** allows integration with DeepL's translation services, enabling users to translate text between various languages. Authentication is managed through **Header Authentication** using `Authorization: DeepL_API_Key`, ensuring secure access to DeepL's resources.
 
 <iframe width="0" height="5" src=""></iframe>.  
 
@@ -34,115 +34,7 @@ In progress
 
 <iframe width="0" height="5" src=""></iframe>. 
 
-## [**Edusign: Get All Templates**](https://developers.edusign.com/reference/gettemplates)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![RESPONSE](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-## [**Edusign: Create a Document Using an Existing Template**](https://developers.edusign.com/reference/createdocumentbytemplateid)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![RESPONSE](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-## [**Edusign: Get All Users**](https://developers.edusign.com/reference/getv1users)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![RESPONSE](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-## [**Edusign: Create a Course**](https://developers.edusign.com/reference/postv1course)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![RESPONSE](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-## [**Edusign: Create a Professor**](https://developers.edusign.com/reference/postv1professor)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![RESPONSE](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-## [**Edusign: Get All Professors**](https://developers.edusign.com/reference/getv1professor)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![RESPONSE](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-## [**Edusign: Get All Documents**](https://developers.edusign.com/reference/getdocuments)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![RESPONSE](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-## [**Edusign: Create a document using base64**](https://developers.edusign.com/reference/createdocumentbybase64)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![RESPONSE](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-## [**Edusign: Create a Student**](https://developers.edusign.com/reference/postv1student)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![LOGIC](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>. 
-
-![RESPONSE](data:image/png;base64,)
-
-<iframe width="0" height="5" src=""></iframe>.  
-
-## [**Edusign: Send Signature Emails**](https://developers.edusign.com/reference/postv1documentcustomsendtemplateid)
+## [**DeepL: Translate text**](https://developers.deepl.com/docs/api-reference/translate/openapi-spec-for-text-translation)
 
 <iframe width="0" height="5" src=""></iframe>. 
 
@@ -177,5 +69,5 @@ These status codes will appear consistently in the **Result** section of each me
 
 ## Links to Documentation
 
-[Edusign API Documentation](https://developers.edusign.com/reference/deleteabsencereasons)
-[Edusign API Access Setup](https://developers.edusign.com/docs/api-reference)
+[DeepL API Documentation](https://developers.deepl.com/docs)
+[DeepL API Access Setup](https://developers.deepl.com/docs/getting-started/auth)
