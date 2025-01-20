@@ -1,6 +1,6 @@
 ## Overview
 
-The **Notion API Plugin** enables interaction with Notion databases, pages, blocks, and users. This plugin provides methods to list and retrieve users, create databases and pages, search for content, and manage blocks within a Notion workspace. Authentication is managed through Bearer Token using a **Secret_internal** key, ensuring secure access to Notion resources.
+Example overview text.
 
 <iframe width="0" height="5" src=""></iframe>.  
 
@@ -141,5 +141,5 @@ These status codes will appear consistently in the **Result** section of each me
 
 ## Links to Documentation
 
-[Example API Documentation](https://developer.atlassian.com/cloud/trello/rest/api-group-boards/)
-[Example API Access Setup](https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/)
+[Notion API Documentation](https://developers.notion.com/docs)
+[Notion API Access Setup](https://developers.notion.com/docs#authentication)
