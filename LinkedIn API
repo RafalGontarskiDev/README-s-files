@@ -62,6 +62,7 @@ For create Your data configuration In NoCodeX on left navigation go to Data.
 <iframe width="0" height="5" src=""></iframe>. 
 
 ## [LinkedIn: Create a Share (UGC Post)](https://learn.microsoft.com/en-us/linkedin/compliance/integrations/shares/ugc-post-api?tabs=http#create-organic-ugc-posts)
+This method allows users to publish a **User-Generated Content (UGC) post** on LinkedIn, including text, images, videos, or links, while specifying audience visibility and other post metadata.
 
 <iframe width="0" height="5" src=""></iframe>. 
 
